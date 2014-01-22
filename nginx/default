@@ -42,10 +42,6 @@ server {
                 autoindex on;
         }
 
-        location /gitweb {
-                root /usr/share/gitweb;
-        }
-
         location / {
             proxy_pass        http://kamailio.sipwise.com:8080/;
             proxy_redirect    http://kamailio.sipwise.com/ https://kamailio.sipwise.com/;
