@@ -6,7 +6,7 @@ export DEB_BUILD_OPTIONS="parallel=$(nproc)"
 export BUILD_ONLY=true
 export SUDO_CMD=sudo
 export COWBUILDER_DIST=$distribution
-export POST_BUILD_HOOK=/usr/bin/jdg-debc
+export POST_BUILD_HOOK=/home/admin/kamailio-deb-jenkins/scripts/jdg-debc
 
 # set specific mirror when building for Ubuntu
 if [ "$distribution" = "precise" ] ; then
