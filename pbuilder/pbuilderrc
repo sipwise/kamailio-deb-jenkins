@@ -1,0 +1,13 @@
+# ccache
+CCACHEDIR=/var/cache/pbuilder/ccache
+
+# ubuntu specific configuration
+if [ "$distribution" = "precise" ] ; then
+  MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+  # we need key id 40976EAF437D05B5
+  DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+  # cowdancer is in universe
+  COMPONENTS="main universe"
+else
+  MIRRORSITE="http://http.debian.net/debian"
+fi

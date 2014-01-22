@@ -30,9 +30,20 @@ Automatically deploy [jenkins-debian-glue](http://jenkins-debian-glue.org/):
     wget --no-check-certificate https://raw.github.com/mika/jenkins-debian-glue/master/puppet/apply.sh
     sudo bash ./apply.sh $PASSWORD
 
+Support providing additional configuration to cowbuilder + related tools:
+
+    sudo tee -a /etc/sudoers.d/jenkins >/dev/null <<EOF
+    # for cowbuilder/pbuilder/... instruction:
+    Defaults  env_keep+="release branch distribution JOB_NAME"
+    EOF
+
 Grab a copy of this repository:
 
     git clone https://github.com/sipwise/kamailio-deb-jenkins.git /home/admin/kamailio-deb-jenkins
+
+Adopt pbuilder for usage with building for Ubuntu:
+
+    sudo cp /home/admin/kamailio-deb-jenkins/pbuilder/pbuilderrc /etc/jenkins/pbuilderrc
 
 Deploy nginx as proxy for Jenkins:
 
@@ -52,8 +63,14 @@ Set up jenkins-job-builder:
     url=http://localhost:8080/
     EOF
 
+Generate according Jenkins jobs:
+
+    cd /home/admin/kamailio-deb-jenkins/jjb
+    make
+
 
 Questions?
 ----------
 
-Drop a mail to mprokop (at) sipwise dot com
+For Jenkins/Build environment related questions contact Michael Prokop (mprokop (at) sipwise dot com),
+for Kamailio (packaging) related questions contact Victor Seva (vseva (at) sipwise dot com).
