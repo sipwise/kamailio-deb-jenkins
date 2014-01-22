@@ -73,5 +73,5 @@ Generate according Jenkins jobs:
 Questions?
 ----------
 
-For Jenkins/Build environment related questions contact Michael Prokop (mprokop (at) sipwise dot com),
-for Kamailio (packaging) related questions contact Victor Seva (vseva (at) sipwise dot com).
+For Jenkins/Build environment related questions contact [Michael Prokop](https://github.com/mika/) (mprokop (at) sipwise dot com),
+for Kamailio (packaging) related questions contact [Victor Seva](https://github.com/linuxmaniac/) (vseva (at) sipwise dot com).
