@@ -15,6 +15,8 @@
       name: '{name}-source'
       project-type: matrix
       description: 'Build Debian source package of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
+      logrotate:
+        numToKeep: 20
       disabled: false
       auth-token: kamailio-upstream-secret
       scm:
@@ -68,6 +70,8 @@
             deb     http://$jenkins_server/debian/ {name} main
             deb-src http://$jenkins_server/debian/ {name} main
           </pre>
+      logrotate:
+        numToKeep: 20
       execution-strategy:
         sequential: true
       axes:
@@ -125,6 +129,8 @@
       project-type: freestyle
       description: 'Installation and upgrade tests for {name} Debian packages.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
       disabled: false
+      logrotate:
+        numToKeep: 20
       parameters:
         - string:
             name: architecture
