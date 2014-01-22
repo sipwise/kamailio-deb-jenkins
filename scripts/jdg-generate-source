@@ -1,0 +1,20 @@
+#!/bin/bash
+# Purpose: generate Debian source package based on kamailio's git repository
+
+cd source
+
+git clean -fxd
+
+cp -a "pkg/kamailio/deb/${distribution}" debian
+
+export DEBEMAIL="Jenkins Sipwise <jenkins@sipwise.com>"
+
+ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
+TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
+DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
+
+dch -b --distribution="${DISTRIBUTION}" \
+  --newversion=${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution} \
+  -- "Automated package build."
+
+dpkg-buildpackage -uc -us -nc -d -S -i -I --source-option=--unapply-patches
