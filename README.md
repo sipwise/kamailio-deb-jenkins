@@ -65,6 +65,11 @@ Set up jenkins-job-builder:
     url=http://localhost:8080/
     EOF
 
+Install Matrix Reloaded Jenkins Plugin:
+
+    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/matrix-reloaded.hpi http://updates.jenkins-ci.org/latest/matrix-reloaded.hpi
+    sudo chown jenkins:nogroup /var/lib/jenkins/plugins/matrix-reloaded.hpi
+
 Generate according Jenkins jobs:
 
     cd /home/admin/kamailio-deb-jenkins/jjb
