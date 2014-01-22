@@ -44,6 +44,7 @@ Grab a copy of this repository:
 Adopt pbuilder for usage with building for Ubuntu:
 
     sudo cp /home/admin/kamailio-deb-jenkins/pbuilder/pbuilderrc /etc/jenkins/pbuilderrc
+    sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/ubuntu-keyring_2012.05.19_all.deb
 
 Deploy nginx as proxy for Jenkins:
 
