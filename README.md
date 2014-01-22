@@ -43,6 +43,7 @@ Grab a copy of this repository:
 
 Adopt pbuilder for usage with building for Ubuntu:
 
+    echo PBUILDER_CONFIG=/etc/jenkins/pbuilderrc | sudo tee -a a /etc/jenkins/debian_glue
     sudo cp /home/admin/kamailio-deb-jenkins/pbuilder/pbuilderrc /etc/jenkins/pbuilderrc
     sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/ubuntu-keyring_2012.05.19_all.deb
 
