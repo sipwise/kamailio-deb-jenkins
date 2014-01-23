@@ -70,6 +70,15 @@ Install Matrix Reloaded Jenkins Plugin:
     sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/matrix-reloaded.hpi http://updates.jenkins-ci.org/latest/matrix-reloaded.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/matrix-reloaded.hpi
 
+Fix headless issue with Java:
+
+    echo JAVA_ARGS="-Djava.awt.headless=true" | sudo tee -a /etc/default/jenkins
+    sudo apt-get install ttf-dejavu
+    sudo java -jar /usr/lib/jvm/java-6-openjdk-common/jre/lib/compilefontconfig.jar \
+      /etc/java-6-openjdk/fontconfig.properties \
+      /usr/lib/jvm/java-6-openjdk-common/jre/lib/fontconfig.bfc
+    sudo /etc/init.d/jenkins restart
+
 Generate according Jenkins jobs:
 
     cd /home/admin/kamailio-deb-jenkins/jjb
