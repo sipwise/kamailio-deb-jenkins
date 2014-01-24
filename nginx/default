@@ -6,7 +6,7 @@ server {
         server_tokens off;
 
         location /debian {
-                root   /srv/repository/;
+                root   /srv/;
                 autoindex on;
         }
 
@@ -38,7 +38,7 @@ server {
         ssl_prefer_server_ciphers   on;
 
         location /debian {
-                root   /srv/repository/;
+                root   /srv/;
                 autoindex on;
         }
 

@@ -54,6 +54,12 @@ Deploy nginx as proxy for Jenkins:
     sudo cp /home/admin/kamailio-deb-jenkins/nginx/default /etc/nginx/sites-available/default
     sudo /etc/init.d/nginx restart
 
+Set up Debian repository directories:
+
+    sudo mkdir /srv/repository
+    sudo chown jenkins /srv/repository
+    sudo ln -s /srv/repository/ /srv/debian
+
 Set up jenkins-job-builder:
 
     sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/python-jenkins*deb
