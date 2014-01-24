@@ -62,8 +62,7 @@
 - job-template:
       name: '{name}-binaries'
       project-type: matrix
-      description: |
-          <p>Build Debian binary packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!</p>
+      description: 'Build Debian binary packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
       logrotate:
         numToKeep: 20
       execution-strategy:
@@ -124,8 +123,7 @@
 - job-template:
       name: '{name}-repos'
       project-type: matrix
-      description: |
-	<p>Repository handling for Debian packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!</p>
+      description: 'Repository handling for Debian packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
       logrotate:
         numToKeep: 20
       execution-strategy:
@@ -152,7 +150,7 @@
         - copyartifact:
             project: '{name}-source/architecture=$architecture,distribution=$distribution'
             filter: '*'
-	    target: 'binaries/'
+            target: 'binaries/'
             which-build: upstream-build
             fallback-to-last-successful: true
         - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
