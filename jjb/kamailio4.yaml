@@ -64,12 +64,6 @@
       project-type: matrix
       description: |
           <p>Build Debian binary packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!</p>
-          <h2>Usage instructions how to use the Debian repository</h2>
-          <p>Access to this repository is available using the following sources.list entry:</p>
-          <pre>
-            deb     http://$jenkins_server/debian/ {name} main
-            deb-src http://$jenkins_server/debian/ {name} main
-          </pre>
       logrotate:
         numToKeep: 20
       execution-strategy:
@@ -117,8 +111,56 @@
         - fingerprint:
             record-artifacts: true
         - trigger:
+            project: '{name}-repos'
+            threshold: UNSTABLE
+        - trigger:
             project: '{name}-piuparts'
             threshold: UNSTABLE
+        - workspace-cleanup:
+            dirmatch: false
+      wrappers:
+        - timestamps
+
+- job-template:
+      name: '{name}-repos'
+      project-type: matrix
+      description: |
+	<p>Repository handling for Debian packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!</p>
+      logrotate:
+        numToKeep: 20
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values:
+             - i386
+             - amd64
+        - axis:
+            type: user-defined
+            name: distribution
+            values:
+             - wheezy
+             - squeeze
+             - jessie
+             - precise
+      builders:
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. * "
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-source/architecture=$architecture,distribution=$distribution'
+            filter: '*'
+	    target: 'binaries/'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
+      publishers:
+        - archive:
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes'
+        - fingerprint:
+            record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
       wrappers:
