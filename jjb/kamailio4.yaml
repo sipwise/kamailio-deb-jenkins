@@ -9,6 +9,7 @@
     jobs:
       - '{name}-source'
       - '{name}-binaries'
+      - '{name}-repos'
       - '{name}-piuparts'
 
 - job-template:
