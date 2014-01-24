@@ -167,28 +167,40 @@
 
 - job-template:
       name: '{name}-piuparts'
-      project-type: freestyle
+      project-type: matrix
       description: 'Installation and upgrade tests for {name} Debian packages.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
       disabled: false
       logrotate:
         numToKeep: 20
-      parameters:
-        - string:
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
             name: architecture
-            default: amd64
-            description: "Architecture that should be used."
+            values:
+             - i386
+             - amd64
+        - axis:
+            type: user-defined
+            name: distribution
+            values:
+             - wheezy
+             - squeeze
+             - jessie
+             - precise
       builders:
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. * "
+           rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/architecture=$architecture'
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
             filter: '*.deb'
             which-build: upstream-build
             fallback-to-last-successful: true
             flatten: true
             target: 'artifacts/'
-        - shell: |
-            # sadly piuparts always returns with exit code 1 :((
-            sudo piuparts_wrapper $PWD/artifacts/*.deb || true
-        - shell: 'piuparts_tap piuparts.txt > piuparts.tap'
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-piuparts"
       publishers:
         - tap:
             results: 'piuparts.tap'
