@@ -1,0 +1,9 @@
+#!/bin/bash
+
+export BASE_PATH="binaries/"
+export PROVIDE_ONLY=true
+export REPOSITORY="/srv/repository/${JOB_NAME%-repos*}"
+export REPOS="${distribution}"
+
+/usr/bin/generate-reprepro-codename "${REPOS}"
+/usr/bin/build-and-provide-package
