@@ -14,7 +14,9 @@
 - job-template:
       name: '{name}-source'
       project-type: matrix
-      description: 'Build Debian source package of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
+      description: |
+        Build Debian source package of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       logrotate:
         numToKeep: 20
       disabled: false
@@ -62,7 +64,9 @@
 - job-template:
       name: '{name}-binaries'
       project-type: matrix
-      description: 'Build Debian binary packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
+      description: |
+        Build Debian/Ubuntu binary packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       logrotate:
         numToKeep: 20
       execution-strategy:
@@ -123,7 +127,9 @@
 - job-template:
       name: '{name}-repos'
       project-type: matrix
-      description: 'Repository handling for Debian packages of {name}.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
+      description: |
+        Repository handling for Debian packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       logrotate:
         numToKeep: 20
       execution-strategy:
@@ -167,7 +173,9 @@
 - job-template:
       name: '{name}-piuparts'
       project-type: matrix
-      description: 'Installation and upgrade tests for {name} Debian packages.<br />Do not edit this job through the web, it is generated via jenkins-job-builder!'
+      description: |
+        Installation and upgrade tests for {name} Debian packages.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       disabled: false
       logrotate:
         numToKeep: 20
