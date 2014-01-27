@@ -32,11 +32,11 @@ DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
 if "$build_tag" ; then
   echo "*** Building a tagged version (${TAG}).***"
   dch -b --distribution="${DISTRIBUTION}" \
-    --newversion=${ORIG_VERSION}+0~${distribution} \
+    --newversion="${ORIG_VERSION}+${distribution}" \
     -- "Automated package build for tag $TAG and distribution $distribution."
 else
   dch -b --distribution="${DISTRIBUTION}" \
-    --newversion=${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution} \
+    --newversion="${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution}" \
     -- "Automated package build."
 fi
 
