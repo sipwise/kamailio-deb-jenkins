@@ -3,7 +3,7 @@
 # master branch
 
 - project:
-    name: kamailio
+    name: kamailiodev-nightly
     repos: git://git.sip-router.org/kamailio
     jobs:
       - '{name}-source'
