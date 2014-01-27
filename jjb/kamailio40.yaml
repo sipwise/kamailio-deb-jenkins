@@ -1,10 +1,9 @@
 # This jenkins-job-build configuration sets up Jenkins jobs
-# for building Debian packages of kamailio4
-# which are provided using the repository software called reprepro
-# [http://mirrorer.alioth.debian.org/] then.
+# for building Debian packages of kamailio, building
+# 4.0 tags
 
 - project:
-    name: kamailio4
+    name: kamailio40
     repos: git://git.sip-router.org/kamailio
     jobs:
       - '{name}-source'
@@ -24,10 +23,10 @@
         - git:
             url: '{repos}'
             name: origin
-            refspec: +refs/heads/*:refs/remotes/origin/*
+            refspec: '+refs/tags/*:refs/remotes/origin/tags/*'
             basedir: source
             branches:
-              - master
+              - '*/tags/4.0*'
             wipe-workspace: false
       execution-strategy:
         sequential: true
@@ -149,7 +148,7 @@
            echo "* Removing files workspace before copying artifacts from another project. * "
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
+            project: '{name}-source/architecture=$architecture,distribution=$distribution'
             filter: '*'
             target: 'binaries/'
             which-build: upstream-build

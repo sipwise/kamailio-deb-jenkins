@@ -1,8 +1,9 @@
 # This jenkins-job-build configuration sets up Jenkins jobs
-# for building Debian packages of kamailio
+# for building Debian packages of kamailio, building
+# 3.3 branch
 
 - project:
-    name: kamailio41-nightly
+    name: kamailio33-nightly
     repos: git://git.sip-router.org/kamailio
     jobs:
       - '{name}-source'
@@ -25,7 +26,7 @@
             refspec: +refs/heads/*:refs/remotes/origin/*
             basedir: source
             branches:
-              - 3.3
+              - '3.3'
             wipe-workspace: false
       execution-strategy:
         sequential: true

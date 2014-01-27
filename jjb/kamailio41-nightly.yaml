@@ -1,5 +1,6 @@
 # This jenkins-job-build configuration sets up Jenkins jobs
-# for building Debian packages of kamailio
+# for building Debian packages of kamailio, building
+# 4.1 branch
 
 - project:
     name: kamailio41-nightly

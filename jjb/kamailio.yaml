@@ -1,7 +1,6 @@
 # This jenkins-job-build configuration sets up Jenkins jobs
-# for building Debian packages of kamailio4
-# which are provided using the repository software called reprepro
-# [http://mirrorer.alioth.debian.org/] then.
+# for building Debian packages of kamailio4, building
+# master branch
 
 - project:
     name: kamailio
