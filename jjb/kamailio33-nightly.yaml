@@ -148,7 +148,7 @@
            echo "* Removing files workspace before copying artifacts from another project. * "
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-source/architecture=$architecture,distribution=$distribution'
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
             filter: '*'
             target: 'binaries/'
             which-build: upstream-build
