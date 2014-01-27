@@ -60,6 +60,15 @@ Set up Debian repository directories:
     sudo chown jenkins /srv/repository
     sudo ln -s /srv/repository/ /srv/debian
 
+GPG key setup for Debian repository:
+
+    sudo apt-get install haveged
+    sudo -s
+    su - jenkins
+    gpg --gen-key # note $KEY_ID
+    gpg --armor --export $KEY_ID --output /srv/debian/kamailiodebkey.gpg
+    echo KEY_ID=$KEY_ID | sudo tee -a /etc/jenkins/debian_glue
+
 Set up jenkins-job-builder:
 
     sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/python-jenkins*deb
