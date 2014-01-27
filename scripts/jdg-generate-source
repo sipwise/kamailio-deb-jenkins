@@ -3,6 +3,22 @@
 
 cd source
 
+# debug info
+env
+
+# defaults
+build_tag=false
+TAG=unknown
+
+if [ -n "$GIT_BRANCH" ] ; then
+  case "$GIT_BRANCH" in
+    origin/tags/*)
+      build_tag=true
+      TAG=${GIT_BRANCH#origin/tags/}
+      ;;
+  esac
+fi
+
 git clean -fxd
 
 cp -a "pkg/kamailio/deb/${distribution}" debian
@@ -13,8 +29,15 @@ ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
 TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
 DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
 
-dch -b --distribution="${DISTRIBUTION}" \
-  --newversion=${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution} \
-  -- "Automated package build."
+if "$build_tag" ; then
+  echo "*** Building a tagged version (${TAG}).***"
+  dch -b --distribution="${DISTRIBUTION}" \
+    --newversion=${ORIG_VERSION}+0~${distribution} \
+    -- "Automated package build for tag $TAG and distribution $distribution."
+else
+  dch -b --distribution="${DISTRIBUTION}" \
+    --newversion=${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution} \
+    -- "Automated package build."
+fi
 
 dpkg-buildpackage -uc -us -nc -d -S -i -I --source-option=--unapply-patches
