@@ -38,7 +38,6 @@
             name: distribution
             values:
              - wheezy
-             - jessie
              - squeeze
              - precise
       builders:
@@ -84,7 +83,6 @@
             values:
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |
@@ -147,7 +145,6 @@
             values:
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |
@@ -194,7 +191,6 @@
             values:
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |
