@@ -15,4 +15,4 @@ all: $(ENABLED)
 $(ENABLED):
 	jenkins-jobs update $@
 
-.PHONY: vseva all $(ENABLED)
+.PHONY: all $(ENABLED)
