@@ -9,9 +9,11 @@ export COWBUILDER_DIST=$distribution
 export POST_BUILD_HOOK=/home/admin/kamailio-deb-jenkins/scripts/jdg-debc
 
 # set specific mirror when building for Ubuntu
-if [ "$distribution" = "precise" ] ; then
- export MIRRORSITE=http://at.archive.ubuntu.com/ubuntu/
-fi
+case "$distribution" in
+  precise|lucid)
+    export MIRRORSITE=http://at.archive.ubuntu.com/ubuntu/
+    ;;
+esac
 
 # execute main jenkins-debian-glue script
 /usr/bin/build-and-provide-package
