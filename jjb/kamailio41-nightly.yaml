@@ -37,8 +37,8 @@
             type: user-defined
             name: distribution
             values:
-             - wheezy
              - jessie
+             - wheezy
              - squeeze
              - precise
       builders:
@@ -82,9 +82,9 @@
             type: user-defined
             name: distribution
             values:
+             - jessie
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |
@@ -145,9 +145,9 @@
             type: user-defined
             name: distribution
             values:
+             - jessie
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |
@@ -192,9 +192,9 @@
             type: user-defined
             name: distribution
             values:
+             - jessie
              - wheezy
              - squeeze
-             - jessie
              - precise
       builders:
         - shell: |

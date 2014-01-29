@@ -39,6 +39,8 @@
             values:
              - wheezy
              - squeeze
+             - lenny
+             - lucid
              - precise
       builders:
         - shell: 'rm -f ./* || true'
@@ -83,6 +85,8 @@
             values:
              - wheezy
              - squeeze
+             - lenny
+             - lucid
              - precise
       builders:
         - shell: |
@@ -145,6 +149,8 @@
             values:
              - wheezy
              - squeeze
+             - lenny
+             - lucid
              - precise
       builders:
         - shell: |
@@ -191,6 +197,8 @@
             values:
              - wheezy
              - squeeze
+             - lenny
+             - lucid
              - precise
       builders:
         - shell: |
