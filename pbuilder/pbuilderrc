@@ -10,6 +10,9 @@ case "$distribution" in
     # cowdancer is in universe
     COMPONENTS="main universe"
     ;;
+  lenny)
+    MIRRORSITE="http://archive.debian.org/debian/"
+    ;;
   *)
     MIRRORSITE="http://http.debian.net/debian"
     ;;

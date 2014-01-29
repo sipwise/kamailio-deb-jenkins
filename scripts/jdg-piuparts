@@ -4,8 +4,11 @@
 case "$distribution" in
   precise|lucid)
     export MIRROR="http://ie.archive.ubuntu.com/ubuntu/"
-    echo "*** Building for distribution precise, using mirror $MIRROR ***"
+    echo "*** Building for Ubuntu release precise or lucid, using mirror $MIRROR ***"
     ;;
+  lenny)
+    export MIRROR="http://archive.debian.org/debian/"
+    echo "*** Building for Debian release lenny, using mirror $MIRROR ***"
 esac
 
 # sadly piuparts always returns with exit code 1 :((
