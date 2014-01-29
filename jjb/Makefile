@@ -6,6 +6,6 @@ ENABLED=kamailio33-nightly.yaml kamailio33.yaml \
 all: $(ENABLED)
 
 $(ENABLED):
-	echo jenkins-jobs update $@
+	jenkins-jobs update $@
 
 .PHONY: all $(ENABLED)
