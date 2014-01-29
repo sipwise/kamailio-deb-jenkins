@@ -34,7 +34,7 @@ Support providing additional configuration to cowbuilder + related tools:
 
     sudo tee -a /etc/sudoers.d/jenkins >/dev/null <<EOF
     # for cowbuilder/pbuilder/... instruction:
-    Defaults  env_keep+="release branch distribution JOB_NAME"
+    Defaults  env_keep+="release branch distribution JOB_NAME MIRROR"
     EOF
 
 Grab a copy of this repository:

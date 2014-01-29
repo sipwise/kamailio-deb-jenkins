@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# use according mirror when building for Ubuntu
+if [ "$distribution" = "precise" ] ; then
+  export MIRROR="http://ie.archive.ubuntu.com/ubuntu/"
+  echo "*** Building for distribution precise, using mirror $MIRROR ***"
+fi
+
 # sadly piuparts always returns with exit code 1 :((
 sudo piuparts_wrapper $PWD/artifacts/*.deb || true
 
