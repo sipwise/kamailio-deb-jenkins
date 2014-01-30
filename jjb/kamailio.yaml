@@ -1,34 +1,120 @@
 # This jenkins-job-build configuration sets up Jenkins jobs
-# for building Debian packages of kamailio, building
-# 4.1 tags
+# for building Debian packages of kamailio
+# NOTE: requires jenkins-job-builder with patch
+# https://github.com/linuxmaniac/jenkins-job-builder/commit/3ca77a761fde77c383625d13d531455bdebf3fb8
+# (at least until it's included in upstream)
 
-- project:
-    name: kamailio41
-    repos: git://git.sip-router.org/kamailio
-    jobs:
+# global defaults
+- defaults:
+    name: global
+    distributions: !!python/tuple &distributions
+     - wheezy
+     - squeeze
+     - lenny
+     - lucid
+     - precise
+    architectures: !!python/tuple &architectures
+     - amd64
+     - i386
+    repos: &repos
+     - 'git://git.sip-router.org/kamailio'
+    reftag: &reftag
+     - '+refs/tags/*:refs/remotes/origin/tags/*'
+    refbranch: &refbranch
+     - '+refs/heads/*:refs/remotes/origin/*'
+    branch: &branch
+      - 'master'
+    jobs: &jobs
       - '{name}-source'
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
 
+# list of projects with their configurations
+- project:
+    name: kamailiodev-nightly
+    repos: *repos
+    refspec: *refbranch
+    branch: *branch
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio41-nightly
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '4.1'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio40-nightly
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '4.0'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio33-nightly
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '3.3'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio41
+    repos: *repos
+    refspec: *reftag
+    branch:
+      - '*/tags/4.1*'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio40
+    repos: *repos
+    refspec: *reftag
+    branch:
+      - '*/tags/4.0*'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: kamailio33
+    repos: *repos
+    refspec: *reftag
+    branch:
+      - '*/tags/3.3*'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+# the job template
 - job-template:
       name: '{name}-source'
       project-type: matrix
       description: |
         Build Debian source package of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      logrotate:
-        numToKeep: 20
-      disabled: false
-      auth-token: kamailio-upstream-secret
       scm:
         - git:
             url: '{repos}'
             name: origin
-            refspec: '+refs/tags/*:refs/remotes/origin/tags/*'
             basedir: source
+            refspec: '{refspec}'
             branches:
-              - '*/tags/4.1*'
+              - '{branch}'
             wipe-workspace: false
       execution-strategy:
         sequential: true
@@ -36,11 +122,11 @@
         - axis:
             type: user-defined
             name: distribution
-            values:
-             - jessie
-             - wheezy
-             - squeeze
-             - precise
+            values: '{list:distributions}'
+      logrotate:
+        numToKeep: 20
+      disabled: false
+      auth-token: kamailio-upstream-secret
       builders:
         - shell: 'rm -f ./* || true'
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
@@ -75,20 +161,14 @@
         - axis:
             type: user-defined
             name: architecture
-            values:
-             - i386
-             - amd64
+            values: '{list:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values:
-             - jessie
-             - wheezy
-             - squeeze
-             - precise
+            values: '{list:distributions}'
       builders:
         - shell: |
-           echo "* Removing files workspace before copying artifacts from another project. * "
+           echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
             project: '{name}-source/distribution=$distribution'
@@ -138,27 +218,21 @@
         - axis:
             type: user-defined
             name: architecture
-            values:
-             - i386
-             - amd64
+            values: '{list:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values:
-             - jessie
-             - wheezy
-             - squeeze
-             - precise
+            values: '{list:distributions}'
       builders:
         - shell: |
-           echo "* Removing files workspace before copying artifacts from another project. * "
+           echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
             project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
             filter: '*'
-            target: 'binaries/'
             which-build: upstream-build
             fallback-to-last-successful: true
+            target: 'binaries/'
         - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
       publishers:
         - archive:
@@ -185,20 +259,14 @@
         - axis:
             type: user-defined
             name: architecture
-            values:
-             - i386
-             - amd64
+            values: '{list:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values:
-             - jessie
-             - wheezy
-             - squeeze
-             - precise
+            values: '{list:distributions}'
       builders:
         - shell: |
-           echo "* Removing files workspace before copying artifacts from another project. * "
+           echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
             project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
