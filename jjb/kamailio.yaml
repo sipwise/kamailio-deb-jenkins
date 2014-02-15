@@ -4,9 +4,11 @@
 # https://github.com/linuxmaniac/jenkins-job-builder/commit/3ca77a761fde77c383625d13d531455bdebf3fb8
 # (at least until it's included in upstream)
 
-# global defaults
+## global defaults
 - defaults:
     name: global
+    logrotate_keep: &logrotate_keep
+     - 20
     distributions: !!python/tuple &distributions
      - wheezy
      - squeeze
@@ -30,9 +32,11 @@
       - '{name}-repos'
       - '{name}-piuparts'
 
-# list of projects with their configurations
+## list of projects with their configurations
+# build based on branches
 - project:
     name: kamailiodev-nightly
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
     branch: *branch
@@ -42,6 +46,7 @@
 
 - project:
     name: kamailio41-nightly
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
     branch:
@@ -52,6 +57,7 @@
 
 - project:
     name: kamailio40-nightly
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
     branch:
@@ -62,6 +68,7 @@
 
 - project:
     name: kamailio33-nightly
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
     branch:
@@ -70,8 +77,10 @@
     architectures: *architectures
     jobs: *jobs
 
+# build based on tags
 - project:
     name: kamailio41
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
     branch:
@@ -82,6 +91,7 @@
 
 - project:
     name: kamailio40
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
     branch:
@@ -92,6 +102,7 @@
 
 - project:
     name: kamailio33
+    logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
     branch:
@@ -100,7 +111,52 @@
     architectures: *architectures
     jobs: *jobs
 
-# the job template
+# vseva's playground
+- project:
+    name: vseva-kamailiodev-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch: *branch
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: vseva-kamailio41-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - '4.1'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: vseva-kamailio40-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - '4.0'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+- project:
+    name: vseva-kamailio33-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - '3.3'
+    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+
+## the job template
 - job-template:
       name: '{name}-source'
       project-type: matrix
@@ -124,7 +180,7 @@
             name: distribution
             values: '{list:distributions}'
       logrotate:
-        numToKeep: 20
+        numToKeep: '{logrotate_keep}'
       disabled: false
       auth-token: kamailio-upstream-secret
       builders:
@@ -154,7 +210,7 @@
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       logrotate:
-        numToKeep: 20
+        numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -211,7 +267,7 @@
         Repository handling for Debian packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       logrotate:
-        numToKeep: 20
+        numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -252,7 +308,7 @@
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       disabled: false
       logrotate:
-        numToKeep: 20
+        numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
