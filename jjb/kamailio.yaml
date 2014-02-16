@@ -179,6 +179,11 @@
             type: user-defined
             name: distribution
             values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
       logrotate:
         numToKeep: '{logrotate_keep}'
       disabled: false
@@ -222,6 +227,11 @@
             type: user-defined
             name: distribution
             values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - slave
       builders:
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
@@ -279,6 +289,11 @@
             type: user-defined
             name: distribution
             values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
       builders:
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
@@ -320,6 +335,11 @@
             type: user-defined
             name: distribution
             values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - slave
       builders:
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
