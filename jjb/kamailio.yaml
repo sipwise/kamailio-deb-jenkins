@@ -237,7 +237,7 @@
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-source/distribution=$distribution'
+            project: '{name}-source/distribution=$distribution,label=master'
             filter: '*'
             which-build: upstream-build
             fallback-to-last-successful: true
@@ -299,7 +299,7 @@
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution,label=slave'
             filter: '*'
             which-build: upstream-build
             fallback-to-last-successful: true
@@ -345,7 +345,7 @@
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution,label=slave'
             filter: '*.deb'
             which-build: upstream-build
             fallback-to-last-successful: true
