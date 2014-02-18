@@ -67,13 +67,10 @@ esac
 EOF
 fi
 
-if [ -r /etc/sudoers.d/pbuilder ] ; then
-  echo "!!! /etc/sudoers.d/pbuilder exists already !!!"
-else
-  cat > /etc/sudoers.d/pbuilder <<EOF
-Defaults  env_keep+="DEB_* release branch distribution JOB_NAME"
+echo "!!! Setting up /etc/sudoers.d/pbuilder !!!"
+cat > /etc/sudoers.d/pbuilder <<EOF
+Defaults  env_keep+="DEB_* release branch distribution JOB_NAME MIRROR"
 EOF
-fi
 
 if grep -q '^PBUILDER_CONFIG=' /etc/jenkins/debian_glue 2>/dev/null ; then
   echo "!!! /etc/jenkins/debian_glue with PBUILDER_CONFIG exists already !!!"
