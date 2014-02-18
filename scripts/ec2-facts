@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if ! [ -x /usr/bin/facter ] ; then
+  echo "/usr/bin/facter not present, exiting."
+  exit 0
+fi
+
+AMI_ID=$(facter ec2_ami_id)
+
+if [ -z "$AMI_ID" ] ; then
+  echo "No ec2_ami_id data found, exiting."
+  exit 0
+fi
+
+PUBLIC_HOSTNAME=$(facter ec2_public_hostname)
+INSTANCE_TYPE=$(facter ec2_instance_type)
+INSTANCE_ID=$(facter ec2_instance_id)
+AVAILABILITY_ZONE=$(facter ec2_placement_availability_zone)
+PUBLIC_HOSTNAME=$(facter ec2_public_hostname)
+PUBLIC_IP=$(facter ec2_public_ipv4)
+SECURITY_GROUPS=$(facter ec2_security_groups)
+USER_DATA=$(facter ec2_userdata)
+
+cat << EOF
+################################################################################
+Running ami id $AMI_ID ($INSTANCE_TYPE) on zone $AVAILABILITY_ZONE + id $INSTANCE_ID
+Reachable via $PUBLIC_HOSTNAME (IP $PUBLIC_IP)
+Security group(s): $SECURITY_GROUPS
+User data: $USER_DATA
+################################################################################
+Init script used on AMI:
+
+$(cat /tmp/init.sh)
+################################################################################
+Init script log from system:
+
+$(cat /tmp/initsh.log)
+################################################################################
+EOF
