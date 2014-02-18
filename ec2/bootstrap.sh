@@ -5,6 +5,11 @@ if [ "$(id -u 2>/dev/null)" != 0 ] ; then
   exit 1
 fi
 
+UPDATE=false
+if [ "$1" == "--update" ] ; then
+  UPDATE=true
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 
 # enable j-d-g repos
@@ -81,17 +86,16 @@ fi
 for distri in jessie lenny lucid precise squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
-  arch=amd64
-  if [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-    echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
-  else
-    cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
-  fi
-
-  arch=i386
-  if [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-    echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
-  else
-    cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
-  fi
+  for arch in amd64 i386 ; do
+    if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
+      cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
+    else
+      if $UPDATE ; then
+        echo "!!! Executing update for cowbuilder as requested !!!"
+        cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow
+      else
+        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
+      fi
+    fi
+  done
 done
