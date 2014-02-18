@@ -187,7 +187,8 @@
       logrotate:
         numToKeep: '{logrotate_keep}'
       disabled: false
-      auth-token: kamailio-upstream-secret
+      triggers:
+        - pollscm: '*/5 * * * *'
       builders:
         - shell: 'rm -f ./* || true'
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
