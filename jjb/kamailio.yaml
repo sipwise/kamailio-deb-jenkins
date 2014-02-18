@@ -233,6 +233,7 @@
             values:
               - slave
       builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
@@ -341,6 +342,7 @@
             values:
               - slave
       builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
