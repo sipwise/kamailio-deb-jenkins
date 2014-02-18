@@ -93,7 +93,7 @@ for distri in jessie lenny lucid precise squeeze wheezy ; do
     else
       if $UPDATE ; then
         echo "!!! Executing update for cowbuilder as requested !!!"
-        cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow
+        cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --configfile=/etc/jenkins/pbuilderrc
       else
         echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
       fi
