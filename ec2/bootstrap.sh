@@ -46,10 +46,8 @@ apt-get -y install screen zsh vim
 # get rid of installation packages
 apt-get clean
 
-if [ -r /etc/jenkins/pbuilderrc ] ; then
-  echo "!!! /etc/jenkins/pbuilderrc exists already !!!"
-else
-  cat > /etc/jenkins/pbuilderrc <<EOF
+echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
+cat > /etc/jenkins/pbuilderrc <<EOF
 # ccache
 CCACHEDIR=/var/cache/pbuilder/ccache
 
@@ -69,8 +67,11 @@ case "$distribution" in
     MIRRORSITE="http://http.debian.net/debian"
     ;;
 esac
+
+# package install speedup
+EXTRAPACKAGES="eatmydata"
+export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
 EOF
-fi
 
 echo "!!! Setting up /etc/sudoers.d/pbuilder !!!"
 cat > /etc/sudoers.d/pbuilder <<EOF
