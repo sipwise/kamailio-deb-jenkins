@@ -38,7 +38,7 @@ apt-get update
 apt-get -y upgrade
 
 # packages required for building on slaves
-apt-get -y install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter
+apt-get -y install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
 
 # commodity packages
 apt-get -y install screen zsh vim
