@@ -59,18 +59,20 @@ case "$distribution" in
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
     ;;
   lenny)
     MIRRORSITE="http://archive.debian.org/debian/"
     ;;
   *)
     MIRRORSITE="http://http.debian.net/debian"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
     ;;
 esac
-
-# package install speedup
-EXTRAPACKAGES="eatmydata"
-export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
 EOF
 
 echo "!!! Setting up /etc/sudoers.d/pbuilder !!!"
