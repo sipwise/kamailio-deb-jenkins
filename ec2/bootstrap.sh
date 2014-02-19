@@ -56,12 +56,12 @@ case "\$distribution" in
   precise|lucid)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
-    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
     ;;
   lenny)
     MIRRORSITE="http://archive.debian.org/debian/"
@@ -70,7 +70,7 @@ case "\$distribution" in
     MIRRORSITE="http://http.debian.net/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
     ;;
 esac
 EOF
