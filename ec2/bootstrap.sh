@@ -52,7 +52,7 @@ cat > /etc/jenkins/pbuilderrc <<EOF
 CCACHEDIR=/var/cache/pbuilder/ccache
 
 # ubuntu specific configuration
-case "$distribution" in
+case "\$distribution" in
   precise|lucid)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
