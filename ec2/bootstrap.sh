@@ -66,6 +66,10 @@ case "\$distribution" in
   lenny)
     MIRRORSITE="http://archive.debian.org/debian/"
     ;;
+  squeeze)
+    # lacks eatmydata package, so explicitely configure it
+    MIRRORSITE="http://http.debian.net/debian"
+    ;;
   *)
     MIRRORSITE="http://http.debian.net/debian"
     # package install speedup
