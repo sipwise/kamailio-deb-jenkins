@@ -53,7 +53,7 @@ CCACHEDIR=/var/cache/pbuilder/ccache
 
 # ubuntu specific configuration
 case "\$distribution" in
-  precise|lucid)
+  precise)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -62,6 +62,14 @@ case "\$distribution" in
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    ;;
+  lucid)
+    # lacks eatmydata package, so explicitely configure it
+    MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+    # we need key id 40976EAF437D05B5
+    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    # cowdancer is in universe
+    COMPONENTS="main universe"
     ;;
   lenny)
     MIRRORSITE="http://archive.debian.org/debian/"
