@@ -16,6 +16,21 @@ server {
 }
 
 server {
+        listen 80;
+        listen [::]:80 ipv6only=on;
+
+        server_name deb.kamailio.org;
+        server_tokens off;
+
+        access_log  /var/log/nginx/deb.kamailio.org.access.log;
+
+        location / {
+                root   /srv/debian/;
+                autoindex on;
+        }
+}
+
+server {
         listen   443;
         listen   [::]:443 default ipv6only=on;
 
@@ -57,3 +72,30 @@ server {
         client_max_body_size 20M;
 }
 
+server {
+        listen   443;
+        listen   [::]:443 ipv6only=on;
+
+        server_name  deb.kamailio.org;
+        server_tokens off;
+
+        access_log  /var/log/nginx/deb.kamailio.org.access.log;
+
+        # openssl req -days 3650 -nodes -new -x509 -keyout server.key -out server.cert
+        ssl on;
+        ssl_certificate     /etc/ssl/private/server.cert;
+        ssl_certificate_key /etc/ssl/private/server.key;
+
+        # NOTE: the following ssl configuration requires nginx >= 1.2.1-2.2~bpo60+2
+        # openssl ciphers -v HIGH:\!ADH:\!DH:\!3DES:\!MD5
+        ssl_session_timeout  10m;
+        ssl_session_cache  shared:SSL:10m;
+        ssl_protocols  SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers  ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-RC4-SHA:ECDHE-RSA-RC4-SHA:DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:ECDH-ECDSA-AES256-GCM-SHA384:ECDH-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-RC4-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:RC4-SHA:ECDH-ECDSA-AES256-SHA:ECDH-RSA-AES256-SHA:CAMELLIA256-SHA:AES256-SHA;
+        ssl_prefer_server_ciphers   on;
+
+        location / {
+                root   /srv/debian/;
+                autoindex on;
+        }
+}
