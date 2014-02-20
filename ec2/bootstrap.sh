@@ -85,10 +85,10 @@ case "\$distribution" in
     ;;
   squeeze)
     # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://http.debian.net/debian"
+    MIRRORSITE="http://ftp.ie.debian.org/debian"
     ;;
   *)
-    MIRRORSITE="http://http.debian.net/debian"
+    MIRRORSITE="http://ftp.ie.debian.org/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
