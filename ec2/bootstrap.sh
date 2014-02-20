@@ -34,11 +34,20 @@ else
 fi
 
 # make sure we use up2date packages
+echo "!!! Enabling Debian backports !!!"
+cat > /etc/apt/sources.list.d/backports.list << EOF
+deb http://ftp.ie.debian.org/debian wheezy-backports main
+EOF
+
 apt-get update
 apt-get -y upgrade
 
 # packages required for building on slaves
 apt-get -y install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
+
+# make sure we use an up2date piuparts version, e.g.
+# to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
+apt-get -y install -t wheezy-backports piuparts
 
 # commodity packages
 apt-get -y install screen zsh vim
