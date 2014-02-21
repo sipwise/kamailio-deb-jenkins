@@ -137,7 +137,7 @@
     refspec: *refbranch
     branch: *branch
     browser: githubweb
-    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -150,7 +150,7 @@
     branch:
       - '4.1'
     browser: githubweb
-    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -163,7 +163,7 @@
     branch:
       - '4.0'
     browser: githubweb
-    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -176,7 +176,7 @@
     branch:
       - '3.3'
     browser: githubweb
-    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
