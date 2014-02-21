@@ -40,8 +40,8 @@ deb http://ftp.ie.debian.org/debian wheezy-backports main
 EOF
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
-  echo '!!! Setting ftp.ie.debian.net as Debian mirror in /etc/apt/sources.list !!!'
-  sed -i 's/http.debian.net/ftp.ie.debian.net/' /etc/apt/sources.list
+  echo '!!! Setting ftp.ie.debian.org as Debian mirror in /etc/apt/sources.list !!!'
+  sed -i 's/http.debian.net/ftp.ie.debian.org/' /etc/apt/sources.list
 fi
 
 apt-get update
