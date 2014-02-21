@@ -216,7 +216,7 @@
         numToKeep: '{logrotate_keep}'
       disabled: false
       triggers:
-        - pollscm: '*/5 * * * *'
+        - pollscm: '@midnight'
       builders:
         - shell: 'rm -f ./* || true'
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
