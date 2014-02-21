@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# config
+DEBIAN_MIRROR="ftp.ie.debian.org"
+
 if [ "$(id -u 2>/dev/null)" != 0 ] ; then
   echo "Error: please execute this script as user root" >&2
   exit 1
@@ -36,12 +39,12 @@ fi
 # make sure we use up2date packages
 echo "!!! Enabling Debian backports !!!"
 cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://ftp.ie.debian.org/debian wheezy-backports main
+deb http://${DEBIAN_MIRROR}/debian wheezy-backports main
 EOF
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
-  echo '!!! Setting ftp.ie.debian.org as Debian mirror in /etc/apt/sources.list !!!'
-  sed -i 's/http.debian.net/ftp.ie.debian.org/' /etc/apt/sources.list
+  echo "!!! Setting ${DEBIAN_MIRROR} as Debian mirror in /etc/apt/sources.list !!!"
+  sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /etc/apt/sources.list
 fi
 
 apt-get update
@@ -90,10 +93,10 @@ case "\$distribution" in
     ;;
   squeeze)
     # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://ftp.ie.debian.org/debian"
+    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     ;;
   *)
-    MIRRORSITE="http://ftp.ie.debian.org/debian"
+    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
@@ -120,6 +123,12 @@ for distri in jessie lenny lucid precise squeeze wheezy ; do
       cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
     else
       if $UPDATE ; then
+        # replace http.debian.net with our actual Debian mirror
+        if grep -q 'http.debian.net' /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list ; then
+          echo "!!! Setting $DEBIAN_MIRROR as Debian mirror in /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list !!!"
+          sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
+        fi
+
         echo "!!! Executing update for cowbuilder as requested !!!"
         cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --configfile=/etc/jenkins/pbuilderrc
       else
