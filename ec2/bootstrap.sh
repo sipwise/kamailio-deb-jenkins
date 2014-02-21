@@ -65,9 +65,6 @@ apt-get clean
 
 echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc <<EOF
-# ccache
-CCACHEDIR=/var/cache/pbuilder/ccache
-
 # ubuntu specific configuration
 case "\$distribution" in
   precise)
