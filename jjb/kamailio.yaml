@@ -26,6 +26,10 @@
      - '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
       - 'master'
+    browser: &browser
+      - gitweb
+    browser-url: &browserurl
+      - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=kamailio'
     jobs: &jobs
       - '{name}-source'
       - '{name}-binaries'
@@ -40,6 +44,8 @@
     repos: *repos
     refspec: *refbranch
     branch: *branch
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -51,6 +57,8 @@
     refspec: *refbranch
     branch:
       - '4.1'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -62,6 +70,8 @@
     refspec: *refbranch
     branch:
       - '4.0'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -73,6 +83,8 @@
     refspec: *refbranch
     branch:
       - '3.3'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -85,6 +97,8 @@
     refspec: *reftag
     branch:
       - '*/tags/4.1*'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -96,6 +110,8 @@
     refspec: *reftag
     branch:
       - '*/tags/4.0*'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -107,6 +123,8 @@
     refspec: *reftag
     branch:
       - '*/tags/3.3*'
+    browser: *browser
+    browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -118,6 +136,8 @@
     repos: "https://github.com/linuxmaniac/kamailio.git"
     refspec: *refbranch
     branch: *branch
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -129,6 +149,8 @@
     refspec: *refbranch
     branch:
       - '4.1'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
@@ -140,6 +162,8 @@
     refspec: *refbranch
     branch:
       - '4.0'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -151,6 +175,8 @@
     refspec: *refbranch
     branch:
       - '3.3'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio.git'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
@@ -172,6 +198,8 @@
             branches:
               - '{branch}'
             wipe-workspace: false
+            browser: '{browser}'
+            browser-url: '{browser-url}'
       execution-strategy:
         sequential: true
       axes:
