@@ -234,6 +234,8 @@
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
 
@@ -297,6 +299,8 @@
             threshold: UNSTABLE
         - workspace-cleanup:
             dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
 
@@ -342,6 +346,8 @@
             record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
 
@@ -392,5 +398,7 @@
             record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
