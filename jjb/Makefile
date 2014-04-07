@@ -1,4 +1,4 @@
-ENABLED=kamailio.yaml
+ENABLED=kamailio.yaml sems.yaml
 
 all: $(ENABLED)
 

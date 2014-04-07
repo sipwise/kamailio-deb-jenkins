@@ -1,0 +1,289 @@
+# This jenkins-job-build configuration sets up Jenkins jobs
+# for building Debian packages of sems
+# NOTE: requires jenkins-job-builder with patch
+# https://github.com/linuxmaniac/jenkins-job-builder/commit/3ca77a761fde77c383625d13d531455bdebf3fb8
+# (at least until it's included in upstream)
+
+## global defaults
+- defaults:
+    name: global
+    logrotate_keep: &logrotate_keep
+     - 20
+    debian_dir: &debian_dir
+     - 'pkg/deb'
+    debian_auto_version: &debian_auto_version
+     - 'sems'
+    distributions: !!python/tuple &distributions
+     - wheezy
+     - squeeze
+     - lenny
+     - lucid
+     - precise
+    architectures: !!python/tuple &architectures
+     - amd64
+     - i386
+    repos: &repos
+     - 'git://git.sip-router.org/sems'
+    reftag: &reftag
+     - '+refs/tags/*:refs/remotes/origin/tags/*'
+    refbranch: &refbranch
+     - '+refs/heads/*:refs/remotes/origin/*'
+    branch: &branch
+      - 'master'
+    browser: &browser
+      - gitweb
+    browser-url: &browserurl
+      - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=sems'
+    jobs: &jobs
+      - '{name}-source'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+
+# vseva's playground
+- project:
+    name: vseva-semsdev-nightly
+    logrotate_keep: 5
+    debian_dir: *debian_dir
+    debian_auto_version: *debian_auto_version
+    tagbasedev: '1.6-dev'
+    repos: "https://github.com/linuxmaniac/sems.git"
+    refspec: *refbranch
+    branch:
+      - 'vseva/deb'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/sems'
+    distributions: !!python/tuple [jessie]
+    architectures: *architectures
+    jobs: *jobs
+
+## the job template
+- job-template:
+      name: '{name}-source'
+      project-type: matrix
+      description: |
+        Build Debian source package of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      scm:
+        - git:
+            url: '{repos}'
+            name: origin
+            basedir: source
+            refspec: '{refspec}'
+            branches:
+              - '{branch}'
+            wipe-workspace: false
+            browser: '{browser}'
+            browser-url: '{browser-url}'
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
+      logrotate:
+        numToKeep: '{logrotate_keep}'
+      disabled: false
+      triggers:
+        - pollscm: '@midnight'
+      parameters:
+        - string:
+            name: debian_dir
+            default: '{debian_dir}'
+        - string:
+            name: debian_auto_version
+            default: '{debian_auto_version}'
+        - string:
+            name: tagbase
+            default: '{tagbasedev}'
+      builders:
+        - shell: 'rm -f ./* || true'
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
+        - shell: |
+            mkdir -p report
+            /usr/bin/lintian-junit-report *.dsc > report/lintian.xml
+      publishers:
+        - archive:
+            artifacts: '*.gz,*.bz2,*.xz,*.deb,*.dsc,*.changes,lintian.txt'
+        - trigger:
+            project: '{name}-binaries'
+            threshold: UNSTABLE
+        - junit:
+            results: '**/lintian.xml'
+            keep-long-stdio: false
+        - fingerprint:
+            record-artifacts: true
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
+      wrappers:
+        - timestamps
+
+- job-template:
+      name: '{name}-binaries'
+      project-type: matrix
+      description: |
+        Build Debian/Ubuntu binary packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      logrotate:
+        numToKeep: '{logrotate_keep}'
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{list:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - slave
+      builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-source/distribution=$distribution,label=master'
+            filter: '*'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-build-package"
+        - shell: |
+            mkdir -p report
+            /usr/bin/lintian-junit-report *.changes > report/lintian.xml
+        - shell: |
+            mkdir -p report adt
+            touch adt/summary # do not fail if no autopkgtest run took place
+            /usr/bin/adtsummary_tap adt/summary > report/autopkgtest.tap
+      publishers:
+        - archive:
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes,**/lintian.txt'
+        - tap:
+            results: 'report/*.tap'
+        - junit:
+            results: '**/lintian.xml'
+            keep-long-stdio: false
+        - fingerprint:
+            record-artifacts: true
+        - trigger:
+            project: '{name}-repos'
+            threshold: UNSTABLE
+        - trigger:
+            project: '{name}-piuparts'
+            threshold: UNSTABLE
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
+      wrappers:
+        - timestamps
+
+- job-template:
+      name: '{name}-repos'
+      project-type: matrix
+      description: |
+        Repository handling for Debian packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      logrotate:
+        numToKeep: '{logrotate_keep}'
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{list:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
+      builders:
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution,label=slave'
+            filter: '*'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+            target: 'binaries/'
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
+      publishers:
+        - archive:
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes'
+        - fingerprint:
+            record-artifacts: true
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
+      wrappers:
+        - timestamps
+
+- job-template:
+      name: '{name}-piuparts'
+      project-type: matrix
+      description: |
+        Installation and upgrade tests for {name} Debian packages.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      disabled: false
+      logrotate:
+        numToKeep: '{logrotate_keep}'
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{list:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{list:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - slave
+      builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution,label=slave'
+            filter: '*.deb'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+            flatten: true
+            target: 'artifacts/'
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-piuparts"
+      publishers:
+        - tap:
+            results: 'piuparts.tap'
+        - archive:
+            artifacts: 'piuparts.*'
+        - fingerprint:
+            record-artifacts: true
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: linuxmaniac@torreviejawireless.org
+      wrappers:
+        - timestamps
