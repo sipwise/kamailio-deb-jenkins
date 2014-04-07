@@ -57,6 +57,23 @@
     architectures: *architectures
     jobs: *jobs
 
+- project:
+    name: vseva-sems15-nightly
+    logrotate_keep: 5
+    debian_dir: *debian_dir
+    debian_auto_version: *debian_auto_version
+    tagbasedev: '1.5.1-dev'
+    repos: "https://github.com/linuxmaniac/sems.git"
+    refspec: *refbranch
+    branch:
+      - 'vseva/deb_1.5'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/sems'
+    distributions: !!python/tuple [jessie, wheezy, precise]
+    architectures: *architectures
+    jobs: *jobs
+
+
 ## the job template
 - job-template:
       name: '{name}-source'
