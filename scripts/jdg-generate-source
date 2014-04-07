@@ -1,6 +1,9 @@
 #!/bin/bash
-# Purpose: generate Debian source package based on kamailio's git repository
-
+# Purpose: generate Debian source package based on project's git repository
+# schema:
+# $debian_dir: and one directory for every distribution
+# $debian_auto_version: how the automatic version is created
+# $tagbase: tag to use for git describe
 cd source
 
 # debug info
@@ -9,6 +12,7 @@ env
 # defaults
 build_tag=false
 TAG=unknown
+BASE_DIR=${debian_dir:-"pkg/kamailio/deb"}
 
 if [ -n "$GIT_BRANCH" ] ; then
   case "$GIT_BRANCH" in
@@ -19,15 +23,32 @@ if [ -n "$GIT_BRANCH" ] ; then
   esac
 fi
 
+if [ ! -d "$BASE_DIR" ]; then
+  echo 'No $BASE_DIR found on source'
+  exit 1
+fi
+
 git clean -fxd
 
-cp -a "pkg/kamailio/deb/${distribution}" debian
+cp -a "${BASE_DIR}/${distribution}" debian
 
 export DEBEMAIL="Jenkins Sipwise <jenkins@sipwise.com>"
 
 ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
 TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
 DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
+AUTO_VERSION="${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}"
+
+if [ -n "$debian_auto_version" ]; then
+  case "$debian_auto_version" in
+    sems)
+      DESCRIBE=$(git describe --match "${tagbase}" --always)
+      echo "*** setting sems auto_version from ${DESCRIBE} ***"
+      DESCRIBE=$(echo -n ${DESCRIBE}| sed 's/^.*-\([0-9]\+\)-\([a-zA-Z0-9]\+\)$/\1~\2/')
+      AUTO_VERSION="${ORIG_VERSION}+0~${DESCRIBE}"
+      ;;
+    esac
+fi
 
 if "$build_tag" ; then
   echo "*** Building a tagged version (${TAG}).***"
@@ -35,8 +56,9 @@ if "$build_tag" ; then
     --newversion="${ORIG_VERSION}+${distribution}" \
     -- "Automated package build for tag $TAG and distribution $distribution."
 else
+  echo "*** Building version (${AUTO_VERSION}+${distribution}).***"
   dch -b --distribution="${DISTRIBUTION}" \
-    --newversion="${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}+${distribution}" \
+    --newversion="${AUTO_VERSION}+${distribution}" \
     -- "Automated package build."
 fi
 
