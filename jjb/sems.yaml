@@ -57,6 +57,22 @@
     architectures: *architectures
     jobs: *jobs
 
+- project:
+    name: sems15-nightly
+    logrotate_keep: *logrotate_keep
+    debian_dir: *debian_dir
+    debian_auto_version: *debian_auto_version
+    tagbasedev: '1.5.1-dev'
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '1.5'
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, precise]
+    architectures: *architectures
+    jobs: *jobs
+
 # vseva's playground
 - project:
     name: vseva-semsdev-nightly
