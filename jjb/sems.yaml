@@ -40,6 +40,23 @@
       - '{name}-repos'
       - '{name}-piuparts'
 
+## list of projects with their configurations
+# build based on branches
+- project:
+    name: semsdev-nightly
+    logrotate_keep: *logrotate_keep
+    debian_dir: *debian_dir
+    debian_auto_version: *debian_auto_version
+    tagbasedev: '1.6-dev'
+    repos: *repos
+    refspec: *refbranch
+    branch: *branch
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, precise]
+    architectures: *architectures
+    jobs: *jobs
+
 # vseva's playground
 - project:
     name: vseva-semsdev-nightly
