@@ -67,7 +67,7 @@ echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc <<EOF
 # ubuntu specific configuration
 case "\$distribution" in
-  precise)
+  trusty|precise)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
