@@ -112,7 +112,7 @@ else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
 fi
 
-for distri in jessie lenny lucid precise squeeze wheezy ; do
+for distri in jessie lenny lucid precise trusty squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do
