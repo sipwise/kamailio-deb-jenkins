@@ -12,7 +12,7 @@ export POST_BUILD_HOOK=/home/admin/kamailio-deb-jenkins/scripts/jdg-debc
 case "$distribution" in
   trusty|precise|lucid)
     export MIRRORSITE="http://at.archive.ubuntu.com/ubuntu/"
-    echo "*** Building for Ubuntu release trusty,precise or lucid, using mirror $MIRRORSITE ***"
+    echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
   lenny)
     export MIRRORSITE="http://archive.debian.org/debian/"

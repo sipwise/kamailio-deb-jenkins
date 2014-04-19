@@ -4,7 +4,7 @@
 case "$distribution" in
   trusty|precise|lucid)
     export MIRROR="http://ie.archive.ubuntu.com/ubuntu/"
-    echo "*** Building for Ubuntu release trusty, precise or lucid, using mirror $MIRROR ***"
+    echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;
   lenny)
     export MIRROR="http://archive.debian.org/debian/"
