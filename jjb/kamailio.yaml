@@ -424,8 +424,8 @@
     logrotate:
       numToKeep: '{logrotate_keep}'
     disabled: false
-    triggers:
-      - pollscm: '@midnight'
+#    triggers:
+#      - pollscm: '@midnight'
     builders:
       - shell: |
           # Enable all checks -j $numThreads ??
