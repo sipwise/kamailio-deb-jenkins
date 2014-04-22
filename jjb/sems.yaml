@@ -86,7 +86,7 @@
       - 'vseva/deb'
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/sems'
-    distributions: !!python/tuple [jessie, wheezy, precise]
+    distributions: !!python/tuple [jessie, wheezy, precise, trusty]
     architectures: *architectures
     jobs: *jobs
 
