@@ -430,7 +430,9 @@
       - shell: |
           # Enable all checks -j $numThreads ??
           mkdir -p reports
-          /usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
+          /usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 source 2> reports/cppcheck.xml
+          # hard check
+          #/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
     publishers:
       - cppcheck:
           pattern: "**/cppcheck.xml"
