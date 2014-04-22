@@ -43,7 +43,8 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: *branch
+    branch:
+      - 'vseva/deb'
     browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
@@ -56,7 +57,7 @@
     repos: *repos
     refspec: *refbranch
     branch:
-      - '4.1'
+      - 'vseva/deb_4.1'
     browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
@@ -69,7 +70,7 @@
     repos: *repos
     refspec: *refbranch
     branch:
-      - '4.0'
+      - 'vseva/deb_4.0'
     browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
@@ -82,7 +83,7 @@
     repos: *repos
     refspec: *refbranch
     branch:
-      - '3.3'
+      - 'vseva/deb_3.3'
     browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
