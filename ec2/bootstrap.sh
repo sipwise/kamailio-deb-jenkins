@@ -53,6 +53,9 @@ apt-get -y upgrade
 # packages required for building on slaves
 apt-get -y install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
 
+# packages required for static checks
+apt-get -y install cppcheck
+
 # make sure we use an up2date piuparts version, e.g.
 # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
 apt-get -y install -t wheezy-backports piuparts
