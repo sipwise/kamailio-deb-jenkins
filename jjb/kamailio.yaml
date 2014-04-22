@@ -32,6 +32,7 @@
       - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=kamailio'
     jobs: &jobs
       - '{name}-source'
+      - '{name}-cppcheck'
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
@@ -403,3 +404,55 @@
             recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
+
+- job-template:
+    name: '{name}-cppcheck'
+    description: |
+      Cpp source check for {name}.
+      <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+    scm:
+      - git:
+          url: '{repos}'
+          name: origin
+          basedir: source
+          refspec: '{refspec}'
+          branches:
+            - '{branch}'
+          wipe-workspace: false
+          browser: '{browser}'
+          browser-url: '{browser-url}'
+    logrotate:
+      numToKeep: '{logrotate_keep}'
+    disabled: false
+    triggers:
+      - pollscm: '@midnight'
+    builders:
+      - shell: |
+          # Enable all checks -j $numThreads ??
+          mkdir -p reports
+          /usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
+    publishers:
+      - cppcheck:
+          pattern: "**/cppcheck.xml"
+          # the rest is optional
+          # build status (new) error count thresholds
+          thresholds:
+            unstable: 5
+            new-unstable: 5
+            failure: 7
+            new-failure: 3
+            # severities which count towards the threshold, default all true
+            severity:
+              error: true
+              warning: true
+              information: false
+          graph:
+            xysize: [500, 200]
+            # which errors to display, default only sum
+            display:
+              sum: false
+              error: true
+      - email:
+            recipients: linuxmaniac@torreviejawireless.org
+    wrappers:
+      - timestamps
