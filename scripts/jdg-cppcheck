@@ -1,4 +1,15 @@
 #!/bin/sh
+get_changed_files() {
+	TAG_PREV=$(cd source; /usr/bin/git tag | grep jenkins- | sort -r | tail -2 | head -n 1)
+	if [ -n "$TAG_PREV" ]; then
+		CHANGES=$(cd source; /usr/bin/git diff --name-only $TAG_PREV $BUILD_TAG| xargs)
+	else
+		echo "use source dir"
+		CHANGES="source"
+	fi
+}
+
+get_changed_files
 
 if ! which cppcheck >/dev/null 2>&1 ; then
   echo "cppcheck not available yet, installing cppcheck Debian package"
@@ -6,9 +17,13 @@ if ! which cppcheck >/dev/null 2>&1 ; then
 fi
 
 mkdir -p reports
-
-# Enable all checks -j $numThreads ??
-/usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 source 2> reports/cppcheck.xml
+if [ "${CHANGES}" != "source" ]; then
+	cd source
+	REPORT_DIR="../reports"
+else
+	REPORT_DIR="reports"
+fi
+/usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
 
 # hard check
 #/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
