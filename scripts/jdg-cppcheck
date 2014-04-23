@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if ! which cppcheck >/dev/null 2>&1 ; then
+  echo "cppcheck not available yet, installing cppcheck Debian package"
+  sudo apt-get -y install cppcheck
+fi
+
 mkdir -p reports
 
 # Enable all checks -j $numThreads ??
