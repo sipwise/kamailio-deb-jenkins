@@ -7,7 +7,9 @@ $(ENABLED):
 
 test:
 	mkdir -p config
-	jenkins-jobs test -o config $(ENABLED)
+	$(foreach X,$(ENABLED), \
+		jenkins-jobs test -o config $X ; \
+	)
 
 clean:
 	rm -rf config
