@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir -p reports
+
+# Enable all checks -j $numThreads ??
+/usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 source 2> reports/cppcheck.xml
+
+# hard check
+#/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml

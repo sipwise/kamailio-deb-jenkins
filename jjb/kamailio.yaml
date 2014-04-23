@@ -428,12 +428,7 @@
 #    triggers:
 #      - pollscm: '@midnight'
     builders:
-      - shell: |
-          # Enable all checks -j $numThreads ??
-          mkdir -p reports
-          /usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 source 2> reports/cppcheck.xml
-          # hard check
-          #/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
+      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
     publishers:
       - cppcheck:
           pattern: "**/cppcheck.xml"
