@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # config
 DEBIAN_MIRROR="ftp.ie.debian.org"
 
