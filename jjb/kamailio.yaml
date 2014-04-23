@@ -421,6 +421,7 @@
           wipe-workspace: false
           browser: '{browser}'
           browser-url: '{browser-url}'
+    node: slave
     logrotate:
       numToKeep: '{logrotate_keep}'
     disabled: false
