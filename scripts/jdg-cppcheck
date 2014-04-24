@@ -3,7 +3,7 @@ GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
 SHA=$(cd source; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
-
+FORCE=${cppcheck_force:-false}
 set -e
 
 get_tag_prev() {
@@ -47,8 +47,10 @@ mkdir -p reports
 if [ "${CHANGES}" != "source" ]; then
 	cd source
 else
-	echo "No changes since last build job"
-	exit 0
+	if [ $(echo "${FORCE}"|tr '[:upper:]' '[:lower:]') = "false" ]; then
+		echo "No changes since last build job"
+		exit 0
+	fi
 fi
 
 /usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
