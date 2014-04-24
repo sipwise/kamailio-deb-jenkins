@@ -3,7 +3,7 @@ GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
 FORCE=${cppcheck_force:-false}
-SOURCE=${source:-source}
+SOURCE=${source:-${WORKSPACE}/source}
 SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 set -e
 
@@ -35,6 +35,7 @@ get_changed_files() {
 	fi
 }
 
+mkdir -p ${REPORT_DIR}
 get_changed_files
 
 if ! which cppcheck >/dev/null 2>&1 ; then
@@ -44,7 +45,6 @@ fi
 
 save_tag_info
 
-mkdir -p reports
 if [ "${CHANGES}" != "${SOURCE}" ]; then
 	cd ${SOURCE}
 else
