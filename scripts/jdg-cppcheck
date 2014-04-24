@@ -1,9 +1,34 @@
 #!/bin/sh
-get_changed_files() {
-	TAG_PREV=$(cd source; /usr/bin/git tag | grep jenkins- | sort -r | tail -2 | head -n 1)
-	if [ -n "$TAG_PREV" ]; then
-		CHANGES=$(cd source; /usr/bin/git diff --name-only $TAG_PREV $BUILD_TAG| xargs)
+GIT="/usr/bin/git"
+REPORT_DIR="${WORKSPACE}/reports"
+TAG_FILE="${REPORT_DIR}/tags.info"
+SHA=$(cd source; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
+
+set -e
+
+get_tag_prev() {
+	if [ -f "$TAG_FILE" ]; then
+		SHA_PREV=$(grep -v ${BUILD_TAG} ${TAG_FILE}| sort -r | cut -f2 -d:)
 	else
+		SHA_PREV=""
+	fi
+}
+
+save_tag_info() {
+	local exist
+	exist=$(grep ${BUILD_TAG} ${TAG_FILE} 2>/dev/null || true)
+	if [ -z "$exist" ]; then
+		echo "saving new tag:${BUILD_TAG} info to ${TAG_FILE}"
+		echo "${BUILD_TAG}:${SHA}" >> ${TAG_FILE}
+	fi
+}
+
+get_changed_files() {
+	get_tag_prev
+	if [ -n "${SHA_PREV}" ]; then
+		CHANGES=$(cd source; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| xargs)
+	fi
+	if [ -z "${CHANGES}" ]; then
 		echo "use source dir"
 		CHANGES="source"
 	fi
@@ -16,13 +41,16 @@ if ! which cppcheck >/dev/null 2>&1 ; then
   sudo apt-get -y install cppcheck
 fi
 
+save_tag_info
+
 mkdir -p reports
 if [ "${CHANGES}" != "source" ]; then
 	cd source
-	REPORT_DIR="../reports"
 else
-	REPORT_DIR="reports"
+	echo "No changes since last build job"
+	exit 0
 fi
+
 /usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
 
 # hard check
