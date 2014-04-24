@@ -40,6 +40,16 @@ get_changed_files() {
 	fi
 }
 
+generate_empty_report() {
+	cat > ${REPORT_DIR}/cppcheck.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+  <cppcheck version="1.54"/>
+  <errors/>
+</results>
+EOF
+}
+
 mkdir -p ${REPORT_DIR}
 get_changed_files
 
@@ -55,6 +65,7 @@ if [ "${CHANGES}" != "${SOURCE}" ]; then
 else
 	if [ $(echo "${FORCE}"|tr '[:upper:]' '[:lower:]') = "false" ]; then
 		echo "No changes since last build job"
+		generate_empty_report
 		exit 0
 	fi
 fi
