@@ -475,6 +475,10 @@
       - email:
           recipients: linuxmaniac@torreviejawireless.org
     parameters:
+      - string:
+          name: source
+          default: source
+          description: "sources directiory"
       - bool:
           name: cppcheck_force
           default: true
@@ -516,6 +520,10 @@
       - email:
           recipients: linuxmaniac@torreviejawireless.org
     parameters:
+      - string:
+          name: source
+          default: source
+          description: "sources directiory"
       - bool:
           name: cppcheck_force
           default: false
