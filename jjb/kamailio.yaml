@@ -459,12 +459,13 @@
       numToKeep: '{logrotate_keep}'
     disabled: false
     builders:
-      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
       - copyartifact:
-          project: '{name}-source'
+          project: '{name}-cppcheck-full'
           filter: 'reports/*'
           which-build: upstream-build
           fallback-to-last-successful: true
+          optional: true
+      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
     publishers:
 #      - copy-to-master:
 #          includes:
@@ -477,7 +478,7 @@
     parameters:
       - string:
           name: source
-          default: source
+          default: "${WORKSPACE}/source"
           description: "sources directiory"
       - bool:
           name: cppcheck_force
@@ -522,7 +523,7 @@
     parameters:
       - string:
           name: source
-          default: source
+          default: "${WORKSPACE}/source"
           description: "sources directiory"
       - bool:
           name: cppcheck_force
