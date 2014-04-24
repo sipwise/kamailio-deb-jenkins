@@ -5,19 +5,24 @@ TAG_FILE="${REPORT_DIR}/tags.info"
 FORCE=${cppcheck_force:-false}
 SOURCE=${source:-${WORKSPACE}/source}
 SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
+BASE_TAG=${basetag:-}
 set -e
 
 get_tag_prev() {
+	local bt
 	if [ -f "$TAG_FILE" ]; then
 		SHA_PREV=$(grep -v ${BUILD_TAG} ${TAG_FILE}| sort -r | cut -f2 -d:)
 	else
-		SHA_PREV=""
+		if [ -n "${BASE_TAG}" ]; then
+			bt=$(cd ${SOURCE}; ${GIT} tag | grep "^${BASE_TAG}" | sort -r | head -n1)
+			SHA_PREV=$(cd ${SOURCE}; ${GIT} show ${bt} | awk '/^commit [a-z0-9]+$/ { print $2 }')
+		fi
 	fi
 }
 
 save_tag_info() {
 	local exist
-	exist=$(grep ${BUILD_TAG} ${TAG_FILE} 2>/dev/null || true)
+	exist=$(grep -e ${BUILD_TAG} -e ${SHA} ${TAG_FILE} 2>/dev/null || true)
 	if [ -z "$exist" ]; then
 		echo "saving new tag:${BUILD_TAG} info to ${TAG_FILE}"
 		echo "${BUILD_TAG}:${SHA}" >> ${TAG_FILE}
