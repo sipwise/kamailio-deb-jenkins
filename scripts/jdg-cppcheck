@@ -2,9 +2,9 @@
 GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
-SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 FORCE=${cppcheck_force:-false}
 SOURCE=${source:-source}
+SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 set -e
 
 get_tag_prev() {
