@@ -2,8 +2,9 @@
 GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
-SHA=$(cd source; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
+SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 FORCE=${cppcheck_force:-false}
+SOURCE=${source:-source}
 set -e
 
 get_tag_prev() {
@@ -26,11 +27,11 @@ save_tag_info() {
 get_changed_files() {
 	get_tag_prev
 	if [ -n "${SHA_PREV}" ]; then
-		CHANGES=$(cd source; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| xargs)
+		CHANGES=$(cd ${SOURCE}; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| xargs)
 	fi
 	if [ -z "${CHANGES}" ]; then
-		echo "use source dir"
-		CHANGES="source"
+		echo "use ${SOURCE} dir"
+		CHANGES="${SOURCE}"
 	fi
 }
 
@@ -44,8 +45,8 @@ fi
 save_tag_info
 
 mkdir -p reports
-if [ "${CHANGES}" != "source" ]; then
-	cd source
+if [ "${CHANGES}" != "${SOURCE}" ]; then
+	cd ${SOURCE}
 else
 	if [ $(echo "${FORCE}"|tr '[:upper:]' '[:lower:]') = "false" ]; then
 		echo "No changes since last build job"
@@ -56,4 +57,4 @@ fi
 /usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
 
 # hard check
-#/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 source 2> reports/cppcheck.xml
+#/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 ${SOURCE} 2> reports/cppcheck.xml
