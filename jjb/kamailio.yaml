@@ -32,10 +32,36 @@
       - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=kamailio'
     jobs: &jobs
       - '{name}-source'
+      - '{name}-cppcheck-full'
       - '{name}-cppcheck'
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
+    jobs_simple: &jobs_simple
+      - '{name}-source'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+    cppcheck: &cppcheck
+      pattern: "**/cppcheck.xml"
+      # the rest is optional
+      # build status (new) error count thresholds
+      thresholds:
+        unstable: 5
+        new-unstable: 5
+        failure: 7
+        new-failure: 3
+        # severities which count towards the threshold, default all true
+        severity:
+          error: true
+          warning: true
+          information: false
+      graph:
+        xysize: [500, 200]
+        # which errors to display, default only sum
+        display:
+          sum: false
+          error: true
 
 ## list of projects with their configurations
 # build based on branches
@@ -50,6 +76,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 - project:
     name: kamailio41-nightly
@@ -63,6 +90,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 - project:
     name: kamailio40-nightly
@@ -76,6 +104,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 - project:
     name: kamailio33-nightly
@@ -89,6 +118,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 # build based on tags
 - project:
@@ -103,6 +133,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 - project:
     name: kamailio40
@@ -116,6 +147,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 - project:
     name: kamailio33
@@ -129,6 +161,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
     jobs: *jobs
+    cppcheck: *cppcheck
 
 # vseva's playground
 - project:
@@ -142,7 +175,7 @@
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_simple
 
 - project:
     name: vseva-kamailio41-nightly
@@ -155,7 +188,7 @@
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_simple
 
 - project:
     name: vseva-kamailio40-nightly
@@ -168,7 +201,7 @@
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_simple
 
 - project:
     name: vseva-kamailio33-nightly
@@ -181,7 +214,7 @@
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_simple
 
 
 ## the job template
@@ -406,7 +439,7 @@
         - timestamps
 
 - job-template:
-    name: '{name}-cppcheck'
+    name: '{name}-cppcheck-full'
     description: |
       Cpp source check for {name}.
       <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
@@ -425,32 +458,67 @@
     logrotate:
       numToKeep: '{logrotate_keep}'
     disabled: false
-#    triggers:
-#      - pollscm: '@midnight'
+    builders:
+      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
+      - copyartifact:
+          project: '{name}-source'
+          filter: 'reports/*'
+          which-build: upstream-build
+          fallback-to-last-successful: true
+    publishers:
+#      - copy-to-master:
+#          includes:
+#            - reports/tag.info
+      - archive:
+          artifacts: 'reports/*'
+      - cppcheck: '{list:cppcheck}'
+      - email:
+          recipients: linuxmaniac@torreviejawireless.org
+    parameters:
+      - bool:
+          name: cppcheck_force
+          default: true
+          description: "force the check if no changes found. This will check ALL the files!!"
+    wrappers:
+      - timestamps
+#      - copy-to-master:
+#          includes:
+#            - reports/tag.info
+
+- job-template:
+    name: '{name}-cppcheck'
+    description: |
+      Cpp source check for {name}.
+      <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+    scm:
+      - git:
+          url: '{repos}'
+          name: origin
+          basedir: source
+          refspec: '{refspec}'
+          branches:
+            - '{branch}'
+          wipe-workspace: false
+          browser: '{browser}'
+          browser-url: '{browser-url}'
+    node: master
+    logrotate:
+      numToKeep: '{logrotate_keep}'
+    disabled: false
+    triggers:
+      - pollscm: '@midnight'
     builders:
       - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
     publishers:
-      - cppcheck:
-          pattern: "**/cppcheck.xml"
-          # the rest is optional
-          # build status (new) error count thresholds
-          thresholds:
-            unstable: 5
-            new-unstable: 5
-            failure: 7
-            new-failure: 3
-            # severities which count towards the threshold, default all true
-            severity:
-              error: true
-              warning: true
-              information: false
-          graph:
-            xysize: [500, 200]
-            # which errors to display, default only sum
-            display:
-              sum: false
-              error: true
+      - archive:
+          artifacts: 'reports/*'
+      - cppcheck: '{list:cppcheck}'
       - email:
-            recipients: linuxmaniac@torreviejawireless.org
+          recipients: linuxmaniac@torreviejawireless.org
+    parameters:
+      - bool:
+          name: cppcheck_force
+          default: false
+          description: "force the check if no changes found. This will check ALL the files!!"
     wrappers:
       - timestamps
