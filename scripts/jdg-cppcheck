@@ -3,7 +3,7 @@ GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
 FORCE=${cppcheck_force:-false}
-SOURCE=${source:-${WORKSPACE}/source}
+SOURCE=${source:-source}
 SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 BASE_TAG=${basetag:-}
 SUP_FILE="${WORKSPACE}/suppressions.txt"
@@ -33,7 +33,7 @@ save_tag_info() {
 get_changed_files() {
 	get_tag_prev
 	if [ -n "${SHA_PREV}" ]; then
-		CHANGES=$(cd ${SOURCE}; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| xargs)
+		CHANGES=$(cd ${SOURCE}; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| sed -e 's#^#'${SOURCE}'/#' | xargs )
 	fi
 	if [ -z "${CHANGES}" ]; then
 		echo "use ${SOURCE} dir"
@@ -53,7 +53,7 @@ EOF
 
 generate_suppressions_file() {
 	cat > ${SUP_FILE} << EOF
-*:Changelog
+*:ChangeLog
 *:Makefile*
 *:NEWS
 *:README*
@@ -62,6 +62,10 @@ generate_suppressions_file() {
 *:modules*/README
 *:modules*/doc/*
 EOF
+}
+
+fix_source_path() {
+	sed -e 's#file="#file="'${SOURCE}'/#g' ${REPORT_DIR}/cppcheck.xml
 }
 
 mkdir -p ${REPORT_DIR}
@@ -91,3 +95,8 @@ generate_suppressions_file
 
 # hard check
 #/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 ${SOURCE} 2> reports/cppcheck.xml
+
+if [ "${CHANGES}" != "${SOURCE}" ]; then
+	fix_source_path
+fi
+
