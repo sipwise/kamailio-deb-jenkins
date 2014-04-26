@@ -33,7 +33,7 @@ save_tag_info() {
 get_changed_files() {
 	get_tag_prev
 	if [ -n "${SHA_PREV}" ]; then
-		CHANGES=$(cd ${SOURCE}; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG}| sed -e 's#^#'${SOURCE}'/#' | xargs )
+		CHANGES=$(cd ${SOURCE}; ${GIT} diff --name-only ${SHA_PREV}..${BUILD_TAG} | xargs )
 	fi
 	if [ -z "${CHANGES}" ]; then
 		echo "use ${SOURCE} dir"
