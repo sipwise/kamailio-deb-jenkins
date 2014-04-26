@@ -514,6 +514,13 @@
           browser: '{browser}'
           browser-url: '{browser-url}'
     node: master
+    properties:
+      - build-blocker:
+          use-build-blocker: true
+          blocking-jobs:
+            - ".*-cppcheck"
+            - ".*-source"
+            - ".*-repos"
     logrotate:
       numToKeep: '{logrotate_keep}'
     disabled: false
