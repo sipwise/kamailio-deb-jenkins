@@ -125,7 +125,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '3.3'
 
