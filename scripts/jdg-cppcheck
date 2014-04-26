@@ -6,6 +6,7 @@ FORCE=${cppcheck_force:-false}
 SOURCE=${source:-${WORKSPACE}/source}
 SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 BASE_TAG=${basetag:-}
+SUP_FILE="${WORKSPACE}/suppressions.txt"
 set -e
 
 get_tag_prev() {
@@ -50,6 +51,19 @@ generate_empty_report() {
 EOF
 }
 
+generate_suppressions_file() {
+	cat > ${SUP_FILE} << EOF
+*:Changelog
+*:Makefile*
+*:NEWS
+*:README*
+*:TODO
+*:pkg/*
+*:modules*/README
+*:modules*/doc/*
+EOF
+}
+
 mkdir -p ${REPORT_DIR}
 get_changed_files
 
@@ -70,7 +84,10 @@ else
 	fi
 fi
 
-/usr/bin/cppcheck -j $(/usr/bin/nproc) --force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
+generate_suppressions_file
+
+/usr/bin/cppcheck -j $(/usr/bin/nproc) --suppressions ${SUP_FILE} \
+	--force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
 
 # hard check
 #/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 ${SOURCE} 2> reports/cppcheck.xml
