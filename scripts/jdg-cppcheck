@@ -91,10 +91,8 @@ fi
 generate_suppressions_file
 
 /usr/bin/cppcheck -j $(/usr/bin/nproc) --suppressions ${SUP_FILE} \
-	--force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
-
-# hard check
-#/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 ${SOURCE} 2> reports/cppcheck.xml
+	--enable=all --force --inconclusive --xml --xml-version=2 \
+	${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
 
 if [ "${CHANGES}" != "${SOURCE}" ]; then
 	fix_source_path
