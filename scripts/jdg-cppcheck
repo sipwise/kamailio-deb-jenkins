@@ -73,7 +73,7 @@ run_check() {
 	local PARAM="--suppressions ${SUP_FILE} \
 		--force --xml --xml-version=2"
 	if [ $(echo "${HARD}"|tr '[:upper:]' '[:lower:]') = "true" ]; then
-		PARAM="${PARAM} --enalble=all --inconclusive"
+		PARAM="${PARAM} --enable=all --inconclusive"
 	fi
 	/usr/bin/cppcheck -j $(/usr/bin/nproc) ${PARAM} ${1} 2> ${REPORT_DIR}/cppcheck.xml
 }
