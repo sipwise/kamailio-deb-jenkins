@@ -483,14 +483,18 @@
       - email:
           recipients: linuxmaniac@torreviejawireless.org
     parameters:
+      - bool:
+          name: full
+          default: true
+          description: "check all the source files"
+      - bool:
+          name: cppcheck_hard
+          default: true
+          description: "cppcheck with hard check options. Increases the check time!"
       - string:
           name: source
           default: "source"
           description: "sources directiory"
-      - bool:
-          name: cppcheck_force
-          default: true
-          description: "force the check if no changes found. This will check ALL the files!!"
     wrappers:
       - timestamps
 #      - copy-to-master:
@@ -544,8 +548,8 @@
           default: "source"
           description: "sources directiory"
       - bool:
-          name: cppcheck_force
+          name: cppcheck_hard
           default: false
-          description: "force the check if no changes found. This will check ALL the files!!"
+          description: "cppcheck with hard check options. Increases the check time!"
     wrappers:
       - timestamps

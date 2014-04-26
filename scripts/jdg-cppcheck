@@ -2,11 +2,12 @@
 GIT="/usr/bin/git"
 REPORT_DIR="${WORKSPACE}/reports"
 TAG_FILE="${REPORT_DIR}/tags.info"
-FORCE=${cppcheck_force:-false}
 SOURCE=${source:-source}
 SHA=$(cd ${SOURCE}; ${GIT} show ${BUILD_TAG} | awk '/^commit [a-z0-9]+$/ { print $2 }')
 BASE_TAG=${basetag:-}
 SUP_FILE="${WORKSPACE}/suppressions.txt"
+FULL=${full:-false}
+HARD=${cppcheck_hard:-false}
 set -e
 
 get_tag_prev() {
@@ -53,14 +54,14 @@ EOF
 
 generate_suppressions_file() {
 	cat > ${SUP_FILE} << EOF
-*:ChangeLog
-*:Makefile*
-*:NEWS
-*:README*
-*:TODO
-*:pkg/*
-*:modules*/README
-*:modules*/doc/*
+*:${1}ChangeLog
+*:${1}Makefile*
+*:${1}NEWS
+*:${1}README*
+*:${1}TODO
+*:${1}pkg/*
+*:${1}modules*/README
+*:${1}modules*/doc/*
 EOF
 }
 
@@ -68,35 +69,41 @@ fix_source_path() {
 	sed -e 's#file="#file="'${SOURCE}'/#g' ${REPORT_DIR}/cppcheck.xml
 }
 
-mkdir -p ${REPORT_DIR}
-get_changed_files
+run_check() {
+	local PARAM="--suppressions ${SUP_FILE} \
+		--force --xml --xml-version=2"
+	if [ $(echo "${HARD}"|tr '[:upper:]' '[:lower:]') = "true" ]; then
+		PARAM="${PARAM} --enalble=all --inconclusive"
+	fi
+	/usr/bin/cppcheck -j $(/usr/bin/nproc) ${PARAM} ${1} 2> ${REPORT_DIR}/cppcheck.xml
+}
 
 if ! which cppcheck >/dev/null 2>&1 ; then
   echo "cppcheck not available yet, installing cppcheck Debian package"
   sudo apt-get -y install cppcheck
 fi
 
-save_tag_info
+mkdir -p ${REPORT_DIR}
 
-if [ "${CHANGES}" != "${SOURCE}" ]; then
-	cd ${SOURCE}
+if [ $(echo "${FULL}"|tr '[:upper:]' '[:lower:]') = "true" ]; then
+	generate_suppressions_file "${SOURCE}/"
+	run_check ${SOURCE}
 else
-	if [ $(echo "${FORCE}"|tr '[:upper:]' '[:lower:]') = "false" ]; then
+	get_changed_files
+	save_tag_info
+
+	if [ "${CHANGES}" != "${SOURCE}" ]; then
+		cd ${SOURCE}
+	else
 		echo "No changes since last build job"
 		generate_empty_report
 		exit 0
 	fi
+
+	generate_suppressions_file
+	run_check ${CHANGES}
+
+	if [ "${CHANGES}" != "${SOURCE}" ]; then
+		fix_source_path
+	fi
 fi
-
-generate_suppressions_file
-
-/usr/bin/cppcheck -j $(/usr/bin/nproc) --suppressions ${SUP_FILE} \
-	--force --xml --xml-version=2 ${CHANGES} 2> ${REPORT_DIR}/cppcheck.xml
-
-# hard check
-#/usr/bin/cppcheck -j $(/usr/bin/nproc) --enable=all --force --inconclusive --xml --xml-version=2 ${SOURCE} 2> reports/cppcheck.xml
-
-if [ "${CHANGES}" != "${SOURCE}" ]; then
-	fix_source_path
-fi
-
