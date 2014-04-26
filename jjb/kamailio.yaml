@@ -30,10 +30,15 @@
       - gitweb
     browser-url: &browserurl
       - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=kamailio'
-    jobs: &jobs
+    jobs: &jobs_check
+      - '{name}-source'
+      - '{name}-cppcheck'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+    jobs: &jobs_fullcheck
       - '{name}-source'
       - '{name}-cppcheck-full'
-      - '{name}-cppcheck'
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
@@ -75,7 +80,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.1'
 
@@ -90,7 +95,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.1'
 
@@ -105,7 +110,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.0'
 
@@ -136,7 +141,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.1'
 
@@ -151,7 +156,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.0'
 
@@ -166,7 +171,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
-    jobs: *jobs
+    jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '3.3'
 
