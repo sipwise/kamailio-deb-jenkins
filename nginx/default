@@ -124,7 +124,7 @@ server {
         }
 
         location / {
-            proxy_pass        http://kamailio.sipwise.com:8080/;
+            proxy_pass        http://kamailio.sipwise.com:8080;
             proxy_redirect    http://kamailio.sipwise.com/ https://kamailio.sipwise.com/;
             proxy_set_header  X-Real-IP $remote_addr;
             proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
