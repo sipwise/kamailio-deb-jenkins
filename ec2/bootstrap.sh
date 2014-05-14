@@ -16,6 +16,7 @@ if [ "$1" == "--update" ] ; then
 fi
 
 export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_PRIORITY=critical
 
 # enable j-d-g repos
 if [ -r /etc/apt/sources.list.d/jenkins-debian-glue.list ] ; then
@@ -49,21 +50,25 @@ if grep -q 'http.debian.net' /etc/apt/sources.list ; then
   sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /etc/apt/sources.list
 fi
 
+# make sure we don't get stuck if debconf wants to pop up because of a modified conf file
+APT_OPTIONS='-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
+
 apt-get update
-apt-get -y upgrade
+apt-get -y $APT_OPTIONS upgrade
+apt-get -y $APT_OPTIONS dist-upgrade
 
 # packages required for building on slaves
-apt-get -y install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
+apt-get -y $APT_OPTIONS  install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
 
 # packages required for static checks
-apt-get -y install cppcheck
+apt-get -y $APT_OPTIONS install cppcheck
 
 # make sure we use an up2date piuparts version, e.g.
 # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
-apt-get -y install -t wheezy-backports piuparts
+apt-get -y $APT_OPTIONS install -t wheezy-backports piuparts
 
 # commodity packages
-apt-get -y install screen zsh vim
+apt-get -y $APT_OPTIONS install screen zsh vim
 
 # get rid of installation packages
 apt-get clean
