@@ -282,7 +282,7 @@
         - fingerprint:
             record-artifacts: true
         - email:
-            recipients: linuxmaniac@torreviejawireless.org
+            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
 
@@ -347,7 +347,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org
+            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
 
@@ -394,7 +394,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org
+            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
 
@@ -446,7 +446,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org
+            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
 
@@ -486,7 +486,7 @@
           artifacts: 'reports/*'
       - cppcheck: '{list:cppcheck}'
       - email:
-          recipients: linuxmaniac@torreviejawireless.org
+          recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
     parameters:
       - bool:
           name: full
@@ -542,7 +542,7 @@
           artifacts: 'reports/*'
       - cppcheck: '{list:cppcheck}'
       - email:
-          recipients: linuxmaniac@torreviejawireless.org
+          recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
     parameters:
       - string:
           name: basetag
