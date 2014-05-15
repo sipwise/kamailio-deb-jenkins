@@ -51,7 +51,7 @@ if grep -q 'http.debian.net' /etc/apt/sources.list ; then
 fi
 
 # make sure we don't get stuck if debconf wants to pop up because of a modified conf file
-APT_OPTIONS='-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"'
+APT_OPTIONS='-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold'
 
 apt-get update
 apt-get -y $APT_OPTIONS upgrade
