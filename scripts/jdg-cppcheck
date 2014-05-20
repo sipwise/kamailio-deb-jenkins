@@ -53,7 +53,12 @@ EOF
 }
 
 generate_suppressions_file() {
-	cat > ${SUP_FILE} << EOF
+	TYPE=$(expr "${JOB_NAME}" : '\(sems\)')
+	if [ "${TYPE}" = "sems" ]; then
+		cat > ${SUP_FILE} << EOF
+EOF
+else
+		cat > ${SUP_FILE} << EOF
 *:${1}ChangeLog
 *:${1}Makefile*
 *:${1}NEWS
@@ -63,6 +68,7 @@ generate_suppressions_file() {
 *:${1}modules*/README
 *:${1}modules*/doc/*
 EOF
+fi
 }
 
 fix_source_path() {
