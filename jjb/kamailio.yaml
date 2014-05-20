@@ -80,7 +80,13 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
     architectures: *architectures
-    jobs: *jobs_check
+    jobs:
+      - '{name}-source'
+      - '{name}-cppcheck'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+      - '{name}-cppcheck-full'
     cppcheck: *cppcheck
     basetag: '4.1'
 
