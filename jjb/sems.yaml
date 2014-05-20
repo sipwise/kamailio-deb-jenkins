@@ -88,6 +88,8 @@
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
     jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '1.6-dev'
 
 - project:
     name: sems15-nightly
@@ -104,6 +106,8 @@
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
     jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '1.5-dev'
 
 # vseva's playground
 - project:
