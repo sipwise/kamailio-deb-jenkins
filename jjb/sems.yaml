@@ -46,6 +46,13 @@
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
+    jobs: &jobs_checkplus
+      - '{name}-source'
+      - '{name}-cppcheck'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+      - '{name}-cppcheck-full'
     jobs_simple: &jobs_simple
       - '{name}-source'
       - '{name}-binaries'
@@ -87,7 +94,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
-    jobs: *jobs_check
+    jobs: *jobs_checkplus
     cppcheck: *cppcheck
     basetag: '1.6-dev'
 
@@ -105,9 +112,9 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
-    jobs: *jobs_check
+    jobs: *jobs_checkplus
     cppcheck: *cppcheck
-    basetag: '1.5-dev'
+    basetag: '1.5.1-dev'
 
 # vseva's playground
 - project:
@@ -462,6 +469,10 @@
       - email:
           recipients: linuxmaniac@torreviejawireless.org
     parameters:
+      - bool:
+          name: full
+          default: false
+          description: "check all the source files"
       - string:
           name: basetag
           default: '{basetag}'
