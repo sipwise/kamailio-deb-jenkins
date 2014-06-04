@@ -1,0 +1,25 @@
+#!/bin/bash
+# Wrapper around jenkins-job-builder's jenkins-jobs.
+# If the jenkins-jobs binary is already present (e.g. because you have
+# the jenkins-job-builder package installed) then nothing needs to be done.
+# Otherwise we're installing jenkins-job-builder via pip, because backporting
+# version 0.8.0 to Debian/wheezy is horrible.
+
+set -e
+
+if [ -x "$(which jenkins-jobs >/dev/null 2>&1)" ] ; then
+  echo "** jenkins-jobs binary already present, skipping pip execution"
+elif [ -r bin/activate ] && [ -x bin/jenkins-jobs ] ; then
+  echo "** jenkins-jobs binary not found, but noticed according pip environment, enabling"
+  source bin/activate
+else
+  echo "** jenkins-job-builder not executable, installing build dependencies"
+  sudo apt-get -y install libyaml-dev python2.7-dev python-virtualenv
+
+  echo "** Installing jenkins-job-builder via virtualenv"
+  virtualenv .
+  source bin/activate
+  pip install jenkins-job-builder
+fi
+
+jenkins-jobs $@

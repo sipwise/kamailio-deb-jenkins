@@ -71,8 +71,6 @@ GPG key setup for Debian repository:
 
 Set up jenkins-job-builder:
 
-    sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/python-jenkins*deb
-    sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/jenkins-job-builder*.deb
     sudo tee -a /etc/jenkins_jobs/jenkins_jobs2.ini >/dev/null <<EOF
     [jenkins]
     user=jenkins-job-builder

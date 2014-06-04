@@ -259,7 +259,7 @@
         - axis:
             type: user-defined
             name: distribution
-            values: '{list:distributions}'
+            values: '{obj:distributions}'
         - axis:
             type: slave
             name: label
@@ -306,11 +306,11 @@
         - axis:
             type: user-defined
             name: architecture
-            values: '{list:architectures}'
+            values: '{obj:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values: '{list:distributions}'
+            values: '{obj:distributions}'
         - axis:
             type: slave
             name: label
@@ -371,11 +371,11 @@
         - axis:
             type: user-defined
             name: architecture
-            values: '{list:architectures}'
+            values: '{obj:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values: '{list:distributions}'
+            values: '{obj:distributions}'
         - axis:
             type: slave
             name: label
@@ -419,11 +419,11 @@
         - axis:
             type: user-defined
             name: architecture
-            values: '{list:architectures}'
+            values: '{obj:architectures}'
         - axis:
             type: user-defined
             name: distribution
-            values: '{list:distributions}'
+            values: '{obj:distributions}'
         - axis:
             type: slave
             name: label
@@ -490,7 +490,7 @@
 #            - reports/tag.info
       - archive:
           artifacts: 'reports/*'
-      - cppcheck: '{list:cppcheck}'
+      - cppcheck: '{obj:cppcheck}'
       - email:
           recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
     parameters:
@@ -546,7 +546,7 @@
     publishers:
       - archive:
           artifacts: 'reports/*'
-      - cppcheck: '{list:cppcheck}'
+      - cppcheck: '{obj:cppcheck}'
       - email:
           recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
     parameters:
