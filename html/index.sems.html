@@ -1,0 +1,45 @@
+<h1>Welcome to the SEMS Debian repositories</h1>
+
+<p>This is the Debian/Ubuntu package repository of <a href="http://opensbc.org/">SEMS</a>,
+powered by <a href="http://jenkins-debian-glue.org/">jenkins-debian-glue.org</a> and
+sponsored by <a href="http://www.sipwise.com/">Sipwise</a>.</p>
+
+<p>Build information available at <a href="https://kamailio.sipwise.com/">Jenkins system</a>.</p>
+
+<p>Usage instructions:</p>
+
+<pre>
+% wget -O- https://pkg.opensbc.org/semsdebkey.gpg | sudo apt-key add -
+</pre>
+
+<h2>Stable releases</h2>
+
+<p>To be added</p>
+
+<h2>Development packages</h2>
+
+<p>Debian/Ubuntu packages with latest changes from master branch (choose the distribution you're interested in):</p>
+
+<pre>
+deb     https://pkg.opensbc.org/semsdev-nightly jessie  main
+deb-src https://pkg.opensbc.org/semsdev-nightly jessie  main
+
+deb     https://pkg.opensbc.org/semsdev-nightly wheezy  main
+deb-src https://pkg.opensbc.org/semsdev-nightly wheezy  main
+
+deb     https://pkg.opensbc.org/semsdev-nightly precise main
+deb-src https://pkg.opensbc.org/semsdev-nightly precise main
+</pre>
+
+<p>Debian/Ubuntu packages with latest changes from 1.5 branch (choose the distribution you're interested in):</p>
+
+<pre>
+deb     https://pkg.opensbc.org/sems15-nightly wheezy  main
+deb-src https://pkg.opensbc.org/sems15-nightly wheezy  main
+
+deb     https://pkg.opensbc.org/sems15-nightly jessie  main
+deb-src https://pkg.opensbc.org/sems15-nightly jessie  main
+
+deb     https://pkg.opensbc.org/sems15-nightly precise main
+deb-src https://pkg.opensbc.org/sems15-nightly precise main
+</pre>
