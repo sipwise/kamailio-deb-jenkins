@@ -99,7 +99,7 @@
       - '4.1'
     browser: *browser
     browser-url: *browserurl
-    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs: *jobs_check
     cppcheck: *cppcheck
@@ -145,7 +145,7 @@
       - '*/tags/4.1*'
     browser: *browser
     browser-url: *browserurl
-    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
