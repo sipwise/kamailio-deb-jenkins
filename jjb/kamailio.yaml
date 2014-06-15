@@ -204,7 +204,7 @@
       - 'vseva/deb_4.1'
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
-    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs: *jobs_simple
 
