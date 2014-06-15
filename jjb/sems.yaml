@@ -92,7 +92,7 @@
     branch: *branch
     browser: *browser
     browser-url: *browserurl
-    distributions: !!python/tuple [jessie, wheezy, precise]
+    distributions: !!python/tuple [jessie, wheezy, precise, trusty]
     architectures: *architectures
     jobs: *jobs_checkplus
     cppcheck: *cppcheck
