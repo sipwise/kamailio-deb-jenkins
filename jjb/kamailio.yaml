@@ -78,7 +78,7 @@
     branch: *branch
     browser: *browser
     browser-url: *browserurl
-    distributions: !!python/tuple [jessie, wheezy, squeeze, precise]
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs:
       - '{name}-source'
