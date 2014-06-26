@@ -93,6 +93,11 @@ Install CppCheck Jenkins Plugin:
     sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/cppcheck.hpi http://updates.jenkins-ci.org/latest/cppcheck.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/cppcheck.hpi
 
+Install Build-timeout Plugin:
+
+    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi
+    sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-timeout.hpi
+
 Fix headless issue with Java:
 
     echo JAVA_ARGS="-Djava.awt.headless=true" | sudo tee -a /etc/default/jenkins

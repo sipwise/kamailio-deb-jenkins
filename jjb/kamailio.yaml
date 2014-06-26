@@ -291,6 +291,9 @@
             recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
+        - timeout:
+            timeout: 90
+            fail: true
 
 - job-template:
       name: '{name}-binaries'
@@ -356,6 +359,9 @@
             recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
+        - timeout:
+            timeout: 240
+            fail: true
 
 - job-template:
       name: '{name}-repos'
@@ -403,6 +409,9 @@
             recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
+        - timeout:
+            timeout: 90
+            fail: true
 
 - job-template:
       name: '{name}-piuparts'
@@ -455,6 +464,9 @@
             recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
+        - timeout:
+            timeout: 240
+            fail: true
 
 - job-template:
     name: '{name}-cppcheck-full'
@@ -508,6 +520,9 @@
           description: "sources directiory"
     wrappers:
       - timestamps
+      - timeout:
+          timeout: 240
+          fail: true
 #      - copy-to-master:
 #          includes:
 #            - reports/tag.info
@@ -564,3 +579,6 @@
           description: "cppcheck with hard check options. Increases the check time!"
     wrappers:
       - timestamps
+      - timeout:
+          timeout: 90
+          fail: true
