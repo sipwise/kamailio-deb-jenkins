@@ -400,7 +400,7 @@
         - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
       publishers:
         - archive:
-            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes'
+            artifacts: '**/*.dsc,**/*.changes'
         - fingerprint:
             record-artifacts: true
         - workspace-cleanup:
