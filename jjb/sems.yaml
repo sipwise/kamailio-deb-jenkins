@@ -8,7 +8,7 @@
 - defaults:
     name: global
     logrotate_keep: &logrotate_keep
-     - 20
+     - 12
     debian_dir: &debian_dir
      - 'pkg/deb'
     debian_auto_version: &debian_auto_version

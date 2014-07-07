@@ -8,7 +8,7 @@
 - defaults:
     name: global
     logrotate_keep: &logrotate_keep
-     - 20
+     - 12
     distributions: !!python/tuple &distributions
      - wheezy
      - squeeze
