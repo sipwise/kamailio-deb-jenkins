@@ -222,8 +222,7 @@
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
-    architectures:
-      - amd64
+    architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
 
 - project:
@@ -236,8 +235,7 @@
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
-    architectures:
-      - amd64
+    architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
 
 - project:
@@ -250,8 +248,7 @@
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures:
-      - amd64
+    architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
 
 - project:
@@ -264,8 +261,7 @@
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures:
-      - amd64
+    architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
 
 
