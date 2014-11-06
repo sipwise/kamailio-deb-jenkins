@@ -226,6 +226,19 @@
     jobs: *jobs_simple
 
 - project:
+    name: vseva-kamailio42-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - 'vseva/deb_4.2'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: !!python/tuple [amd64, ]
+    jobs: *jobs_simple
+
+- project:
     name: vseva-kamailio41-nightly
     logrotate_keep: 5
     repos: "https://github.com/linuxmaniac/kamailio.git"
