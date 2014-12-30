@@ -19,7 +19,7 @@
      - amd64
      - i386
     repos: &repos
-     - 'git://git.sip-router.org/kamailio'
+     - 'https://github.com/kamailio/kamailio.git'
     reftag: &reftag
      - '+refs/tags/*:refs/remotes/origin/tags/*'
     refbranch: &refbranch
@@ -29,7 +29,7 @@
     browser: &browser
       - gitweb
     browser-url: &browserurl
-      - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=kamailio'
+      - 'https://github.com/kamailio/kamailio.git'
     jobs: &jobs_check
       - '{name}-source'
       - '{name}-cppcheck'
@@ -331,7 +331,7 @@
         - fingerprint:
             record-artifacts: true
         - email:
-            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+            recipients: sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
         - timeout:
@@ -399,7 +399,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+            recipients: sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
         - timeout:
@@ -449,7 +449,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+            recipients: sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
         - timeout:
@@ -504,7 +504,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+            recipients: sr-dev@lists.sip-router.org
       wrappers:
         - timestamps
         - timeout:
@@ -547,7 +547,7 @@
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
       - email:
-          recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+          recipients: sr-dev@lists.sip-router.org
     parameters:
       - bool:
           name: full
@@ -606,7 +606,7 @@
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
       - email:
-          recipients: linuxmaniac@torreviejawireless.org sr-dev@lists.sip-router.org
+          recipients: sr-dev@lists.sip-router.org
     parameters:
       - string:
           name: basetag
