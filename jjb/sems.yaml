@@ -23,7 +23,7 @@
      - amd64
      - i386
     repos: &repos
-     - 'git://git.sip-router.org/sems'
+     - 'https://github.com/sems-server/sems.git'
     reftag: &reftag
      - '+refs/tags/*:refs/remotes/origin/tags/*'
     refbranch: &refbranch
@@ -33,7 +33,7 @@
     browser: &browser
       - gitweb
     browser-url: &browserurl
-      - 'http://git.sip-router.org/cgi-bin/gitweb.cgi?p=sems'
+      - 'https://github.com/sems-server/sems'
     jobs: &jobs_check
       - '{name}-source'
       - '{name}-cppcheck'
