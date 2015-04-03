@@ -78,6 +78,8 @@
         display:
           sum: false
           error: true
+    email: &defautl_email
+      recipients: linuxmaniac@torreviejawireless.org
 
 ## list of projects with their configurations
 # build based on branches
@@ -212,8 +214,7 @@
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
-        - email:
-            recipients: linuxmaniac@torreviejawireless.org
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -280,8 +281,7 @@
             threshold: UNSTABLE
         - workspace-cleanup:
             dirmatch: false
-        - email:
-            recipients: linuxmaniac@torreviejawireless.org
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -330,8 +330,7 @@
             record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
-        - email:
-            recipients: linuxmaniac@torreviejawireless.org
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -386,7 +385,6 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
         - timeout:
@@ -425,8 +423,7 @@
       - archive:
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: linuxmaniac@torreviejawireless.org
+      - email: *defautl_email
     parameters:
       - bool:
           name: full
@@ -484,8 +481,7 @@
       - archive:
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: linuxmaniac@torreviejawireless.org
+      - email: *defautl_email
     parameters:
       - bool:
           name: full

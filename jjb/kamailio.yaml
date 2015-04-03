@@ -67,6 +67,8 @@
         display:
           sum: false
           error: true
+    email: &defautl_email
+      recipients: sr-dev@lists.sip-router.org linuxmaniac@torreviejawireless.org
 
 ## list of projects with their configurations
 # build based on branches
@@ -330,8 +332,7 @@
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
-        - email:
-            recipients: "sr-dev@lists.sip-router.org, linuxmaniac@torreviejawireless.org"
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -398,8 +399,7 @@
             threshold: UNSTABLE
         - workspace-cleanup:
             dirmatch: false
-        - email:
-            recipients: "sr-dev@lists.sip-router.org, linuxmaniac@torreviejawireless.org"
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -448,8 +448,7 @@
             record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
-        - email:
-            recipients: "sr-dev@lists.sip-router.org, linuxmaniac@torreviejawireless.org"
+        - email: *defautl_email
       wrappers:
         - timestamps
         - timeout:
@@ -504,7 +503,6 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: "sr-dev@lists.sip-router.org, linuxmaniac@torreviejawireless.org"
       wrappers:
         - timestamps
         - timeout:
@@ -546,8 +544,7 @@
       - archive:
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: sr-dev@lists.sip-router.org
+      - email: *defautl_email
     parameters:
       - bool:
           name: full
@@ -605,8 +602,7 @@
       - archive:
           artifacts: 'reports/*'
       - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: "sr-dev@lists.sip-router.org, linuxmaniac@torreviejawireless.org"
+      - email: *defautl_email
     parameters:
       - string:
           name: basetag
