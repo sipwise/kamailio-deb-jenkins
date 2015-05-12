@@ -102,6 +102,13 @@ case "\$distribution" in
     # lacks eatmydata package, so explicitely configure it
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     ;;
+  jessie)
+    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    # eatmydata (>=82-2)
+    LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    ;;
   *)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
