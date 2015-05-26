@@ -91,6 +91,21 @@
     basetag: '4.2'
 
 - project:
+    name: kamailio43-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '4.3'
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: *architectures
+    jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '4.3'
+
+- project:
     name: kamailio42-nightly
     logrotate_keep: *logrotate_keep
     repos: *repos
@@ -151,6 +166,21 @@
     basetag: '3.3'
 
 # build based on tags
+- project:
+    name: kamailio43
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch:
+      - '*/tags/4.3*'
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: *architectures
+    jobs: *jobs_fullcheck
+    cppcheck: *cppcheck
+    basetag: '4.3'
+
 - project:
     name: kamailio42
     logrotate_keep: *logrotate_keep
@@ -219,6 +249,19 @@
     refspec: *refbranch
     branch:
       - 'vseva/deb'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: !!python/tuple [amd64, ]
+    jobs: *jobs_simple
+
+- project:
+    name: vseva-kamailio43-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - 'vseva/deb_4.3'
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/kamailio'
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
