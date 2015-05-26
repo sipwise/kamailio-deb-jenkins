@@ -385,8 +385,6 @@
             record-artifacts: true
         - workspace-cleanup:
             dirmatch: false
-        - email:
-            recipients: linuxmaniac@torreviejawireless.org
       wrappers:
         - timestamps
         - timeout:
