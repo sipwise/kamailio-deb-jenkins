@@ -53,7 +53,11 @@ fi
 # make sure we don't get stuck if debconf wants to pop up because of a modified conf file
 APT_OPTIONS='-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold'
 
-apt-get update
+if ! apt-get update ; then
+  echo "Retrying apt-get update once more after failure"
+  apt-get update
+fi
+
 apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
