@@ -182,7 +182,7 @@
               - master
       logrotate:
         numToKeep: '{logrotate_keep}'
-      disabled: false
+      disabled: true
       triggers:
         - pollscm: '@midnight'
       parameters:
@@ -230,6 +230,7 @@
         numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
+      disabled: true
       axes:
         - axis:
             type: user-defined
@@ -344,11 +345,12 @@
       description: |
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      disabled: false
+      disabled: true
       logrotate:
         numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
+      disabled: true
       axes:
         - axis:
             type: user-defined
@@ -410,7 +412,7 @@
     node: slave
     logrotate:
       numToKeep: '{logrotate_keep}'
-    disabled: false
+    disabled: true
     builders:
       - copyartifact:
           project: '{name}-cppcheck-full'
@@ -473,7 +475,7 @@
             - ".*-repos"
     logrotate:
       numToKeep: '{logrotate_keep}'
-    disabled: false
+    disabled: true
     triggers:
       - pollscm: '@midnight'
     builders:

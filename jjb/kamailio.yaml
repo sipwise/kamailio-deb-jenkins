@@ -89,6 +89,7 @@
       - '{name}-cppcheck-full'
     cppcheck: *cppcheck
     basetag: '4.4'
+    disabled: false
 
 - project:
     name: kamailio44-nightly
@@ -104,6 +105,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.4'
+    disabled: false
 
 - project:
     name: kamailio43-nightly
@@ -119,6 +121,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.3'
+    disabled: true
 
 - project:
     name: kamailio42-nightly
@@ -134,6 +137,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.2'
+    disabled: true
 
 - project:
     name: kamailio41-nightly
@@ -149,6 +153,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.1'
+    disabled: true
 
 - project:
     name: kamailio40-nightly
@@ -164,6 +169,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '4.0'
+    disabled: true
 
 - project:
     name: kamailio33-nightly
@@ -179,6 +185,7 @@
     jobs: *jobs_check
     cppcheck: *cppcheck
     basetag: '3.3'
+    disabled: true
 
 # build based on tags
 - project:
@@ -195,6 +202,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.4'
+    disabled: false
 
 - project:
     name: kamailio43
@@ -210,6 +218,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.3'
+    disabled: false
 
 - project:
     name: kamailio42
@@ -225,6 +234,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.2'
+    disabled: false
 
 - project:
     name: kamailio41
@@ -240,6 +250,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.1'
+    disabled: true
 
 - project:
     name: kamailio40
@@ -255,6 +266,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.0'
+    disabled: true
 
 - project:
     name: kamailio33
@@ -270,6 +282,7 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '3.3'
+    disabled: true
 
 # vseva's playground
 - project:
@@ -284,6 +297,21 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
+
+- project:
+    name: vseva-kamailio44-nightly
+    logrotate_keep: 5
+    repos: "https://github.com/linuxmaniac/kamailio.git"
+    refspec: *refbranch
+    branch:
+      - 'vseva/deb_4.4'
+    browser: githubweb
+    browser-url: 'https://github.com/linuxmaniac/kamailio'
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: !!python/tuple [amd64, ]
+    jobs: *jobs_simple
+    disabled: true
 
 - project:
     name: vseva-kamailio43-nightly
@@ -297,6 +325,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
 
 - project:
     name: vseva-kamailio42-nightly
@@ -310,6 +339,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
 
 - project:
     name: vseva-kamailio41-nightly
@@ -323,6 +353,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
 
 - project:
     name: vseva-kamailio40-nightly
@@ -336,6 +367,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
 
 - project:
     name: vseva-kamailio33-nightly
@@ -349,6 +381,7 @@
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: !!python/tuple [amd64, ]
     jobs: *jobs_simple
+    disabled: true
 
 
 ## the job template
@@ -383,7 +416,7 @@
               - master
       logrotate:
         numToKeep: '{logrotate_keep}'
-      disabled: false
+      disabled: '{disabled}'
       triggers:
         - pollscm: '@midnight'
       builders:
@@ -421,6 +454,7 @@
         numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
+      disabled: '{disabled}'
       axes:
         - axis:
             type: user-defined
@@ -489,6 +523,7 @@
         numToKeep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
+      disabled: '{disabled}'
       axes:
         - axis:
             type: user-defined
@@ -535,7 +570,7 @@
       description: |
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      disabled: false
+      disabled: true
       logrotate:
         numToKeep: '{logrotate_keep}'
       execution-strategy:
@@ -603,7 +638,7 @@
     node: slave
     logrotate:
       numToKeep: '{logrotate_keep}'
-    disabled: false
+    disabled: true
     builders:
       - copyartifact:
           project: '{name}-cppcheck-full'
@@ -669,7 +704,7 @@
             - ".*-repos"
     logrotate:
       numToKeep: '{logrotate_keep}'
-    disabled: false
+    disabled: true
     triggers:
       - pollscm: '@midnight'
     builders:
