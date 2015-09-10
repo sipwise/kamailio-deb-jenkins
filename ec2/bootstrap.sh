@@ -62,7 +62,7 @@ apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
 # packages required for building on slaves
-apt-get -y $APT_OPTIONS  install jenkins-debian-glue-buildenv jenkins-debian-glue-buildenv-taptools jenkins-debian-glue-buildenv-lintian jenkins-debian-glue-buildenv-piuparts openjdk-7-jre-headless ntp facter eatmydata
+apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv openjdk-7-jre-headless ntp facter eatmydata
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
