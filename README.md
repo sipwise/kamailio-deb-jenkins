@@ -98,9 +98,12 @@ Install Build-timeout Plugin:
     sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-timeout.hpi
 
-Fix headless issue with Java:
+Adjust for usage with headless Java (if not already present):
 
     echo JAVA_ARGS="-Djava.awt.headless=true" | sudo tee -a /etc/default/jenkins
+
+Fix headless issue with Java (if still running openjdk version 6, doesn't seem to be relevant for openjdk >=7):
+
     sudo apt-get install ttf-dejavu
     sudo java -jar /usr/lib/jvm/java-6-openjdk-common/jre/lib/compilefontconfig.jar \
       /etc/java-6-openjdk/fontconfig.properties \
