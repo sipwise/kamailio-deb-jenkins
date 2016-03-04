@@ -23,7 +23,7 @@ case "$distribution" in
     ;;
   squeeze)
     # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://ftp.ie.debian.org/debian"
+    MIRRORSITE="http://archive.debian.org/debian"
     ;;
   jessie)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
