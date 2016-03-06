@@ -6,9 +6,9 @@ case "$distribution" in
     export MIRROR="http://ie.archive.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;
-  lenny)
+  lenny|squeeze)
     export MIRROR="http://archive.debian.org/debian/"
-    echo "*** Building for Debian release lenny, using mirror $MIRROR ***"
+    echo "*** Building for Debian release ${distribution}, using mirror $MIRROR ***"
 esac
 
 # sadly piuparts always returns with exit code 1 :((

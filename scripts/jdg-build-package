@@ -14,9 +14,9 @@ case "$distribution" in
     export MIRRORSITE="http://at.archive.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
-  lenny)
+  lenny|squeeze)
     export MIRRORSITE="http://archive.debian.org/debian/"
-    echo "*** Building for Debian release lenny, using mirror $MIRRORSITE ***"
+    echo "*** Building for Debian release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
 esac
 
