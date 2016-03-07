@@ -99,12 +99,10 @@ case "\$distribution" in
     # cowdancer is in universe
     COMPONENTS="main universe"
     ;;
-  lenny)
-    MIRRORSITE="http://archive.debian.org/debian/"
-    ;;
-  squeeze)
+  lenny|squeeze)
     # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    # nowadays also resides on archive
+    MIRRORSITE="http://archive.debian.org/debian/"
     ;;
   jessie)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
