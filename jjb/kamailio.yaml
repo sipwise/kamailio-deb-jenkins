@@ -88,7 +88,22 @@
       - '{name}-piuparts'
       - '{name}-cppcheck-full'
     cppcheck: *cppcheck
-    basetag: '4.2'
+    basetag: '4.4'
+
+- project:
+    name: kamailio44-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch:
+      - '4.4'
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: *architectures
+    jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '4.4'
 
 - project:
     name: kamailio43-nightly
@@ -166,6 +181,21 @@
     basetag: '3.3'
 
 # build based on tags
+- project:
+    name: kamailio44
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch:
+      - '*/tags/4.4*'
+    browser: *browser
+    browser-url: *browserurl
+    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
+    architectures: *architectures
+    jobs: *jobs_fullcheck
+    cppcheck: *cppcheck
+    basetag: '4.4'
+
 - project:
     name: kamailio43
     logrotate_keep: *logrotate_keep
