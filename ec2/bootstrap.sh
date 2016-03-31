@@ -3,7 +3,7 @@
 set -e
 
 # config
-DEBIAN_MIRROR="ftp.ie.debian.org"
+DEBIAN_MIRROR="ftp.de.debian.org"
 
 if [ "$(id -u 2>/dev/null)" != 0 ] ; then
   echo "Error: please execute this script as user root" >&2
