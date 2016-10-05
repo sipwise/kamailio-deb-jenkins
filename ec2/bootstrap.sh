@@ -153,3 +153,6 @@ for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
     fi
   done
 done
+
+echo "Cleaning pbuilder's apt cache"
+rm /var/cache/pbuilder/aptcache/*
