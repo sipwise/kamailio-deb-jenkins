@@ -136,7 +136,7 @@ for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
 
   for arch in amd64 i386 ; do
     if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-      cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
+      eatmydata cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
     else
       if $UPDATE ; then
         # replace http.debian.net with our actual Debian mirror
@@ -146,7 +146,7 @@ for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
         fi
 
         echo "!!! Executing update for cowbuilder as requested !!!"
-        cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --configfile=/etc/jenkins/pbuilderrc
+        eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --configfile=/etc/jenkins/pbuilderrc
       else
         echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
       fi
