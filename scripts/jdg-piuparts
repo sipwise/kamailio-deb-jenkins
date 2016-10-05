@@ -2,7 +2,7 @@
 
 # use according mirror when building for Ubuntu
 case "$distribution" in
-  trusty|precise|lucid)
+  xenial|trusty|precise|lucid)
     export MIRROR="http://ie.archive.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;

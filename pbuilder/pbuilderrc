@@ -1,6 +1,6 @@
 # ubuntu specific configuration
 case "$distribution" in
-  trusty|precise)
+  xenial|trusty|precise)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")

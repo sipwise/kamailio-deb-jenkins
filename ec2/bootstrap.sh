@@ -81,7 +81,7 @@ echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc <<EOF
 # ubuntu specific configuration
 case "\$distribution" in
-  trusty|precise)
+  xenial|trusty|precise)
     MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -131,7 +131,7 @@ else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
 fi
 
-for distri in jessie lenny lucid precise trusty squeeze wheezy ; do
+for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do
