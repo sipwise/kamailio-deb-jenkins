@@ -138,6 +138,11 @@ else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
 fi
 
+if ! [ -e /usr/share/debootstrap/scripts/xenial ] ; then
+  echo "Debootstrap version doesn't know about Ubuntu xenial yet, creating according symlink"
+  ln -s gutsy /usr/share/debootstrap/scripts/xenial
+fi
+
 for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
