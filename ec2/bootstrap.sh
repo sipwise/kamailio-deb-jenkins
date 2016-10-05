@@ -5,6 +5,13 @@ set -e
 # config
 DEBIAN_MIRROR="ftp.de.debian.org"
 
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+  echo "$0 creates (or updates) Debian + Ubuntu build environments"
+  echo
+  echo "Usage: $0 [--update]"
+  exit 0
+fi
+
 if [ "$(id -u 2>/dev/null)" != 0 ] ; then
   echo "Error: please execute this script as user root" >&2
   exit 1
