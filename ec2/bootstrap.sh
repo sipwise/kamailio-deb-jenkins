@@ -92,8 +92,8 @@ case "\$distribution" in
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
     ;;
   lucid)
-    # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+    # lacks eatmydata package + is EOL, so explicitely configure it
+    MIRRORSITE="http://old-releases.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
