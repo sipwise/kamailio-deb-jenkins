@@ -26,8 +26,7 @@
      - '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
       - 'master'
-    browser: &browser
-      - gitweb
+    browser: githubweb
     browser-url: &browserurl
       - 'https://github.com/kamailio/kamailio.git'
     jobs: &jobs_check
@@ -76,7 +75,6 @@
     repos: *repos
     refspec: *refbranch
     branch: *branch
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
@@ -98,7 +96,6 @@
     refspec: *refbranch
     branch:
       - '4.4'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
@@ -114,7 +111,6 @@
     refspec: *refbranch
     branch:
       - '4.3'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -130,7 +126,6 @@
     refspec: *refbranch
     branch:
       - '4.2'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -146,7 +141,6 @@
     refspec: *refbranch
     branch:
       - '4.1'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -162,7 +156,6 @@
     refspec: *refbranch
     branch:
       - '4.0'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -178,7 +171,6 @@
     refspec: *refbranch
     branch:
       - '3.3'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -195,7 +187,6 @@
     refspec: *reftag
     branch:
       - '*/tags/4.4*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
@@ -211,7 +202,6 @@
     refspec: *reftag
     branch:
       - '*/tags/4.3*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -227,7 +217,6 @@
     refspec: *reftag
     branch:
       - '*/tags/4.2*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -243,7 +232,6 @@
     refspec: *reftag
     branch:
       - '*/tags/4.1*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -259,7 +247,6 @@
     refspec: *reftag
     branch:
       - '*/tags/4.0*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -275,7 +262,6 @@
     refspec: *reftag
     branch:
       - '*/tags/3.3*'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -314,11 +300,12 @@
             name: label
             values:
               - master
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       disabled: '{disabled}'
       triggers:
-        - pollscm: '@midnight'
+        - pollscm:
+            cron: '@midnight'
       builders:
         - shell: 'rm -f ./* || true'
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
@@ -350,8 +337,8 @@
       description: |
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: '{disabled}'
@@ -419,8 +406,8 @@
       description: |
         Repository handling for Debian packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: '{disabled}'
@@ -471,8 +458,8 @@
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       disabled: true
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -536,8 +523,8 @@
           browser: '{browser}'
           browser-url: '{browser-url}'
     node: slave
-    logrotate:
-      numToKeep: '{logrotate_keep}'
+    build-discarder:
+      num-to-keep: '{logrotate_keep}'
     disabled: true
     builders:
       - copyartifact:
@@ -602,11 +589,12 @@
             - ".*-cppcheck"
             - ".*-source"
             - ".*-repos"
-    logrotate:
-      numToKeep: '{logrotate_keep}'
+    build-discarder:
+      num-to-keep: '{logrotate_keep}'
     disabled: true
     triggers:
-      - pollscm: '@midnight'
+      - pollscm:
+          cron: '@midnight'
     builders:
       - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
     publishers:

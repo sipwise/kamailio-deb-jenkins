@@ -30,8 +30,7 @@
      - '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
       - 'master'
-    browser: &browser
-      - gitweb
+    browser: githubweb
     browser-url: &browserurl
       - 'https://github.com/sems-server/sems'
     jobs: &jobs_check
@@ -90,7 +89,6 @@
     repos: *repos
     refspec: *refbranch
     branch: *branch
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, precise, trusty]
     architectures: *architectures
@@ -108,7 +106,6 @@
     refspec: *refbranch
     branch:
       - '1.5'
-    browser: *browser
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
@@ -180,11 +177,12 @@
             name: label
             values:
               - master
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       disabled: true
       triggers:
-        - pollscm: '@midnight'
+        - pollscm:
+            cron: '@midnight'
       parameters:
         - string:
             name: debian_dir
@@ -226,8 +224,8 @@
       description: |
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: true
@@ -295,8 +293,8 @@
       description: |
         Repository handling for Debian packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -346,8 +344,8 @@
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       disabled: true
-      logrotate:
-        numToKeep: '{logrotate_keep}'
+      build-discarder:
+        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: true
@@ -410,8 +408,8 @@
           browser: '{browser}'
           browser-url: '{browser-url}'
     node: slave
-    logrotate:
-      numToKeep: '{logrotate_keep}'
+    build-discarder:
+      num-to-keep: '{logrotate_keep}'
     disabled: true
     builders:
       - copyartifact:
@@ -473,11 +471,12 @@
             - ".*-cppcheck"
             - ".*-source"
             - ".*-repos"
-    logrotate:
-      numToKeep: '{logrotate_keep}'
+    build-discarder:
+      num-to-keep: '{logrotate_keep}'
     disabled: true
     triggers:
-      - pollscm: '@midnight'
+      - pollscm:
+          cron: '@midnight'
     builders:
       - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
     publishers:
