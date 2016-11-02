@@ -302,7 +302,7 @@
               - master
       build-discarder:
         num-to-keep: '{logrotate_keep}'
-      disabled: '{disabled}'
+      disabled: '{obj:disabled}'
       triggers:
         - pollscm:
             cron: '@midnight'
@@ -341,7 +341,7 @@
         num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
-      disabled: '{disabled}'
+      disabled: '{obj:disabled}'
       axes:
         - axis:
             type: user-defined
@@ -410,7 +410,7 @@
         num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
-      disabled: '{disabled}'
+      disabled: '{obj:disabled}'
       axes:
         - axis:
             type: user-defined
