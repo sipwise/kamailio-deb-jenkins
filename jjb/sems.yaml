@@ -8,11 +8,11 @@
 - defaults:
     name: global
     logrotate_keep: &logrotate_keep
-     - 12
+      12
     debian_dir: &debian_dir
-     - 'pkg/deb'
+      'pkg/deb'
     debian_auto_version: &debian_auto_version
-     - 'sems'
+      'sems'
     distributions: !!python/tuple &distributions
      - wheezy
      - squeeze
@@ -23,16 +23,16 @@
      - amd64
      - i386
     repos: &repos
-     - 'https://github.com/sems-server/sems.git'
+      'https://github.com/sems-server/sems.git'
     reftag: &reftag
-     - '+refs/tags/*:refs/remotes/origin/tags/*'
+      '+refs/tags/*:refs/remotes/origin/tags/*'
     refbranch: &refbranch
-     - '+refs/heads/*:refs/remotes/origin/*'
+      '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
-      - 'master'
+      'master'
     browser: githubweb
     browser-url: &browserurl
-      - 'https://github.com/sems-server/sems'
+      'https://github.com/sems-server/sems'
     jobs: &jobs_check
       - '{name}-source'
       - '{name}-cppcheck'
@@ -104,8 +104,7 @@
     tagbasedev: '1.5.1-dev'
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '1.5'
+    branch: '1.5'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, precise]
     architectures: *architectures
@@ -122,8 +121,7 @@
     tagbasedev: '1.6-dev'
     repos: "https://github.com/linuxmaniac/sems.git"
     refspec: *refbranch
-    branch:
-      - 'vseva/deb'
+    branch: 'vseva/deb'
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/sems'
     distributions: !!python/tuple [jessie, wheezy, precise, trusty]
@@ -138,8 +136,7 @@
     tagbasedev: '1.5.1-dev'
     repos: "https://github.com/linuxmaniac/sems.git"
     refspec: *refbranch
-    branch:
-      - 'vseva/deb_1.5'
+    branch: 'vseva/deb_1.5'
     browser: githubweb
     browser-url: 'https://github.com/linuxmaniac/sems'
     distributions: !!python/tuple [jessie, wheezy, precise]

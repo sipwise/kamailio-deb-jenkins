@@ -8,7 +8,7 @@
 - defaults:
     name: global
     logrotate_keep: &logrotate_keep
-     - 5
+     5
     distributions: !!python/tuple &distributions
      - wheezy
      - squeeze
@@ -19,16 +19,16 @@
      - amd64
      - i386
     repos: &repos
-     - 'https://github.com/kamailio/kamailio.git'
+      'https://github.com/kamailio/kamailio.git'
     reftag: &reftag
-     - '+refs/tags/*:refs/remotes/origin/tags/*'
+      '+refs/tags/*:refs/remotes/origin/tags/*'
     refbranch: &refbranch
-     - '+refs/heads/*:refs/remotes/origin/*'
+      '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
-      - 'master'
+      'master'
     browser: githubweb
     browser-url: &browserurl
-      - 'https://github.com/kamailio/kamailio.git'
+      'https://github.com/kamailio/kamailio.git'
     jobs: &jobs_check
       - '{name}-source'
       - '{name}-cppcheck'
@@ -94,8 +94,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '4.4'
+    branch: '4.4'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
@@ -109,8 +108,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '4.3'
+    branch: '4.3'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -124,8 +122,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '4.2'
+    branch: '4.2'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -139,8 +136,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '4.1'
+    branch: '4.1'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -154,8 +150,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '4.0'
+    branch: '4.0'
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -169,8 +164,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch:
-      - '3.3'
+    branch: '3.3'
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -185,8 +179,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/4.4*'
+    branch: '*/tags/4.4*'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
@@ -200,8 +193,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/4.3*'
+    branch: '*/tags/4.3*'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -215,8 +207,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/4.2*'
+    branch: '*/tags/4.2*'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -230,8 +221,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/4.1*'
+    branch: '*/tags/4.1*'
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
@@ -245,8 +235,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/4.0*'
+    branch: '*/tags/4.0*'
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
@@ -260,8 +249,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch:
-      - '*/tags/3.3*'
+    branch: '*/tags/3.3*'
     browser-url: *browserurl
     distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
     architectures: *architectures
