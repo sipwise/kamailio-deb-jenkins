@@ -174,8 +174,9 @@
             name: label
             values:
               - master
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       disabled: true
       triggers:
         - pollscm:
@@ -221,8 +222,9 @@
       description: |
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: true
@@ -290,8 +292,9 @@
       description: |
         Repository handling for Debian packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -341,8 +344,9 @@
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
       disabled: true
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: true
@@ -405,8 +409,9 @@
           browser: '{browser}'
           browser-url: '{browser-url}'
     node: slave
-    build-discarder:
-      num-to-keep: '{logrotate_keep}'
+    properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
     disabled: true
     builders:
       - copyartifact:
@@ -468,8 +473,8 @@
             - ".*-cppcheck"
             - ".*-source"
             - ".*-repos"
-    build-discarder:
-      num-to-keep: '{logrotate_keep}'
+      - build-discarder:
+          num-to-keep: '{logrotate_keep}'
     disabled: true
     triggers:
       - pollscm:

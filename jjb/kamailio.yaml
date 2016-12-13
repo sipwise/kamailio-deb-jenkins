@@ -265,6 +265,9 @@
       description: |
         Build Debian source package of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       scm:
         - git:
             url: '{repos}'
@@ -288,8 +291,6 @@
             name: label
             values:
               - master
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
       disabled: '{obj:disabled}'
       triggers:
         - pollscm:
@@ -325,8 +326,9 @@
       description: |
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: '{obj:disabled}'
@@ -394,8 +396,9 @@
       description: |
         Repository handling for Debian packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       disabled: '{obj:disabled}'
@@ -445,9 +448,10 @@
       description: |
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
       disabled: true
-      build-discarder:
-        num-to-keep: '{logrotate_keep}'
       execution-strategy:
         sequential: true
       axes:
@@ -499,6 +503,9 @@
     description: |
       Cpp source check for {name}.
       <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+    properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
     scm:
       - git:
           url: '{repos}'
@@ -511,8 +518,6 @@
           browser: '{browser}'
           browser-url: '{browser-url}'
     node: slave
-    build-discarder:
-      num-to-keep: '{logrotate_keep}'
     disabled: true
     builders:
       - copyartifact:
@@ -558,6 +563,9 @@
     description: |
       Cpp source check for {name}.
       <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+    properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
     scm:
       - git:
           url: '{repos}'
@@ -577,8 +585,6 @@
             - ".*-cppcheck"
             - ".*-source"
             - ".*-repos"
-    build-discarder:
-      num-to-keep: '{logrotate_keep}'
     disabled: true
     triggers:
       - pollscm:
