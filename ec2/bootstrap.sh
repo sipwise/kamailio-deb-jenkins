@@ -111,7 +111,7 @@ case "\$distribution" in
     # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
     ;;
-  jessie)
+  stretch|jessie)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
@@ -143,7 +143,7 @@ if ! [ -e /usr/share/debootstrap/scripts/xenial ] ; then
   ln -s gutsy /usr/share/debootstrap/scripts/xenial
 fi
 
-for distri in jessie lenny lucid precise trusty xenial squeeze wheezy ; do
+for distri in stretch jessie lenny lucid precise trusty xenial squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do

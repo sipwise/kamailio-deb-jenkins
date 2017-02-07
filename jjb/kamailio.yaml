@@ -76,7 +76,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
+    distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs:
       - '{name}-source'
@@ -86,7 +86,21 @@
       - '{name}-piuparts'
       - '{name}-cppcheck-full'
     cppcheck: *cppcheck
-    basetag: '4.4'
+    basetag: '5.0'
+    disabled: false
+
+- project:
+    name: kamailio50-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '5.0'
+    browser-url: *browserurl
+    distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
+    architectures: *architectures
+    jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '5.0'
     disabled: false
 
 - project:
@@ -174,6 +188,20 @@
     disabled: true
 
 # build based on tags
+- project:
+    name: kamailio50
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/5.0*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
+    architectures: *architectures
+    jobs: *jobs_fullcheck
+    cppcheck: *cppcheck
+    basetag: '5.0'
+    disabled: false
+
 - project:
     name: kamailio44
     logrotate_keep: *logrotate_keep
