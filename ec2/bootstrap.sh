@@ -172,4 +172,4 @@ for distri in stretch jessie lenny lucid precise trusty xenial squeeze wheezy ; 
 done
 
 echo "Cleaning pbuilder's apt cache"
-rm /var/cache/pbuilder/aptcache/*
+rm -f /var/cache/pbuilder/aptcache/*
