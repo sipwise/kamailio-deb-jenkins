@@ -143,6 +143,11 @@ if ! [ -e /usr/share/debootstrap/scripts/xenial ] ; then
   ln -s gutsy /usr/share/debootstrap/scripts/xenial
 fi
 
+if ! [ -e /usr/share/debootstrap/scripts/stretch ] ; then
+  echo "Debootstrap version doesn't know about Debian stretch yet, creating according symlink"
+  ln -s sid /usr/share/debootstrap/scripts/stretch
+fi
+
 for distri in stretch jessie lenny lucid precise trusty xenial squeeze wheezy ; do
   export distribution=$distri # for usage in pbuilderrc
 
