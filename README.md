@@ -33,8 +33,8 @@ Automatically deploy [jenkins-debian-glue](http://jenkins-debian-glue.org/):
 Support providing additional configuration to cowbuilder + related tools:
 
     sudo tee -a /etc/sudoers.d/jenkins >/dev/null <<EOF
-    # for cowbuilder/pbuilder/... instruction:
-    Defaults  env_keep+="release branch distribution JOB_NAME MIRROR DIST ARCH"
+    # for cowbuilder/pbuilder/... instructions in kamailio-deb-jenkins setup:
+    Defaults  env_keep+="release branch distribution JOB_NAME MIRROR DEB_BUILD_OPTIONS"
     EOF
 
 Grab a copy of this repository:
@@ -115,6 +115,18 @@ Generate according Jenkins jobs:
     cd /home/admin/kamailio-deb-jenkins/jjb
     make
 
+Build slave setup
+-----------------
+
+It's possible to run the build process on a separate Jenkins slave.
+To set up the build slave follow those steps:
+
+    sudo apt-get -y install git
+    git clone https://github.com/sipwise/kamailio-deb-jenkins
+    cd kamailio-deb-jenkins/
+    sudo ./ec2/bootstrap.sh
+
+Depending on your setup, connect the slave to your master then (SSH, swarm plugin, Amazon EC2 plugin,...).
 
 Questions?
 ----------
