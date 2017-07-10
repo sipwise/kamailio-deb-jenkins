@@ -69,7 +69,10 @@ apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
 # packages required for building on slaves
-apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv openjdk-8-jre-headless ntp facter eatmydata
+apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv ntp facter eatmydata
+
+# packages required from jessie-backports
+apt-get -y $APT_OPTIONS install -t jessie-backports ca-certificates-java openjdk-8-jre-headless
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
