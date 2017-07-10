@@ -73,6 +73,7 @@ apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv ntp facter eatmydat
 
 # packages required from jessie-backports
 apt-get -y $APT_OPTIONS install -t jessie-backports ca-certificates-java openjdk-8-jre-headless
+apt-get -y $APT_OPTIONS remove openjdk-7-jre-headless default-jre-headless
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
