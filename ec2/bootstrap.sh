@@ -49,7 +49,7 @@ fi
 # make sure we use up2date packages
 echo "!!! Enabling Debian backports !!!"
 cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://${DEBIAN_MIRROR}/debian wheezy-backports main
+deb http://${DEBIAN_MIRROR}/debian jessie-backports main
 EOF
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
@@ -69,14 +69,14 @@ apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
 # packages required for building on slaves
-apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv default-jre-headless ntp facter eatmydata
+apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv openjdk-8-jre-headless ntp facter eatmydata
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
 
 # make sure we use an up2date piuparts version, e.g.
 # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
-apt-get -y $APT_OPTIONS install -t wheezy-backports piuparts
+apt-get -y $APT_OPTIONS install -t jessie-backports piuparts
 
 # commodity packages
 apt-get -y $APT_OPTIONS install screen zsh vim
