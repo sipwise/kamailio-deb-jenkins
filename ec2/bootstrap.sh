@@ -42,7 +42,7 @@ if [ -r /usr/share/keyrings/ubuntu-archive-keyring.gpg ] ; then
   echo "!!! /usr/share/keyrings/ubuntu-archive-keyring.gpg exists already !!!"
 else
   wget -O ubuntu-keyring_2012.05.19_all.deb \
-    http://de.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2012.05.19_all.deb
+    http://archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2012.05.19_all.deb
   dpkg -i ubuntu-keyring_2012.05.19_all.deb
 fi
 
@@ -93,7 +93,7 @@ cat > /etc/jenkins/pbuilderrc <<EOF
 # ubuntu specific configuration
 case "\$distribution" in
   xenial|trusty|precise)
-    MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+    MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe

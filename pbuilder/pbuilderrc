@@ -1,7 +1,7 @@
 # ubuntu specific configuration
 case "$distribution" in
   xenial|trusty|precise)
-    MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+    MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
@@ -12,7 +12,7 @@ case "$distribution" in
     ;;
   lucid)
     # lacks eatmydata package, so explicitely configure it
-    MIRRORSITE="http://ie.archive.ubuntu.com/ubuntu/"
+    MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
