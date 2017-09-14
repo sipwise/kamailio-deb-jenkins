@@ -1,6 +1,6 @@
-# ubuntu specific configuration
+# distribution specific configuration
 case "$distribution" in
-  xenial|trusty|precise)
+  xenial)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -8,30 +8,39 @@ case "$distribution" in
     COMPONENTS="main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  lucid)
+  trusty|precise)
     # lacks eatmydata package, so explicitely configure it
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # ensure it's unset
+    unset LD_PRELOAD
+    ;;
+  lucid)
+    # lacks eatmydata package + is EOL, so explicitely configure it
+    MIRRORSITE="http://old-releases.ubuntu.com/ubuntu/"
+    # we need key id 40976EAF437D05B5
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    # cowdancer is in universe
+    COMPONENTS="main universe"
+    # ensure it's unset
+    unset LD_PRELOAD
     ;;
   lenny|squeeze)
+    # lacks eatmydata package, so explicitely configure it
+    # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
+    # ensure it's unset
+    unset LD_PRELOAD
     ;;
-  jessie|stretch)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+  wheezy|jessie|stretch|buster|*)
+    MIRRORSITE="http://ftp.de.debian.org/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    # eatmydata (>=82-2)
-    LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
-    ;;
-  *)
-    MIRRORSITE="http://ftp.ie.debian.org/debian"
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
 esac

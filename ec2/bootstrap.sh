@@ -90,9 +90,9 @@ apt-get clean
 
 echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc <<EOF
-# ubuntu specific configuration
+# distribution specific configuration
 case "\$distribution" in
-  xenial|trusty|precise)
+  xenial)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -100,7 +100,17 @@ case "\$distribution" in
     COMPONENTS="main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  trusty|precise)
+    # lacks eatmydata package, so explicitely configure it
+    MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
+    # we need key id 40976EAF437D05B5
+    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    # cowdancer is in universe
+    COMPONENTS="main universe"
+    # ensure it's unset
+    unset LD_PRELOAD
     ;;
   lucid)
     # lacks eatmydata package + is EOL, so explicitely configure it
@@ -109,24 +119,21 @@ case "\$distribution" in
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # ensure it's unset
+    unset LD_PRELOAD
     ;;
   lenny|squeeze)
     # lacks eatmydata package, so explicitely configure it
     # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
+    # ensure it's unset
+    unset LD_PRELOAD
     ;;
-  stretch|jessie)
+  wheezy|jessie|stretch|buster|*)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    # eatmydata (>=82-2)
-    LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
-    ;;
-  *)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
     ;;
 esac
 EOF
@@ -152,7 +159,12 @@ if ! [ -e /usr/share/debootstrap/scripts/stretch ] ; then
   ln -s sid /usr/share/debootstrap/scripts/stretch
 fi
 
-for distri in stretch jessie lenny lucid precise trusty xenial squeeze wheezy ; do
+if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
+  echo "Debootstrap version doesn't know about Debian buster yet, creating according symlink"
+  ln -s sid /usr/share/debootstrap/scripts/buster
+fi
+
+for distri in buster stretch jessie wheezy squeeze lenny xenial trusty precise lucid ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do
@@ -167,7 +179,7 @@ for distri in stretch jessie lenny lucid precise trusty xenial squeeze wheezy ; 
         fi
 
         echo "!!! Executing update for cowbuilder as requested !!!"
-        eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --configfile=/etc/jenkins/pbuilderrc
+        eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
       else
         echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
       fi
