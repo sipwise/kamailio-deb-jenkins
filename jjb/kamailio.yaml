@@ -76,7 +76,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs:
       - '{name}-source'
