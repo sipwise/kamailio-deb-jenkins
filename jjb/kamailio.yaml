@@ -479,7 +479,7 @@
       properties:
         - build-discarder:
             num-to-keep: '{logrotate_keep}'
-      disabled: true
+      disabled: false
       execution-strategy:
         sequential: true
       axes:
@@ -519,7 +519,7 @@
         - workspace-cleanup:
             dirmatch: false
         - email:
-            recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
+            recipients: "linuxmaniac@torreviejawireless.org"
       wrappers:
         - timestamps
         - timeout:
