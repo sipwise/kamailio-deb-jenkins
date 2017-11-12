@@ -86,7 +86,21 @@
       - '{name}-piuparts'
       - '{name}-cppcheck-full'
     cppcheck: *cppcheck
-    basetag: '5.0'
+    basetag: '5.1'
+    disabled: false
+
+- project:
+    name: kamailio51-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '5.1'
+    browser-url: *browserurl
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
+    architectures: *architectures
+    jobs: *jobs_check
+    cppcheck: *cppcheck
+    basetag: '5.1'
     disabled: false
 
 - project:
