@@ -80,7 +80,8 @@ apt-get -y $APT_OPTIONS install cppcheck
 
 # make sure we use an up2date piuparts version, e.g.
 # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
-apt-get -y $APT_OPTIONS install -t jessie-backports piuparts
+# and lintian to solve control.tar.xz error (needs >= 2.5.50)
+apt-get -y $APT_OPTIONS install -t jessie-backports piuparts lintian
 
 # commodity packages
 apt-get -y $APT_OPTIONS install screen zsh vim
