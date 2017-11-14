@@ -4,6 +4,7 @@
 case "$distribution" in
   xenial|trusty|precise|lucid)
     export MIRROR="http://archive.ubuntu.com/ubuntu/"
+    export COMPONENTS='main,universe,restricted,multiverse'
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;
   lenny|squeeze)
@@ -11,8 +12,11 @@ case "$distribution" in
     echo "*** Building for Debian release ${distribution}, using mirror $MIRROR ***"
 esac
 
+export architecture=${architecture}
+echo "*** architecture ${architecture} ***"
+
 # sadly piuparts always returns with exit code 1 :((
-sudo piuparts_wrapper $PWD/artifacts/*.deb || true
+sudo piuparts_wrapper "${PWD}"/artifacts/*.deb || true
 
 # generate TAP report
 piuparts_tap piuparts.txt > piuparts.tap
