@@ -207,6 +207,20 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
+    branch: '*/tags/5.1*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
+    architectures: *architectures
+    jobs: *jobs_fullcheck
+    cppcheck: *cppcheck
+    basetag: '5.1'
+    disabled: false
+
+- project:
+    name: kamailio50
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
     branch: '*/tags/5.0*'
     browser-url: *browserurl
     distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
