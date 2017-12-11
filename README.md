@@ -10,7 +10,7 @@ Development of this setup is sponsored by [Sipwise](http://www.sipwise.com/).
 Involved Software
 -----------------
 
-* [Debian](http://www.debian.org/) (version 7.X, amd64)
+* [Debian](http://www.debian.org/) (version 8.X, amd64)
 * [Jenkins](http://jenkins-ci.org/)
 * [jenkins-debian-glue](http://jenkins-debian-glue.org/)
 * [Jenkins Job Builder](http://ci.openstack.org/jenkins-job-builder/)
@@ -132,4 +132,4 @@ Questions?
 ----------
 
 For Jenkins/Build environment related questions contact [Michael Prokop](https://github.com/mika/) (mprokop (at) sipwise dot com),
-for Kamailio (packaging) related questions contact [Victor Seva](https://github.com/linuxmaniac/) (vseva (at) sipwise dot com).
+for Kamailio (packaging) related questions contact [Victor Seva](https://github.com/linuxmaniac/) (linuxmaniac (at) torreviejawireless dot org).
