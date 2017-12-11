@@ -203,7 +203,7 @@
 
 # build based on tags
 - project:
-    name: kamailio50
+    name: kamailio51
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
