@@ -4,8 +4,8 @@
 case "${distribution}" in
   xenial|trusty|precise|lucid)
     export MIRROR="http://archive.ubuntu.com/ubuntu/"
-    export COMPONENTS=main,universe,restricted,multiverse
-    echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR and components $COMPONENTS ***"
+    export PIUPARTS_COMPONENTS=main,universe,restricted,multiverse
+    echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR and components ${PIUPARTS_COMPONENTS} ***"
     ;;
   lenny|squeeze)
     export MIRROR="http://archive.debian.org/debian/"
