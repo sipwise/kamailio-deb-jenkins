@@ -33,8 +33,17 @@ Automatically deploy [jenkins-debian-glue](http://jenkins-debian-glue.org/):
 Support providing additional configuration to cowbuilder + related tools:
 
     sudo tee -a /etc/sudoers.d/jenkins >/dev/null <<EOF
-    # for cowbuilder/pbuilder/... instructions in kamailio-deb-jenkins setup:
-    Defaults  env_keep+="release branch distribution JOB_NAME MIRROR DEB_BUILD_OPTIONS"
+    # Make sure DEB_* options reach cowbuilder, like e.g.:
+    #  export DEB_BUILD_OPTIONS="parallel=8" /usr/bin/build-and-provide-package
+    Defaults  env_keep+="DEB_*"
+
+    # for *-binaries job
+    jenkins ALL=NOPASSWD: /usr/sbin/cowbuilder, /usr/sbin/chroot
+    # for *-piuparts job
+    jenkins ALL=NOPASSWD: /usr/sbin/piuparts, /usr/sbin/debootstrap, /usr/bin/piuparts_wrapper
+
+    # for cowbuilder instruction:
+    Defaults  env_keep+="architecture release branch distribution JOB_NAME MIRROR COMPONENTS"
     EOF
 
 Grab a copy of this repository:

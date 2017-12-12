@@ -12,11 +12,10 @@ case "${distribution}" in
     echo "*** Building for Debian release ${distribution}, using mirror $MIRROR ***"
 esac
 
-export architecture=${architecture}
 echo "*** architecture ${architecture} ***"
 
 # sadly piuparts always returns with exit code 1 :((
-sudo -E piuparts_wrapper "${PWD}"/artifacts/*.deb || true
+sudo piuparts_wrapper "${PWD}"/artifacts/*.deb || true
 
 if [ -f piuparts.txt ] ; then
     # generate TAP report
