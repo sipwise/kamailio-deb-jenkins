@@ -25,7 +25,7 @@ fi
 echo "*** flavour=${flavour} architecture=${architecture:-} ***"
 
 # sadly piuparts always returns with exit code 1 :((
-echo sudo piuparts_wrapper -D ${flavour} -d "${distribution}" \
+sudo piuparts_wrapper -D ${flavour} -d "${distribution}" \
     --ignore=/usr/bin/db_sql \
     --ignore=/usr/share/python/pyversions.pyc \
     "${PWD}"/artifacts/*.deb || true
