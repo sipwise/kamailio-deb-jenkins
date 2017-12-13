@@ -1,10 +1,11 @@
 #!/bin/bash
-
+flavour=debian
 # use according mirror when building for Ubuntu
 case "${distribution}" in
   xenial|trusty|precise|lucid)
     export MIRROR="http://archive.ubuntu.com/ubuntu/"
     export PIUPARTS_COMPONENTS=main,universe,restricted,multiverse
+    flavour=ubuntu
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR and components ${PIUPARTS_COMPONENTS} ***"
     ;;
   lenny|squeeze)
@@ -15,7 +16,8 @@ esac
 echo "*** architecture ${architecture} ***"
 
 # sadly piuparts always returns with exit code 1 :((
-sudo piuparts_wrapper "${PWD}"/artifacts/*.deb || true
+sudo piuparts_wrapper -D ${flavour} -d ${distribution} \
+    "${PWD}"/artifacts/*.deb || true
 
 if [ -f piuparts.txt ] ; then
     # generate TAP report
