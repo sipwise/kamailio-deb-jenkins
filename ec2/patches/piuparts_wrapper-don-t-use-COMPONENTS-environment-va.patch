@@ -1,0 +1,43 @@
+From 210c6b7650f326f3bdc543da2cdd62fc1dc71236 Mon Sep 17 00:00:00 2001
+From: Victor Seva <linuxmaniac@torreviejawireless.org>
+Date: Tue, 12 Dec 2017 12:57:12 +0100
+Subject: [PATCH] [piuparts_wrapper] don't use COMPONENTS environment variable,
+ add PIPUPARTS_ prefix instead
+
+* debootstrap uses COMPONENTS internally so exporting it was causing
+  troubles like
+
+> E: Invalid Release file, no entry for main,contrib,non-free/binary-amd64/Packages
+
+fix #145
+---
+ scripts/piuparts_wrapper | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/scripts/piuparts_wrapper b/scripts/piuparts_wrapper
+index 0a53681..729fb66 100755
+--- a/scripts/piuparts_wrapper
++++ b/scripts/piuparts_wrapper
+@@ -57,15 +57,15 @@ create_base_tgz() {
+     echo "*** Using mirror $MIRROR ***"
+   fi
+ 
+-  if [ -n "${COMPONENTS:-}" ] ; then
+-    echo "*** COMPONENTS is set [$COMPONENTS], using for debootstrapping ***"
+-    components="$COMPONENTS"
++  if [ -n "${PIUPARTS_COMPONENTS:-}" ] ; then
++    echo "*** PIUPARTS_COMPONENTS is set [${PIUPARTS_COMPONENTS}], using for debootstrapping ***"
++    components="${PIUPARTS_COMPONENTS}"
+   elif lsb_release --id 2>/dev/null | grep -q Ubuntu ; then
+     components='main,universe,restricted,multiverse'
+     echo "*** Ubuntu detected, using components $components ***"
+   else
+     components='main,contrib,non-free'
+-    echo "*** COMPONENTS is unset and looks like Debian - therefore using components $components ***"
++    echo "*** PIUPARTS_COMPONENTS is unset and looks like Debian - therefore using components $components ***"
+   fi
+ 
+   tmpdir=$(mktemp -d)
+-- 
+2.15.1
+

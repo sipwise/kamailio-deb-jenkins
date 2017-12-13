@@ -1,5 +1,5 @@
 #!/bin/bash
-
+SRC_DIR=$(dirname "$(realpath "$0")")
 set -e
 
 # config
@@ -148,6 +148,14 @@ if grep -q '^PBUILDER_CONFIG=' /etc/jenkins/debian_glue 2>/dev/null ; then
   echo "!!! /etc/jenkins/debian_glue with PBUILDER_CONFIG exists already !!!"
 else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
+fi
+
+if ! grep -q 'PIUPARTS_COMPONENTS' /usr/bin/piuparts_wrapper ; then
+  echo "!!! patching /usr/bin/piuparts_wrapper !!!"
+  (
+    cd /usr/bin/
+    patch -p2 < ${SRC_DIR}/ec2/patches/piuparts_wrapper-don-t-use-COMPONENTS-environment-va.patch
+  )
 fi
 
 if ! [ -e /usr/share/debootstrap/scripts/xenial ] ; then
