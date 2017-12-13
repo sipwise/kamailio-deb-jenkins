@@ -154,7 +154,7 @@ if ! grep -q 'PIUPARTS_COMPONENTS' /usr/bin/piuparts_wrapper ; then
   echo "!!! patching /usr/bin/piuparts_wrapper !!!"
   (
     cd /usr/bin/
-    patch -p2 < ${SRC_DIR}/ec2/patches/piuparts_wrapper-don-t-use-COMPONENTS-environment-va.patch
+    patch -p2 < ${SRC_DIR}/patches/piuparts_wrapper-don-t-use-COMPONENTS-environment-va.patch
   )
 fi
 
