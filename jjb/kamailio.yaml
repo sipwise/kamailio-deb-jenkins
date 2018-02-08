@@ -10,11 +10,15 @@
     logrotate_keep: &logrotate_keep
      5
     distributions: !!python/tuple &distributions
+     - precise
+     - buster
+     - stretch
+     - jessie
      - wheezy
      - squeeze
-     - lenny
-     - lucid
      - precise
+     - trusty
+     - xenial
     architectures: !!python/tuple &architectures
      - amd64
      - i386
@@ -173,34 +177,6 @@
     basetag: '4.1'
     disabled: true
 
-- project:
-    name: kamailio40-nightly
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *refbranch
-    branch: '4.0'
-    browser-url: *browserurl
-    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '4.0'
-    disabled: true
-
-- project:
-    name: kamailio33-nightly
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *refbranch
-    branch: '3.3'
-    browser-url: *browserurl
-    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '3.3'
-    disabled: true
-
 # build based on tags
 - project:
     name: kamailio51
@@ -284,34 +260,6 @@
     jobs: *jobs_fullcheck
     cppcheck: *cppcheck
     basetag: '4.1'
-    disabled: true
-
-- project:
-    name: kamailio40
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *reftag
-    branch: '*/tags/4.0*'
-    browser-url: *browserurl
-    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '4.0'
-    disabled: true
-
-- project:
-    name: kamailio33
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *reftag
-    branch: '*/tags/3.3*'
-    browser-url: *browserurl
-    distributions: !!python/tuple [lenny, squeeze, wheezy, lucid, precise]
-    architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '3.3'
     disabled: true
 
 ## the job template

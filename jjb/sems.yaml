@@ -14,10 +14,10 @@
     debian_auto_version: &debian_auto_version
       'sems'
     distributions: !!python/tuple &distributions
+     - jessie
      - wheezy
      - squeeze
-     - lenny
-     - lucid
+     - trusty
      - precise
     architectures: !!python/tuple &architectures
      - amd64
