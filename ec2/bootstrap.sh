@@ -113,17 +113,7 @@ case "\$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  lucid)
-    # lacks eatmydata package + is EOL, so explicitely configure it
-    MIRRORSITE="http://old-releases.ubuntu.com/ubuntu/"
-    # we need key id 40976EAF437D05B5
-    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
-    # cowdancer is in universe
-    COMPONENTS="main universe"
-    # ensure it's unset
-    unset LD_PRELOAD
-    ;;
-  lenny|squeeze)
+  squeeze)
     # lacks eatmydata package, so explicitely configure it
     # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
@@ -173,7 +163,7 @@ if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
   ln -s sid /usr/share/debootstrap/scripts/buster
 fi
 
-for distri in buster stretch jessie wheezy squeeze lenny xenial trusty precise lucid ; do
+for distri in buster stretch jessie wheezy squeeze xenial trusty precise ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do
