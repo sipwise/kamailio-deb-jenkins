@@ -183,6 +183,11 @@ for distri in buster stretch jessie wheezy squeeze xenial trusty precise ; do
         echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
       fi
     fi
+
+    echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+    pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+    popd >/dev/null
   done
 done
 
