@@ -15,10 +15,15 @@ TAG=unknown
 BASE_DIR=${debian_dir:-"pkg/kamailio/deb"}
 
 if [ -n "$GIT_BRANCH" ] ; then
+  # support both
   case "$GIT_BRANCH" in
     origin/tags/*)
       build_tag=true
       TAG=${GIT_BRANCH#origin/tags/}
+      ;;
+    refs/tags/*)
+      build_tag=true
+      TAG=${GIT_BRANCH#refs/tags/}
       ;;
   esac
 fi
