@@ -22,6 +22,8 @@ if [ "$1" == "--update" ] ; then
   UPDATE=true
 fi
 
+echo "Starting at $(date)"
+
 export DEBIAN_FRONTEND=noninteractive
 export DEBIAN_PRIORITY=critical
 
@@ -193,3 +195,5 @@ done
 
 echo "Cleaning pbuilder's apt cache"
 rm -f /var/cache/pbuilder/aptcache/*
+
+echo "Finished at $(date)"
