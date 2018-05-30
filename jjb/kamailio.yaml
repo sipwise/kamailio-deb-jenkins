@@ -10,7 +10,6 @@
     logrotate_keep: &logrotate_keep
      5
     distributions: !!python/tuple &distributions
-     - precise
      - buster
      - stretch
      - jessie
@@ -19,6 +18,7 @@
      - precise
      - trusty
      - xenial
+     - bionic
     architectures: !!python/tuple &architectures
      - amd64
      - i386
@@ -80,7 +80,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
     architectures: *architectures
     jobs:
       - '{name}-source'
