@@ -10,7 +10,7 @@ export POST_BUILD_HOOK=/home/admin/kamailio-deb-jenkins/scripts/jdg-debc
 
 # set specific mirror when building for Ubuntu
 case "$distribution" in
-  xenial|trusty|precise)
+  bionic|xenial|trusty|precise)
     export MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
