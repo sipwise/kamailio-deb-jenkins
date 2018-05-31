@@ -2,7 +2,7 @@
 flavour=debian
 # use according mirror when building for Ubuntu
 case "${distribution:-}" in
-  xenial|trusty|precise)
+  bionic|xenial|trusty|precise)
     export MIRROR="http://archive.ubuntu.com/ubuntu/"
     flavour=ubuntu
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
