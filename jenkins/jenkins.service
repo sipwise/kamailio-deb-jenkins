@@ -1,0 +1,14 @@
+[Unit]
+Description=Jenkins Daemon
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/java -Djenkins.CLI.disabled=true -Djava.awt.headless=true -Dhudson.security.csrf.requestfield=Jenkins-Crumb -jar /usr/share/jenkins/jenkins.war --webroot=/var/cache/jenkins/war --httpPort=8080
+Environment="JENKINS_HOME=/var/lib/jenkins"
+User=jenkins
+Restart=on-failure
+RestartSec=5min
+
+[Install]
+WantedBy=multi-user.target
