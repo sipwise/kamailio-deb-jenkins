@@ -10,10 +10,10 @@ Development of this setup is sponsored by [Sipwise](http://www.sipwise.com/).
 Involved Software
 -----------------
 
-* [Debian](http://www.debian.org/) (version 8.X, amd64)
-* [Jenkins](http://jenkins-ci.org/)
-* [jenkins-debian-glue](http://jenkins-debian-glue.org/)
-* [Jenkins Job Builder](http://ci.openstack.org/jenkins-job-builder/)
+* [Debian](https://www.debian.org/) (version 9/stretch, amd64)
+* [Jenkins](https://jenkins.io/)
+* [jenkins-debian-glue](https://jenkins-debian-glue.org/)
+* [Jenkins Job Builder](https://docs.openstack.org/infra/jenkins-job-builder/)
 
 
 Deployment instructions
@@ -27,7 +27,7 @@ Install etckeeper for tracking changes in /etc:
 
 Automatically deploy [jenkins-debian-glue](http://jenkins-debian-glue.org/):
 
-    wget --no-check-certificate https://raw.github.com/mika/jenkins-debian-glue/master/puppet/apply.sh
+    wget https://raw.github.com/mika/jenkins-debian-glue/master/puppet/apply.sh
     sudo bash ./apply.sh $PASSWORD
 
 Support providing additional configuration to cowbuilder + related tools:
@@ -43,7 +43,7 @@ Support providing additional configuration to cowbuilder + related tools:
     jenkins ALL=NOPASSWD: /usr/sbin/piuparts, /usr/sbin/debootstrap, /usr/bin/piuparts_wrapper
 
     # for cowbuilder instruction:
-    Defaults  env_keep+="architecture release branch distribution JOB_NAME MIRROR COMPONENTS"
+    Defaults  env_keep+="architecture release branch distribution JOB_NAME MIRROR PIUPARTS_COMPONENTS"
     EOF
 
 Grab a copy of this repository:
@@ -56,7 +56,7 @@ Adopt pbuilder for usage with building for Ubuntu:
     sudo cp /home/admin/kamailio-deb-jenkins/pbuilder/pbuilderrc /etc/jenkins/pbuilderrc
     sudo dpkg -i /home/admin/kamailio-deb-jenkins/debs/ubuntu-keyring_2012.05.19_all.deb
 
-Deploy nginx as proxy for Jenkins:
+Deploy nginx as proxy for Jenkins (consider adjusting this using Let's Encrypt SSL certificates though!):
 
     sudo apt-get -y install nginx
     sudo openssl req -days 3650 -nodes -new -x509 -keyout /etc/ssl/private/server.key -out /etc/ssl/private/server.cert
@@ -65,7 +65,7 @@ Deploy nginx as proxy for Jenkins:
 
 Set up Debian repository directories:
 
-    sudo mkdir /srv/repository
+    sudo mkdir -p /srv/repository
     sudo chown jenkins /srv/repository
     sudo ln -s /srv/repository/ /srv/debian
 
@@ -80,7 +80,8 @@ GPG key setup for Debian repository:
 
 Set up jenkins-job-builder:
 
-    sudo tee -a /etc/jenkins_jobs/jenkins_jobs2.ini >/dev/null <<EOF
+    sudo mkdir -p /etc/jenkins_jobs
+    sudo tee -a /etc/jenkins_jobs/jenkins_jobs.ini >/dev/null <<EOF
     [jenkins]
     user=jenkins-job-builder
     password=$PASSWORD
@@ -89,35 +90,27 @@ Set up jenkins-job-builder:
 
 Install Matrix Reloaded Jenkins Plugin:
 
-    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/matrix-reloaded.hpi http://updates.jenkins-ci.org/latest/matrix-reloaded.hpi
+    sudo wget -O /var/lib/jenkins/plugins/matrix-reloaded.hpi http://updates.jenkins-ci.org/latest/matrix-reloaded.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/matrix-reloaded.hpi
 
 Install Build Blocker Jenkins Plugin:
 
-    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/build-blocker-plugin.hpi http://updates.jenkins-ci.org/latest/build-blocker-plugin.hpi
+    sudo wget -O /var/lib/jenkins/plugins/build-blocker-plugin.hpi http://updates.jenkins-ci.org/latest/build-blocker-plugin.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-blocker-plugin.hpi
 
 Install CppCheck Jenkins Plugin:
 
-    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/cppcheck.hpi http://updates.jenkins-ci.org/latest/cppcheck.hpi
+    sudo wget -O /var/lib/jenkins/plugins/cppcheck.hpi http://updates.jenkins-ci.org/latest/cppcheck.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/cppcheck.hpi
 
 Install Build-timeout Plugin:
 
-    sudo wget --no-check-certificate -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi
+    sudo wget -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-timeout.hpi
 
 Adjust for usage with headless Java (if not already present):
 
     echo JAVA_ARGS="-Djava.awt.headless=true" | sudo tee -a /etc/default/jenkins
-
-Fix headless issue with Java (if still running openjdk version 6, doesn't seem to be relevant for openjdk >=7):
-
-    sudo apt-get install ttf-dejavu
-    sudo java -jar /usr/lib/jvm/java-6-openjdk-common/jre/lib/compilefontconfig.jar \
-      /etc/java-6-openjdk/fontconfig.properties \
-      /usr/lib/jvm/java-6-openjdk-common/jre/lib/fontconfig.bfc
-    sudo /etc/init.d/jenkins restart
 
 Generate according Jenkins jobs:
 
