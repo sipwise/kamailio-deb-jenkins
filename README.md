@@ -30,9 +30,12 @@ Automatically deploy [jenkins-debian-glue](http://jenkins-debian-glue.org/):
     wget https://raw.github.com/mika/jenkins-debian-glue/master/puppet/apply.sh
     sudo bash ./apply.sh $PASSWORD
 
-Use systemd unit for jenkins service:
+Use custom systemd unit for jenkins service:
 
+    sudo systemctl stop jenkins
     sudo ln -s /home/admin/kamailio-deb-jenkins/jenkins/jenkins.service /etc/systemd/system/jenkins.service
+    sudo systemctl daemon-reload
+    sudo systemctl restart jenkins
 
 Support providing additional configuration to cowbuilder + related tools:
 
