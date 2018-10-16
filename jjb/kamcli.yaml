@@ -42,11 +42,19 @@
     branch: *branch
     browser-url: *browserurl
     distributions: !!python/tuple [buster, stretch, bionic, xenial]
-    jobs:
-      - '{name}-source'
-      - '{name}-binaries'
-      - '{name}-repos'
-      - '{name}-piuparts'
+    jobs: *jobs_simple
+    disabled: false
+
+# build based on tags
+- project:
+    name: kamcli
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/v*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [buster, stretch, bionic, xenial]
+    jobs: *jobs_simple
     disabled: false
 
 ## the job template
