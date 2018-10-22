@@ -105,11 +105,6 @@ Install Build Blocker Jenkins Plugin:
     sudo wget -O /var/lib/jenkins/plugins/build-blocker-plugin.hpi http://updates.jenkins-ci.org/latest/build-blocker-plugin.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-blocker-plugin.hpi
 
-Install CppCheck Jenkins Plugin:
-
-    sudo wget -O /var/lib/jenkins/plugins/cppcheck.hpi http://updates.jenkins-ci.org/latest/cppcheck.hpi
-    sudo chown jenkins:nogroup /var/lib/jenkins/plugins/cppcheck.hpi
-
 Install Build-timeout Plugin:
 
     sudo wget -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi

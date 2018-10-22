@@ -33,43 +33,11 @@
     browser: githubweb
     browser-url: &browserurl
       'https://github.com/kamailio/kamailio.git'
-    jobs: &jobs_check
-      - '{name}-source'
-      - '{name}-cppcheck'
-      - '{name}-binaries'
-      - '{name}-repos'
-      - '{name}-piuparts'
-    jobs: &jobs_fullcheck
-      - '{name}-source'
-      - '{name}-cppcheck-full'
-      - '{name}-binaries'
-      - '{name}-repos'
-      - '{name}-piuparts'
-    jobs_simple: &jobs_simple
+    jobs: &jobs_simple
       - '{name}-source'
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
-    cppcheck: &cppcheck
-      pattern: "**/cppcheck.xml"
-      # the rest is optional
-      # build status (new) error count thresholds
-      thresholds:
-        unstable: 5
-        new-unstable: 5
-        failure: 7
-        new-failure: 3
-        # severities which count towards the threshold, default all true
-        severity:
-          error: true
-          warning: true
-          information: false
-      graph:
-        xysize: [500, 200]
-        # which errors to display, default only sum
-        display:
-          sum: false
-          error: true
 
 ## list of projects with their configurations
 # build based on branches
@@ -82,15 +50,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
     architectures: *architectures
-    jobs:
-      - '{name}-source'
-      - '{name}-cppcheck'
-      - '{name}-binaries'
-      - '{name}-repos'
-      - '{name}-piuparts'
-      - '{name}-cppcheck-full'
-    cppcheck: *cppcheck
-    basetag: '5.1'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -102,9 +62,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '5.1'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -116,9 +74,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '5.0'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -130,9 +86,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '4.4'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -144,9 +98,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '4.3'
+    jobs: *jobs_simple
     disabled: true
 
 - project:
@@ -158,9 +110,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '4.2'
+    jobs: *jobs_simple
     disabled: true
 
 - project:
@@ -172,9 +122,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_check
-    cppcheck: *cppcheck
-    basetag: '4.1'
+    jobs: *jobs_simple
     disabled: true
 
 # build based on tags
@@ -187,9 +135,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '5.1'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -201,9 +147,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '5.0'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -215,9 +159,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty, xenial]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '4.4'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -229,9 +171,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '4.3'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -243,9 +183,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '4.2'
+    jobs: *jobs_simple
     disabled: false
 
 - project:
@@ -257,9 +195,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
-    jobs: *jobs_fullcheck
-    cppcheck: *cppcheck
-    basetag: '4.1'
+    jobs: *jobs_simple
     disabled: true
 
 ## the job template
@@ -501,121 +437,3 @@
         - timeout:
             timeout: 240
             fail: true
-
-- job-template:
-    name: '{name}-cppcheck-full'
-    description: |
-      Cpp source check for {name}.
-      <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-    properties:
-        - build-discarder:
-            num-to-keep: '{logrotate_keep}'
-    scm:
-      - git:
-          url: '{repos}'
-          name: origin
-          basedir: source
-          refspec: '{refspec}'
-          branches:
-            - '{branch}'
-          wipe-workspace: false
-          browser: '{browser}'
-          browser-url: '{browser-url}'
-    node: slave
-    disabled: true
-    builders:
-      - copyartifact:
-          project: '{name}-cppcheck-full'
-          filter: 'reports/*'
-          which-build: upstream-build
-          fallback-to-last-successful: true
-          optional: true
-      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
-    publishers:
-#      - copy-to-master:
-#          includes:
-#            - reports/tag.info
-      - archive:
-          artifacts: 'reports/*'
-      - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: sr-dev@lists.kamailio.org
-    parameters:
-      - bool:
-          name: full
-          default: true
-          description: "check all the source files"
-      - bool:
-          name: cppcheck_hard
-          default: true
-          description: "cppcheck with hard check options. Increases the check time!"
-      - string:
-          name: source
-          default: "source"
-          description: "sources directiory"
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 240
-          fail: true
-#      - copy-to-master:
-#          includes:
-#            - reports/tag.info
-
-- job-template:
-    name: '{name}-cppcheck'
-    description: |
-      Cpp source check for {name}.
-      <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
-    properties:
-        - build-discarder:
-            num-to-keep: '{logrotate_keep}'
-    scm:
-      - git:
-          url: '{repos}'
-          name: origin
-          basedir: source
-          refspec: '{refspec}'
-          branches:
-            - '{branch}'
-          wipe-workspace: false
-          browser: '{browser}'
-          browser-url: '{browser-url}'
-    node: master
-    properties:
-      - build-blocker:
-          use-build-blocker: true
-          blocking-jobs:
-            - ".*-cppcheck"
-            - ".*-source"
-            - ".*-repos"
-    disabled: true
-    triggers:
-      - pollscm:
-          cron: '@midnight'
-    builders:
-      - shell: '/home/admin/kamailio-deb-jenkins/scripts/jdg-cppcheck'
-    publishers:
-      - archive:
-          artifacts: 'reports/*'
-      - cppcheck: '{obj:cppcheck}'
-      - email:
-          recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
-    parameters:
-      - string:
-          name: basetag
-          default: '{basetag}'
-          description: "base tag"
-      - string:
-          name: source
-          default: "source"
-          description: "sources directiory"
-      - bool:
-          name: cppcheck_hard
-          default: false
-          description: "cppcheck with hard check options. Increases the check time!"
-    wrappers:
-      - timestamps
-      - timeout:
-          timeout: 90
-          fail: true
