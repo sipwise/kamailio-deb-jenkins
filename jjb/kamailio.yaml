@@ -172,7 +172,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio42
@@ -184,7 +184,7 @@
     distributions: !!python/tuple [jessie, wheezy, squeeze, precise, trusty]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio41
