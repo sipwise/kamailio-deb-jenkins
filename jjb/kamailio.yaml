@@ -38,6 +38,9 @@
       - '{name}-binaries'
       - '{name}-repos'
       - '{name}-piuparts'
+    slack-notifications: &slack
+      - notify-success: true
+      - notify-failure: true
 
 ## list of projects with their configurations
 # build based on branches
@@ -254,7 +257,7 @@
             record-artifacts: true
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
-        - slack
+        - slack: &slack-notifications
       wrappers:
         - timestamps
         - timeout:
@@ -325,7 +328,8 @@
             dirmatch: false
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
-        - slack
+        - slack: &slack-notifications
+          - commit-info-choice: AUTHORS_AND_TITLES
       wrappers:
         - timestamps
         - timeout:
@@ -378,7 +382,7 @@
             dirmatch: false
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
-        - slack
+        - slack: &slack-notifications
       wrappers:
         - timestamps
         - timeout:
@@ -435,7 +439,7 @@
             dirmatch: false
         - email:
             recipients: "linuxmaniac@torreviejawireless.org"
-        - slack
+        - slack: &slack-notifications
       wrappers:
         - timestamps
         - timeout:
