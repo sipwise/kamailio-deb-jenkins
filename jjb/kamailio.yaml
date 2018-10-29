@@ -254,6 +254,7 @@
             record-artifacts: true
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
+        - slack
       wrappers:
         - timestamps
         - timeout:
@@ -324,6 +325,7 @@
             dirmatch: false
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
+        - slack
       wrappers:
         - timestamps
         - timeout:
@@ -376,6 +378,7 @@
             dirmatch: false
         - email:
             recipients: "sr-dev@lists.kamailio.org, linuxmaniac@torreviejawireless.org"
+        - slack
       wrappers:
         - timestamps
         - timeout:
@@ -432,6 +435,7 @@
             dirmatch: false
         - email:
             recipients: "linuxmaniac@torreviejawireless.org"
+        - slack
       wrappers:
         - timestamps
         - timeout:
