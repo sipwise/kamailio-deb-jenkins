@@ -44,7 +44,7 @@
     slack_build: &slack_notifications_build
       notify-success: true
       notify-failure: true
-      commit-info-choice: AUTHORS_AND_TITLES 
+      commit-info-choice: AUTHORS_AND_TITLES
 
 ## list of projects with their configurations
 # build based on branches
