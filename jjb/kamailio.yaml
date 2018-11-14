@@ -69,7 +69,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: *branch
+    branch: '5.2'
     browser-url: *browserurl
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
     architectures: *architectures
@@ -159,7 +159,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio51
