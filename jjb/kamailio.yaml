@@ -156,7 +156,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: true
+    disabled: false
 
 - project:
     name: kamailio51
