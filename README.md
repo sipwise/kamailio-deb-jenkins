@@ -40,17 +40,13 @@ Use custom systemd unit for jenkins service:
 Support providing additional configuration to cowbuilder + related tools:
 
     sudo tee -a /etc/sudoers.d/jenkins >/dev/null <<EOF
-    # Make sure DEB_* options reach cowbuilder, like e.g.:
-    #  export DEB_BUILD_OPTIONS="parallel=8" /usr/bin/build-and-provide-package
-    Defaults  env_keep+="DEB_*"
-
     # for *-binaries job
     jenkins ALL=NOPASSWD: /usr/sbin/cowbuilder, /usr/sbin/chroot
     # for *-piuparts job
     jenkins ALL=NOPASSWD: /usr/sbin/piuparts, /usr/sbin/debootstrap, /usr/bin/piuparts_wrapper
 
     # for cowbuilder instruction:
-    Defaults  env_keep+="architecture release branch distribution JOB_NAME MIRROR PIUPARTS_COMPONENTS"
+    Defaults  env_keep+="architecture branch distribution release ARCH DEB_* DIST JOB_NAME MIRROR PIUPARTS_*"
     EOF
 
 Grab a copy of this repository:
