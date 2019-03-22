@@ -124,7 +124,14 @@ case "\$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  wheezy|jessie|stretch|buster|*)
+  wheezy)
+    # nowadays also resides on archive
+    MIRRORSITE="http://archive.debian.org/debian/"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  jessie|stretch|buster|*)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"

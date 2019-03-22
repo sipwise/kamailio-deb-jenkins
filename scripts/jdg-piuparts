@@ -7,7 +7,7 @@ case "${distribution:-}" in
     flavour=ubuntu
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;
-  squeeze)
+  squeeze|wheezy)
     export MIRROR="http://archive.debian.org/debian/"
     echo "*** Building for Debian release ${distribution}, using mirror $MIRROR ***"
 esac
