@@ -187,11 +187,10 @@ for distri in buster stretch jessie wheezy squeeze xenial trusty precise bionic 
       eatmydata cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
     else
       if $UPDATE ; then
-        # replace http.debian.net with our actual Debian mirror
-        if grep -q 'http.debian.net' /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list ; then
-          echo "!!! Setting $DEBIAN_MIRROR as Debian mirror in /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list !!!"
-          sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
-        fi
+        (
+          source /etc/jenkins/pbuilderrc
+          echo "deb ${MIRRORSITE} ${distribution} ${COMPONENTS:-main}" > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
+        )
 
         echo "!!! Executing update for cowbuilder as requested !!!"
         eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
