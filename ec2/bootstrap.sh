@@ -51,7 +51,7 @@ fi
 # make sure we use up2date packages
 echo "!!! Enabling Debian backports !!!"
 cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://${DEBIAN_MIRROR}/debian jessie-backports main
+deb http://archive.debian.org/debian jessie-backports main
 EOF
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
@@ -59,12 +59,24 @@ if grep -q 'http.debian.net' /etc/apt/sources.list ; then
   sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /etc/apt/sources.list
 fi
 
+if grep -q 'jessie-updates' /etc/apt/sources.list ; then
+  echo "!!! Disabling no-longer-existing jessie-updates in /etc/apt/sources.list !!!"
+  sed -i 's/\(^deb.* jessie-updates .*\)/# disabled by ec2\/bootstrap.sh\n# \1/' /etc/apt/sources.list
+fi
+
 # make sure we don't get stuck if debconf wants to pop up because of a modified conf file
 APT_OPTIONS='-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold'
 
-if ! apt-get update ; then
+# jessie repos expired, so disable the repository check iff running on jessie
+case "$(lsb_release -c -s)" in
+  jessie)
+    APT_OPTIONS="$APT_OPTIONS -o Acquire::Check-Valid-Until=false"
+    ;;
+esac
+
+if ! apt-get $APT_OPTIONS update ; then
   echo "Retrying apt-get update once more after failure"
-  apt-get update
+  apt-get $APT_OPTIONS update
 fi
 
 apt-get -y $APT_OPTIONS upgrade
