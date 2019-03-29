@@ -3,7 +3,7 @@
 set -e
 
 # config
-DEBIAN_MIRROR="ftp.de.debian.org"
+DEBIAN_MIRROR="deb.debian.org"
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
   echo "$0 creates (or updates) Debian + Ubuntu build environments"
