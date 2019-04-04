@@ -218,14 +218,27 @@ for distri in buster stretch jessie wheezy squeeze xenial trusty precise bionic 
         echo "!!! Executing update for cowbuilder as requested !!!"
         eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
       else
-        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
+        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
       fi
     fi
 
-    echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
-    pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
-    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
-    popd >/dev/null
+    if $UPDATE ; then
+      echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
+      echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+      pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+      tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+      popd >/dev/null
+    else
+      if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
+        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.tgz exists already (execute '$0 --update' to force (re)building) !!!"
+      else
+        echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+        pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+        tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+        popd >/dev/null
+      fi
+    fi
+
   done
 done
 
