@@ -5,6 +5,9 @@ set -e
 # config
 DEBIAN_MIRROR="deb.debian.org"
 
+# depending on the Debian version we're running on adjust runtime behavior
+DEBIAN_VERSION="$(lsb_release -c -s)"
+
 if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
   echo "$0 creates (or updates) Debian + Ubuntu build environments"
   echo
@@ -48,17 +51,28 @@ else
   dpkg -i ubuntu-keyring_2012.05.19_all.deb
 fi
 
-# make sure we use up2date packages
-echo "!!! Enabling Debian backports !!!"
-cat > /etc/apt/sources.list.d/backports.list << EOF
+# jessie repos expired, so disable the repository check iff running on jessie
+case "${DEBIAN_VERSION}" in
+  jessie)
+    echo "!!! Enabling Debian backports for usage on jessie !!!"
+    cat > /etc/apt/sources.list.d/backports.list << EOF
 deb http://archive.debian.org/debian jessie-backports main
 EOF
+    ;;
+  *)
+    echo "!!! Enabling Debian backports !!!"
+    cat > /etc/apt/sources.list.d/backports.list << EOF
+deb http://${DEBIAN_MIRROR}/debian ${DEBIAN_VERSION}-backports main
+EOF
+  ;;
+esac
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
   echo "!!! Setting ${DEBIAN_MIRROR} as Debian mirror in /etc/apt/sources.list !!!"
   sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /etc/apt/sources.list
 fi
 
+# backwards compatibility if running on jessie based slaves
 if grep -q 'jessie-updates' /etc/apt/sources.list ; then
   echo "!!! Disabling no-longer-existing jessie-updates in /etc/apt/sources.list !!!"
   sed -i 's/\(^deb.* jessie-updates .*\)/# disabled by ec2\/bootstrap.sh\n# \1/' /etc/apt/sources.list
@@ -68,7 +82,7 @@ fi
 APT_OPTIONS='-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold'
 
 # jessie repos expired, so disable the repository check iff running on jessie
-case "$(lsb_release -c -s)" in
+case "${DEBIAN_VERSION}" in
   jessie)
     APT_OPTIONS="$APT_OPTIONS -o Acquire::Check-Valid-Until=false"
     ;;
@@ -85,19 +99,24 @@ apt-get -y $APT_OPTIONS dist-upgrade
 # packages required for building on slaves
 apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv ntp facter eatmydata
 
-# packages required from jessie-backports
-apt-get -y $APT_OPTIONS install -t jessie-backports ca-certificates-java openjdk-8-jre-headless
-apt-get -y $APT_OPTIONS remove openjdk-7-jre-headless default-jre-headless
-# required for build-profile support in e.g. rtpengine
-apt-get -y $APT_OPTIONS install -t jessie-backports pbuilder
+case "${DEBIAN_VERSION}" in
+  jessie)
+    apt-get -y $APT_OPTIONS install -t jessie-backports ca-certificates-java openjdk-8-jre-headless
+    apt-get -y $APT_OPTIONS remove openjdk-7-jre-headless default-jre-headless
+    # required for build-profile support in e.g. rtpengine
+    apt-get -y $APT_OPTIONS install -t jessie-backports pbuilder
+    # make sure we use an up2date piuparts version, e.g.
+    # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
+    # and lintian to solve control.tar.xz error (needs >= 2.5.50)
+    apt-get -y $APT_OPTIONS install -t jessie-backports piuparts lintian
+    ;;
+  *)
+    apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
+    apt-get -y $APT_OPTIONS install pbuilder piuparts lintian
+esac
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
-
-# make sure we use an up2date piuparts version, e.g.
-# to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
-# and lintian to solve control.tar.xz error (needs >= 2.5.50)
-apt-get -y $APT_OPTIONS install -t jessie-backports piuparts lintian
 
 # commodity packages
 apt-get -y $APT_OPTIONS install screen zsh vim
@@ -126,13 +145,6 @@ case "\$distribution" in
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
-    # ensure it's unset
-    unset LD_PRELOAD
-    ;;
-  squeeze)
-    # lacks eatmydata package, so explicitely configure it
-    # nowadays also resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
     # ensure it's unset
     unset LD_PRELOAD
     ;;
@@ -183,7 +195,7 @@ if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
   ln -s sid /usr/share/debootstrap/scripts/buster
 fi
 
-for distri in buster stretch jessie wheezy squeeze xenial trusty precise bionic ; do
+for distri in buster stretch jessie wheezy xenial trusty precise bionic ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do
@@ -199,14 +211,27 @@ for distri in buster stretch jessie wheezy squeeze xenial trusty precise bionic 
         echo "!!! Executing update for cowbuilder as requested !!!"
         eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
       else
-        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already !!!"
+        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
       fi
     fi
 
-    echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
-    pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
-    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
-    popd >/dev/null
+    if $UPDATE ; then
+      echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
+      echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+      pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+      tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+      popd >/dev/null
+    else
+      if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
+        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.tgz exists already (execute '$0 --update' to force (re)building) !!!"
+      else
+        echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+        pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+        tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+        popd >/dev/null
+      fi
+    fi
+
   done
 done
 
