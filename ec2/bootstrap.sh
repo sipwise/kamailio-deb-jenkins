@@ -148,13 +148,6 @@ case "\$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  squeeze)
-    # lacks eatmydata package, so explicitely configure it
-    # nowadays also resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
-    # ensure it's unset
-    unset LD_PRELOAD
-    ;;
   wheezy)
     # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
@@ -202,7 +195,7 @@ if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
   ln -s sid /usr/share/debootstrap/scripts/buster
 fi
 
-for distri in buster stretch jessie wheezy squeeze xenial trusty precise bionic ; do
+for distri in buster stretch jessie wheezy xenial trusty precise bionic ; do
   export distribution=$distri # for usage in pbuilderrc
 
   for arch in amd64 i386 ; do

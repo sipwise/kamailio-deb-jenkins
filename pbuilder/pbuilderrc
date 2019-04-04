@@ -20,13 +20,6 @@ case "$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  squeeze)
-    # lacks eatmydata package, so explicitely configure it
-    # nowadays also resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
-    # ensure it's unset
-    unset LD_PRELOAD
-    ;;
   wheezy)
     # nowadays also resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
