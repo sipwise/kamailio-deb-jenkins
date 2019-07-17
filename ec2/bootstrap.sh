@@ -192,7 +192,7 @@ case "\$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
     ;;
-  jessie|stretch|buster|*)
+  jessie|stretch|buster|bullseye|*)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
@@ -230,6 +230,11 @@ fi
 if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
   echo "Debootstrap version doesn't know about Debian buster yet, creating according symlink"
   ln -s sid /usr/share/debootstrap/scripts/buster
+fi
+
+if ! [ -e /usr/share/debootstrap/scripts/bullseye ] ; then
+  echo "Debootstrap version doesn't know about Debian bullseye yet, creating according symlink"
+  ln -s sid /usr/share/debootstrap/scripts/bullseye
 fi
 
 export distribution=${distri} # for usage in pbuilderrc
