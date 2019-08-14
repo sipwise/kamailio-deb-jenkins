@@ -171,6 +171,8 @@ case "\$distribution" in
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # security and updates
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ \${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu \${distribution}-security main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
@@ -182,6 +184,8 @@ case "\$distribution" in
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # security and updates
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ \${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu \${distribution}-security main universe"
     # ensure it's unset
     unset LD_PRELOAD
     ;;
@@ -192,7 +196,15 @@ case "\$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
     ;;
-  jessie|stretch|buster|bullseye|*)
+  jessie|stretch|buster)
+    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    # security and updates
+    OTHERMIRROR="deb http://security.debian.org/debian-security \${distribution}/updates main"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  bullseye|*)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
@@ -241,16 +253,18 @@ export distribution=${distri} # for usage in pbuilderrc
 
 for arch in amd64 i386 ; do
   if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-    eatmydata cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
+    eatmydata cowbuilder --create \
+      --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
+      --distribution ${distri} --debootstrapopts --arch \
+      --debootstrapopts ${arch} --debootstrapopts --variant=buildd \
+      --configfile=/etc/jenkins/pbuilderrc
   else
     if $UPDATE ; then
-      (
-        source /etc/jenkins/pbuilderrc
-        echo "deb ${MIRRORSITE} ${distribution} ${COMPONENTS:-main}" > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
-      )
-
       echo "!!! Executing update for cowbuilder as requested !!!"
-      eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
+      eatmydata cowbuilder --update \
+        --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
+        --distribution ${distri} \
+        --configfile=/etc/jenkins/pbuilderrc
     else
       echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
     fi

@@ -6,6 +6,8 @@ case "$distribution" in
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # security and updates
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ ${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu ${distribution}-security main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
@@ -17,6 +19,8 @@ case "$distribution" in
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
+    # security and updates
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ ${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu ${distribution}-security main universe"
     # ensure it's unset
     unset LD_PRELOAD
     ;;
@@ -27,7 +31,15 @@ case "$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
     ;;
-  jessie|stretch|buster|*)
+  jessie|stretch|buster)
+    MIRRORSITE="http://ftp.de.debian.org/debian"
+    # security and updates
+    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  bullseye|*)
     MIRRORSITE="http://ftp.de.debian.org/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
