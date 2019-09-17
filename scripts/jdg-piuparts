@@ -1,15 +1,13 @@
 #!/bin/bash
 flavour=debian
-# use according mirror when building for Ubuntu
+
+source /etc/jenkins/pbuilderrc
+export MIRROR=${MIRRORSITE}
+
 case "${distribution:-}" in
   bionic|xenial|trusty|precise)
-    export MIRROR="http://archive.ubuntu.com/ubuntu/"
     flavour=ubuntu
-    echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRROR ***"
     ;;
-  wheezy)
-    export MIRROR="http://archive.debian.org/debian/"
-    echo "*** Building for Debian release ${distribution}, using mirror $MIRROR ***"
 esac
 
 if [ ${flavour} = ubuntu ] ; then
@@ -17,12 +15,13 @@ if [ ${flavour} = ubuntu ] ; then
     echo "*** using components [${PIUPARTS_COMPONENTS}] ***"
 fi
 
-echo "*** flavour=${flavour} architecture=${architecture:-} ***"
+echo "*** flavour=${flavour} architecture=${architecture:-} mirror=${MIRROR} extra-repo=${OTHERMIRROR} ***"
 
 # sadly piuparts always returns with exit code 1 :((
 sudo piuparts_wrapper -D ${flavour} -d "${distribution}" \
     --ignore=/usr/bin/db_sql \
     --ignore=/usr/share/python/pyversions.pyc \
+    --extra-repo=${OTHERMIRROR} \
     "${PWD}"/artifacts/*.deb || true
 
 if [ -f piuparts.txt ] ; then
