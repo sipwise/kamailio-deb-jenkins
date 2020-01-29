@@ -11,7 +11,7 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   trusty|precise)
-    # lacks eatmydata package, so explicitely configure it
+    # lacks eatmydata package, so explicitly configure it
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
