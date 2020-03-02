@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6dcefc_a83ba743",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T16:15:27Z",
+      "side": 1,
+      "message": "being",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 55
+      },
+      "revId": "37f286ac6c1af3d1bc74f0ddd44899a6a052d7a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa505d1_82e2124e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T16:15:27Z",
+      "side": 1,
+      "message": "let\u0027s, apostrophe missing",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "37f286ac6c1af3d1bc74f0ddd44899a6a052d7a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0779481d_d11808e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T16:15:27Z",
+      "side": 1,
+      "message": "I\u0027m not religious about it, but the capital letter is not really needed here, not sure why you changed it from lowercase to uppercase now? :D",
+      "range": {
+        "startLine": 10,
+        "startChar": 38,
+        "endLine": 10,
+        "endChar": 40
+      },
+      "revId": "37f286ac6c1af3d1bc74f0ddd44899a6a052d7a8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}

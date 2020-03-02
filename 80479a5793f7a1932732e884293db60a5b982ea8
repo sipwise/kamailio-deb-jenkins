@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e42001b8_20c15237",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T16:15:27Z",
+      "side": 1,
+      "message": "Better than before, but I think that here you want a \"due\" (or a \"because\")",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "80479a5793f7a1932732e884293db60a5b982ea8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a13ef67_b57ddabf",
         "filename": "ec2/bootstrap.sh",
         "patchSetId": 1
@@ -45,6 +68,30 @@
       "revId": "80479a5793f7a1932732e884293db60a5b982ea8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32bf649_63770378",
+        "filename": "ec2/bootstrap.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T16:15:27Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "0a13ef67_b57ddabf",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "80479a5793f7a1932732e884293db60a5b982ea8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
