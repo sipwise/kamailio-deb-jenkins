@@ -106,6 +106,11 @@ Install Build-timeout Plugin:
     sudo wget -O /var/lib/jenkins/plugins/build-timeout.hpi http://updates.jenkins-ci.org/latest/build-timeout.hpi
     sudo chown jenkins:nogroup /var/lib/jenkins/plugins/build-timeout.hpi
 
+Install groovy-label-assignment Plugin:
+
+    sudo wget -O /var/lib/jenkins/plugins/groovy-label-assignment.hpi http://updates.jenkins-ci.org/latest/groovy-label-assignment.hpi
+    sudo chown jenkins:nogroup /var/lib/jenkins/plugins/groovy-label-assignment.hpi
+
 Adjust for usage with headless Java (if not already present):
 
     echo JAVA_ARGS="-Djava.awt.headless=true" | sudo tee -a /etc/default/jenkins

@@ -8,21 +8,40 @@ DEBIAN_MIRROR="deb.debian.org"
 # depending on the Debian version we're running on adjust runtime behavior
 DEBIAN_VERSION="$(lsb_release -c -s)"
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] ; then
+usage() { # Function: Print a help message.
   echo "$0 creates (or updates) Debian + Ubuntu build environments"
   echo
-  echo "Usage: $0 [--update]"
-  exit 0
+  echo "Usage: $0 [ -u ] distribution" 1>&2
+}
+
+exit_abnormal() { # Function: Exit with error.
+  usage
+  exit 1
+}
+
+UPDATE=false
+while getopts "hu" options; do
+  case "${options}" in
+    h) usage; exit 0;;
+    u) UPDATE=true;;
+    :) echo "Error: -${OPTARG} requires an argument."; exit_abnormal;;
+    *) exit_abnormal;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [[ $# != 1 ]] ; then
+  echo "Error: bad number of arguments" 1>&2
+  echo
+  usage
+  exit 1
 fi
+distri=${1}
+
 
 if [ "$(id -u 2>/dev/null)" != 0 ] ; then
   echo "Error: please execute this script as user root" >&2
   exit 1
-fi
-
-UPDATE=false
-if [ "$1" == "--update" ] ; then
-  UPDATE=true
 fi
 
 echo "Starting at $(date)"
@@ -209,44 +228,42 @@ if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
   ln -s sid /usr/share/debootstrap/scripts/buster
 fi
 
-for distri in buster stretch jessie wheezy xenial trusty precise bionic ; do
-  export distribution=$distri # for usage in pbuilderrc
+export distribution=${distri} # for usage in pbuilderrc
 
-  for arch in amd64 i386 ; do
-    if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-      eatmydata cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
-    else
-      if $UPDATE ; then
-        (
-          source /etc/jenkins/pbuilderrc
-          echo "deb ${MIRRORSITE} ${distribution} ${COMPONENTS:-main}" > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
-        )
-
-        echo "!!! Executing update for cowbuilder as requested !!!"
-        eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
-      else
-        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
-      fi
-    fi
-
+for arch in amd64 i386 ; do
+  if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
+    eatmydata cowbuilder --create --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --debootstrapopts --arch --debootstrapopts ${arch} --debootstrapopts --variant=buildd --configfile=/etc/jenkins/pbuilderrc
+  else
     if $UPDATE ; then
-      echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
+      (
+        source /etc/jenkins/pbuilderrc
+        echo "deb ${MIRRORSITE} ${distribution} ${COMPONENTS:-main}" > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/sources.list
+      )
+
+      echo "!!! Executing update for cowbuilder as requested !!!"
+      eatmydata cowbuilder --update --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow --distribution ${distri} --configfile=/etc/jenkins/pbuilderrc
+    else
+      echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
+    fi
+  fi
+
+  if $UPDATE ; then
+    echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
+    echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+    pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+    popd >/dev/null
+  else
+    if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
+      echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.tgz exists already (execute '$0 --update' to force (re)building) !!!"
+    else
       echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
       pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
       tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
       popd >/dev/null
-    else
-      if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
-        echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.tgz exists already (execute '$0 --update' to force (re)building) !!!"
-      else
-        echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
-        pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
-        tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
-        popd >/dev/null
-      fi
     fi
+  fi
 
-  done
 done
 
 echo "Cleaning pbuilder's apt cache"

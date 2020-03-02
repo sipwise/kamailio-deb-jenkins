@@ -137,9 +137,13 @@
       description: |
         Build Debian/Ubuntu binary packages of {name}.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      node: master
       properties:
         - build-discarder:
             num-to-keep: '{logrotate_keep}'
+        - groovy-label:
+            script:
+              !include-raw-escape: groovy-label.groovy
       execution-strategy:
         sequential: true
       disabled: '{obj:disabled}'
@@ -148,11 +152,6 @@
             type: user-defined
             name: distribution
             values: '{obj:distributions}'
-        - axis:
-            type: slave
-            name: label
-            values:
-              - slave
       builders:
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
         - shell: |
@@ -229,7 +228,7 @@
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/distribution=$distribution,label=slave'
+            project: '{name}-binaries/distribution=$distribution'
             filter: '*'
             which-build: upstream-build
             fallback-to-last-successful: true
@@ -257,9 +256,13 @@
       description: |
         Installation and upgrade tests for {name} Debian packages.
         <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      node: master
       properties:
         - build-discarder:
             num-to-keep: '{logrotate_keep}'
+        - groovy-label:
+            script:
+             !include-raw-escape: groovy-label.groovy
       disabled: false
       execution-strategy:
         sequential: true
@@ -268,18 +271,13 @@
             type: user-defined
             name: distribution
             values: '{obj:distributions}'
-        - axis:
-            type: slave
-            name: label
-            values:
-              - slave
       builders:
         - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
         - shell: |
            echo "* Removing files workspace before copying artifacts from another project. *"
            rm -f ./* || true
         - copyartifact:
-            project: '{name}-binaries/distribution=$distribution,label=slave'
+            project: '{name}-binaries/distribution=$distribution'
             filter: '*.deb'
             which-build: upstream-build
             fallback-to-last-successful: true
