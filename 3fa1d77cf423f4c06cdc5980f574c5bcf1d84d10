@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1ba6281_166212c1",
+        "filename": "ec2/bootstrap.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T15:55:35Z",
+      "side": 0,
+      "message": "apt can fail execution for other reasons, e.g. blip in the network in the middle of a download or \"random\" 500 from the server, so I think that it\u0027s better to keep this code (or an equivalent), and maybe add a small \"sleep\" period for good measure.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 2
+      },
+      "revId": "3fa1d77cf423f4c06cdc5980f574c5bcf1d84d10",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}

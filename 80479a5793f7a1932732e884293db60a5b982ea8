@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70b6b284_fb72a468",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T15:55:35Z",
+      "side": 1,
+      "message": "due to dpkg already being executed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 9,
+        "endChar": 59
+      },
+      "revId": "80479a5793f7a1932732e884293db60a5b982ea8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a13ef67_b57ddabf",
+        "filename": "ec2/bootstrap.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-02T15:55:35Z",
+      "side": 1,
+      "message": "TIL $[] :-)\n\nBut I think that it\u0027s better to use $(()), due to (man bash):\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nArithmetic Expansion\n\nArithmetic expansion allows the evaluation of an arithmetic expression and the substitution of the result.  The format for arithmetic expansion is:\n\n  $((expression))\n\nThe old format $[expression] is deprecated and will be removed in upcoming versions of bash.\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "80479a5793f7a1932732e884293db60a5b982ea8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
