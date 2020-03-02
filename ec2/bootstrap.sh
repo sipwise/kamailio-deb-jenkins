@@ -88,11 +88,20 @@ case "${DEBIAN_VERSION}" in
     ;;
 esac
 
-if ! apt-get $APT_OPTIONS update ; then
-  echo "Retrying apt-get update once more after failure"
-  apt-get $APT_OPTIONS update
-fi
+step=5
+while [[ $step -ne 0 ]]; do
+  echo "$(date) check[$step] /var/lib/dpkg/lock"
+  if lsof /var/lib/dpkg/lock >/dev/null 2>&1 ; then
+    echo "$(date) dpkg lock in use, go to sleep for a while[${step}]"
+    sleep 5
+    step=$[${step}-1]
+  else
+    echo "$(date) check passed /var/lib/dpkg/lock"
+    step=0
+  fi
+done
 
+apt-get $APT_OPTIONS update
 apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
