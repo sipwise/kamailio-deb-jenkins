@@ -9,16 +9,6 @@
     name: global
     logrotate_keep: &logrotate_keep
      5
-    distributions: !!python/tuple &distributions
-     - buster
-     - stretch
-     - jessie
-     - wheezy
-     - squeeze
-     - precise
-     - trusty
-     - xenial
-     - bionic
     architectures: !!python/tuple &architectures
      - amd64
      - i386
