@@ -43,7 +43,7 @@
       <instanceCap>10</instanceCap>
       <templates>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave buster</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -97,7 +97,7 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave stretch</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -151,7 +151,7 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave jessie</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -205,7 +205,7 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave wheezy</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -260,7 +260,7 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave precise</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -314,7 +314,7 @@ sudo ./ec2/bootstrap.sh -u precise &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave trusty</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -368,7 +368,7 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave xenial</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -422,7 +422,7 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0c3896bbb5b50996c</ami>
+          <ami>ami-04c38657ce3626d69</ami>
           <description>jenkins-debian-glue-slave bionic</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
