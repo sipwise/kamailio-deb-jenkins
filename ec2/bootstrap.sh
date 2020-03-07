@@ -2,6 +2,10 @@
 
 set -e
 
+echo "disable unattended-upgrades service"
+systemctl stop unattended-upgrades.service
+systemctl disable unattended-upgrades.service
+
 # config
 DEBIAN_MIRROR="deb.debian.org"
 
