@@ -134,7 +134,7 @@ apt-get -y $APT_OPTIONS upgrade
 apt-get -y $APT_OPTIONS dist-upgrade
 
 # packages required for building on slaves
-apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv ntp facter eatmydata
+apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv facter eatmydata
 
 case "${DEBIAN_VERSION}" in
   jessie)
