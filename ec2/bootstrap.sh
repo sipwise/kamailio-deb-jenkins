@@ -253,18 +253,28 @@ export distribution=${distri} # for usage in pbuilderrc
 
 for arch in amd64 i386 ; do
   if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
-    eatmydata cowbuilder --create \
-      --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
-      --distribution ${distri} --debootstrapopts --arch \
-      --debootstrapopts ${arch} --debootstrapopts --variant=buildd \
-      --configfile=/etc/jenkins/pbuilderrc
+    (
+      source /etc/jenkins/pbuilderrc
+      eatmydata cowbuilder --create \
+        --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
+        --distribution ${distri} --debootstrapopts --arch \
+        --debootstrapopts ${arch} --debootstrapopts --variant=buildd \
+        --configfile=/etc/jenkins/pbuilderrc \
+        --mirror ${MIRRORSITE} \
+        --othermirror="${OTHERMIRROR}"
+    )
   else
     if $UPDATE ; then
       echo "!!! Executing update for cowbuilder as requested !!!"
-      eatmydata cowbuilder --update \
-        --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
-        --distribution ${distri} \
-        --configfile=/etc/jenkins/pbuilderrc
+      (
+        source /etc/jenkins/pbuilderrc
+        eatmydata cowbuilder --update \
+          --basepath /var/cache/pbuilder/base-${distri}-${arch}.cow \
+          --distribution ${distri} \
+          --configfile=/etc/jenkins/pbuilderrc \
+          --mirror ${MIRRORSITE} \
+          --othermirror="${OTHERMIRROR}" --override-config
+      )
     else
       echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
     fi
