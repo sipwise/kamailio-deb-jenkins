@@ -13,6 +13,8 @@ env
 build_tag=false
 TAG=unknown
 BASE_DIR=${debian_dir:-"pkg/kamailio/deb"}
+distribution=${distribution:-unknown}
+BUILD_NUMBER=${BUILD_NUMBER:-0}
 
 if [ -n "$GIT_BRANCH" ] ; then
   # support both
@@ -35,35 +37,48 @@ fi
 
 git clean -fxd
 
+if [ ! -d "${BASE_DIR}/${distribution}" ]; then
+  echo "${distribution} not supported"
+  exit 1
+fi
+
+rm -rf debian
 cp -a "${BASE_DIR}/${distribution}" debian
 
 export DEBEMAIL="Jenkins Sipwise <jenkins@sipwise.com>"
 
-ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
-TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
-DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
-AUTO_VERSION="${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}"
-
-if [ -n "$debian_auto_version" ]; then
-  case "$debian_auto_version" in
-    sems)
-      DESCRIBE=$(git describe --match "${tagbase}" --always)
-      echo "*** setting sems auto_version from ${DESCRIBE} ***"
-      DESCRIBE=$(echo -n ${DESCRIBE}| sed 's/^.*-\([0-9]\+\)-\([a-zA-Z0-9]\+\)$/\1~\2/')
-      AUTO_VERSION="${ORIG_VERSION}+0~${DESCRIBE}"
-      ;;
-    esac
-fi
-
 if "$build_tag" ; then
   echo "*** Building a tagged version (${TAG}).***"
-  dch -b --distribution="${DISTRIBUTION}" \
-    --newversion="${ORIG_VERSION}+${distribution}" \
+  dch -b --distribution="${distribution}" \
+    --newversion="${TAG}" \
     -- "Automated package build for tag $TAG and distribution $distribution."
 else
-  echo "*** Building version (${AUTO_VERSION}+${distribution}).***"
-  dch -b --distribution="${DISTRIBUTION}" \
-    --newversion="${AUTO_VERSION}+${distribution}" \
+  VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
+  DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
+  case "$DISTRIBUTION" in
+   UNRELEASED) echo "*** UNRELEASED detected, use ${VERSION}" ;;
+   *)
+    if [ "${GIT_BRANCH}" != "origin/master" ]; then
+      # use next point version instead, this is a nightly build
+      # if we have A.B.C as ORIG_VERSION we should use A.B.C+1 instead
+      [[ ${VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
+      NEXT=${BASH_REMATCH[3]}
+      (( NEXT++ ))
+      VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${NEXT}"
+      echo "*** branch build detected, next version is ${VERSION}"
+    fi
+    ;;
+  esac
+  TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
+  if [[ "${VERSION}" =~ ~dev[0-9]+ ]] ; then
+    echo "*** dev version detected ***"
+    AUTO_VERSION="${VERSION}+${TIMESTAMP}.${BUILD_NUMBER}"
+  else
+    AUTO_VERSION="${VERSION}~${TIMESTAMP}.${BUILD_NUMBER}"
+  fi
+  echo "*** Building version ${AUTO_VERSION} for ${distribution}.***"
+  dch -b --distribution="${distribution}" \
+    --newversion="${AUTO_VERSION}" \
     -- "Automated package build."
 fi
 
