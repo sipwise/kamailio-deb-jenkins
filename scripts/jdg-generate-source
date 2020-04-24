@@ -39,31 +39,25 @@ cp -a "${BASE_DIR}/${distribution}" debian
 
 export DEBEMAIL="Jenkins Sipwise <jenkins@sipwise.com>"
 
-ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
-TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
-DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
-AUTO_VERSION="${ORIG_VERSION}+0~${TIMESTAMP}.${BUILD_NUMBER}"
-
-if [ -n "$debian_auto_version" ]; then
-  case "$debian_auto_version" in
-    sems)
-      DESCRIBE=$(git describe --match "${tagbase}" --always)
-      echo "*** setting sems auto_version from ${DESCRIBE} ***"
-      DESCRIBE=$(echo -n ${DESCRIBE}| sed 's/^.*-\([0-9]\+\)-\([a-zA-Z0-9]\+\)$/\1~\2/')
-      AUTO_VERSION="${ORIG_VERSION}+0~${DESCRIBE}"
-      ;;
-    esac
-fi
-
 if "$build_tag" ; then
   echo "*** Building a tagged version (${TAG}).***"
-  dch -b --distribution="${DISTRIBUTION}" \
-    --newversion="${ORIG_VERSION}+${distribution}" \
+  dch -b --distribution="${distribution}" \
+    --newversion="${TAG}" \
     -- "Automated package build for tag $TAG and distribution $distribution."
 else
+  ORIG_VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
+  DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
+  if [ "$DISTRIBUTION" != "UNRELEASED" ] ; then
+    [[ ${ORIG_VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
+    NEXT=${BASH_REMATCH[2]}
+    (( NEXT++ ))
+    ORIG_VERSION="${BASH_REMATCH[0]}.${BASH_REMATCH[1]}.${NEXT}"
+  fi
+  TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
+  AUTO_VERSION="${ORIG_VERSION}~${TIMESTAMP}.${BUILD_NUMBER}"
   echo "*** Building version (${AUTO_VERSION}+${distribution}).***"
-  dch -b --distribution="${DISTRIBUTION}" \
-    --newversion="${AUTO_VERSION}+${distribution}" \
+  dch -b --distribution="${distribution}" \
+    --newversion="${AUTO_VERSION}" \
     -- "Automated package build."
 fi
 
