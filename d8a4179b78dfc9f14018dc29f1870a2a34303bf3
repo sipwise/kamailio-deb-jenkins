@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019b7818_767bcbda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "Would be nice to have further details about this \"another version schema\", I\u0027m afraid I don\u0027t really understand it from looking at the code changes :(",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5a5d7d_715c13fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "s/ // :)",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df2745c_4e2d8c1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "I\u0027m afraid I don\u0027t really understand this one :-/",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e39a1b_330768e0",
+        "filename": "scripts/jdg-generate-source",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "what\u0027s the idea behind this line?",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a08d621_bbb4ecdc",
+        "filename": "scripts/jdg-generate-source",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "same here, I\u0027m afraid I don\u0027t understand what you\u0027re doing here from just looking at the code :)",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124e90c7_58654f72",
+        "filename": "scripts/jdg-generate-source",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-04-28T14:25:52Z",
+      "side": 1,
+      "message": "We don\u0027t want to do the \"+0~\" between $ORIG_VERSION and $TIMESTAMP anymore?",
+      "revId": "d8a4179b78dfc9f14018dc29f1870a2a34303bf3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
