@@ -78,17 +78,18 @@ else
     if [ "${GIT_BRANCH}" != "origin/master" ]; then
       # use next point version instead, this is a nightly build
       # if we have A.B.C as ORIG_VERSION we should use A.B.C+1 instead
-      [[ ${VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
-      NEXT=${BASH_REMATCH[3]}
-      (( NEXT++ ))
-      VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${NEXT}"
-      echo "*** branch build detected, next version is ${VERSION}"
+      if [[ ${VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] ; then
+        NEXT=${BASH_REMATCH[3]}
+        (( NEXT++ ))
+        VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${NEXT}"
+        echo "*** branch build detected, next version is ${VERSION}"
+      fi
     fi
     ;;
   esac
   TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
-  if [[ "${VERSION}" =~ ~dev[0-9]+ ]] ; then
-    echo "*** dev version detected ***"
+  if [[ "${VERSION}" =~ ~(dev|rc|pre)[0-9]+ ]] ; then
+    echo "*** ${BASH_REMATCH[1]} version detected ***"
     AUTO_VERSION="${VERSION}+${BPO}.${TIMESTAMP}.${BUILD_NUMBER}"
   else
     AUTO_VERSION="${VERSION}~${BPO}.${TIMESTAMP}.${BUILD_NUMBER}"
