@@ -52,6 +52,18 @@
     disabled: false
 
 - project:
+    name: kamailio54-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '5.4'
+    browser-url: *browserurl
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
     name: kamailio53-nightly
     logrotate_keep: *logrotate_keep
     repos: *repos
@@ -148,6 +160,18 @@
     disabled: true
 
 # build based on tags
+- project:
+    name: kamailio54
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/5.4*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
 - project:
     name: kamailio53
     logrotate_keep: *logrotate_keep
