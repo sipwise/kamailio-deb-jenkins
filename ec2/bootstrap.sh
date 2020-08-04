@@ -147,6 +147,11 @@ case "${DEBIAN_VERSION}" in
     # and lintian to solve control.tar.xz error (needs >= 2.5.50)
     apt-get -y $APT_OPTIONS install -t jessie-backports piuparts lintian
     ;;
+  stretch)
+    apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
+    apt-get -y $APT_OPTIONS install piuparts lintian
+    apt-get -y $APT_OPTIONS install -t stretch-backports pbuilder debootstrap
+    ;;
   *)
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
     apt-get -y $APT_OPTIONS install pbuilder piuparts lintian
