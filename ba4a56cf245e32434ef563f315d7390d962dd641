@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8f58afc_52f24e8c",
+        "filename": "pbuilder/pbuilderrc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2020-08-04T10:10:39Z",
+      "side": 1,
+      "message": "are you sure about this?",
+      "revId": "ba4a56cf245e32434ef563f315d7390d962dd641",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
