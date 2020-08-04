@@ -58,7 +58,7 @@
     refspec: *refbranch
     branch: '5.4'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic, focal]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -167,7 +167,7 @@
     refspec: *reftag
     branch: '*/tags/5.4*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic, focal]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
