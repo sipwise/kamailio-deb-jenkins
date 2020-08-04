@@ -42,7 +42,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, bionic, xenial]
+    distributions: !!python/tuple [buster, stretch, bionic, xenial, focal]
     jobs: *jobs_simple
     disabled: false
 
@@ -54,7 +54,7 @@
     refspec: *reftag
     branch: '*/tags/v*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, bionic, xenial]
+    distributions: !!python/tuple [buster, stretch, bionic, xenial, focal]
     jobs: *jobs_simple
     disabled: false
 
