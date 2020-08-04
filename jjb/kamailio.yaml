@@ -302,6 +302,10 @@
             values:
               - master
       disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
       triggers:
         - pollscm:
             cron: '@midnight'
@@ -345,8 +349,14 @@
             script:
                 !include-raw-escape: groovy-label.groovy
       execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
         sequential: false
       disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
       axes:
         - axis:
             type: user-defined
@@ -411,8 +421,14 @@
         - build-discarder:
             num-to-keep: '{logrotate_keep}'
       execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
         sequential: true
       disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
       axes:
         - axis:
             type: user-defined
@@ -468,7 +484,13 @@
             script:
                 !include-raw-escape: groovy-label.groovy
       disabled: false
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
       execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
         sequential: false
       axes:
         - axis:
