@@ -52,6 +52,7 @@ case "${distribution}" in
   trusty)   BPO=ubuntu14.04 ;;
   xenial)   BPO=ubuntu16.04 ;;
   bionic)   BPO=ubuntu18.04 ;;
+  focal)    BPO=ubuntu20.04 ;;
   wheezy)   BPO=bpo7 ;;
   jessie)   BPO=bpo8 ;;
   stretch)  BPO=bpo9 ;;

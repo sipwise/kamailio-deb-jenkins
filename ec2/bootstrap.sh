@@ -170,7 +170,7 @@ echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc <<EOF
 # distribution specific configuration
 case "\$distribution" in
-  xenial|bionic)
+  xenial|bionic|focal)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -229,6 +229,11 @@ else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
 fi
 
+if ! [ -e /usr/share/debootstrap/scripts/focal ] ; then
+  echo "Debootstrap version doesn't know about Ubuntu focal yet, creating according symlink"
+  ln -s gutsy /usr/share/debootstrap/scripts/focal
+fi
+
 if ! [ -e /usr/share/debootstrap/scripts/bionic ] ; then
   echo "Debootstrap version doesn't know about Ubuntu bionic yet, creating according symlink"
   ln -s gutsy /usr/share/debootstrap/scripts/bionic
@@ -257,6 +262,15 @@ fi
 export distribution=${distri} # for usage in pbuilderrc
 
 for arch in amd64 i386 ; do
+  case "${distri}" in
+    focal)
+      if [ "${arch}" = "i386" ] ; then
+	echo "*** WARN: Ubuntu dropped support for i386 as of 19.10, skipping therefore. ***"
+	continue
+      fi
+      ;;
+  esac
+
   if ! [ -d /var/cache/pbuilder/base-${distri}-${arch}.cow ] ; then
     (
       source /etc/jenkins/pbuilderrc

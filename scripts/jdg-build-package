@@ -17,7 +17,7 @@ fi
 
 # set specific mirror when building for Ubuntu
 case "$distribution" in
-  bionic|xenial|trusty|precise)
+  bionic|xenial|trusty|precise|focal)
     export MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
