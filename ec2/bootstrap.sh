@@ -2,10 +2,6 @@
 
 set -e
 
-echo "disable unattended-upgrades service"
-systemctl stop unattended-upgrades.service
-systemctl disable unattended-upgrades.service
-
 # config
 DEBIAN_MIRROR="deb.debian.org"
 
@@ -49,6 +45,10 @@ if [ "$(id -u 2>/dev/null)" != 0 ] ; then
 fi
 
 echo "Starting at $(date)"
+
+echo "disable unattended-upgrades service"
+systemctl stop unattended-upgrades.service
+systemctl disable unattended-upgrades.service
 
 export DEBIAN_FRONTEND=noninteractive
 export DEBIAN_PRIORITY=critical
