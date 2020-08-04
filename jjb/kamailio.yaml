@@ -46,7 +46,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy,trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -58,7 +58,7 @@
     refspec: *refbranch
     branch: '5.4'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy,trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -70,7 +70,7 @@
     refspec: *refbranch
     branch: '5.3'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -82,7 +82,7 @@
     refspec: *refbranch
     branch: '5.2'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -97,7 +97,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio50-nightly
@@ -109,7 +109,7 @@
     distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio44-nightly
@@ -167,7 +167,7 @@
     refspec: *reftag
     branch: '*/tags/5.4*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -179,7 +179,7 @@
     refspec: *reftag
     branch: '*/tags/5.3*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -191,7 +191,7 @@
     refspec: *reftag
     branch: '*/tags/5.2*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial, bionic]
+    distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -206,7 +206,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio50
@@ -218,7 +218,7 @@
     distributions: !!python/tuple [stretch, jessie, wheezy, precise, trusty, xenial]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio44
