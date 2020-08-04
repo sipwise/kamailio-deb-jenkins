@@ -11,18 +11,38 @@ DEBIAN_VERSION="$(lsb_release -c -s)"
 usage() { # Function: Print a help message.
   echo "$0 creates (or updates) Debian + Ubuntu build environments"
   echo
-  echo "Usage: $0 [ -u ] distribution" 1>&2
+  echo "Usage: $0 [ -u ] distribution"
+  echo
+  echo "To list supported distributions run: $0 -l"
+  echo
+}
+
+list_supported_distributions() {
+  for f in \
+    bionic \
+    bullseye \
+    buster \
+    focal \
+    jessie \
+    precise \
+    stretch \
+    trusty \
+    xenial
+  do
+    echo "$f"
+  done
 }
 
 exit_abnormal() { # Function: Exit with error.
-  usage
+  usage >&2
   exit 1
 }
 
 UPDATE=false
-while getopts "hu" options; do
+while getopts "hlu" options; do
   case "${options}" in
     h) usage; exit 0;;
+    l) list_supported_distributions ; exit 0 ;;
     u) UPDATE=true;;
     :) echo "Error: -${OPTARG} requires an argument."; exit_abnormal;;
     *) exit_abnormal;;
@@ -33,7 +53,7 @@ shift $((OPTIND-1))
 if [[ $# != 1 ]] ; then
   echo "Error: bad number of arguments" 1>&2
   echo
-  usage
+  usage >&2
   exit 1
 fi
 distri=${1}
