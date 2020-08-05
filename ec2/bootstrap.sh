@@ -169,8 +169,7 @@ case "${DEBIAN_VERSION}" in
     ;;
   stretch)
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
-    apt-get -y $APT_OPTIONS install piuparts lintian
-    apt-get -y $APT_OPTIONS install -t stretch-backports pbuilder debootstrap
+    apt-get -y $APT_OPTIONS install -t stretch-backports pbuilder debootstrap piuparts lintian
     ;;
   *)
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
