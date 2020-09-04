@@ -15,15 +15,18 @@ if [ ${flavour} = ubuntu ] ; then
     echo "*** using components [${PIUPARTS_COMPONENTS}] ***"
 fi
 
-EXTRA_REPO=$(echo ${OTHERMIRROR}|cut -d'|' -f1)
+EXTRA_REPO=$(echo "${OTHERMIRROR}"|cut -d'|' -f1)
 
 echo "*** flavour=${flavour} architecture=${architecture:-} mirror=${MIRROR} extra-repo=${EXTRA_REPO} ***"
 
+OPS=("--ignore=/usr/bin/db_sql" "--ignore=/usr/share/python/pyversions.pyc")
+OPS+=("--extra-repo=${EXTRA_REPO}")
+case "${distribution:-}" in
+    focal) OPS+=("--ignore=/etc/localtime");;
+esac
+
 # sadly piuparts always returns with exit code 1 :((
-sudo piuparts_wrapper -D ${flavour} -d "${distribution}" \
-    --ignore=/usr/bin/db_sql \
-    --ignore=/usr/share/python/pyversions.pyc \
-    --extra-repo="${EXTRA_REPO}" \
+sudo piuparts_wrapper -D ${flavour} -d "${distribution}" "${OPS[@]}" \
     "${PWD}"/artifacts/*.deb || true
 
 if [ -f piuparts.txt ] ; then
