@@ -44,7 +44,17 @@ case "$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  jessie|stretch|buster)
+  jessie)
+    MIRRORSITE="http://deb.debian.org/debian"
+    # security and updates
+    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
+    # we need key id CBF8D6FD518E17E1
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  stretch|buster)
     MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
