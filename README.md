@@ -126,10 +126,12 @@ Build slave setup
 It's possible to run the build process on a separate Jenkins slave.
 To set up the build slave follow those steps:
 
-    sudo apt-get -y install git
+    sudo apt update
+    sudo apt -y install git gnupg
     git clone https://github.com/sipwise/kamailio-deb-jenkins
     cd kamailio-deb-jenkins/
-    sudo ./ec2/bootstrap.sh
+    ./ec2/bootstrap.sh -l  # list supported distributions
+    sudo ./ec2/bootstrap.sh -u $DISTRIBUTION  # e.g. bullseye
 
 Depending on your setup, connect the slave to your master then (SSH, swarm plugin, Amazon EC2 plugin,...).
 
