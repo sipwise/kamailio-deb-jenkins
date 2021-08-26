@@ -186,53 +186,74 @@ apt-get -y $APT_OPTIONS install screen zsh vim
 apt-get clean
 
 echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
-cat > /etc/jenkins/pbuilderrc <<EOF
+cat > /etc/jenkins/pbuilderrc << "EOF"
 # distribution specific configuration
-case "\$distribution" in
+case "$distribution" in
   xenial|bionic|focal)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
-    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
     # security and updates
-    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ \${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu \${distribution}-security main universe"
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ ${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu ${distribution}-security main universe"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  trusty|precise)
+  trusty)
     # lacks eatmydata package, so explicitly configure it
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
-    DEBOOTSTRAPOPTS=("\${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
     # cowdancer is in universe
     COMPONENTS="main universe"
     # security and updates
-    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ \${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu \${distribution}-security main universe"
+    OTHERMIRROR="deb http://archive.ubuntu.com/ubuntu/ ${distribution}-updates main universe|deb-src http://security.ubuntu.com/ubuntu ${distribution}-security main universe"
+    # ensure it's unset
+    unset LD_PRELOAD
+    ;;
+  precise)
+    # lacks eatmydata package, so explicitly configure it
+    # also EOL nowadays, so need other mirror
+    MIRRORSITE="http://old-releases.ubuntu.com/ubuntu/"
+    # we need key id 40976EAF437D05B5
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
+    # cowdancer is in universe
+    COMPONENTS="main universe"
+    # security and updates
+    OTHERMIRROR="deb http://old-releases.ubuntu.com/ubuntu/ ${distribution}-updates main universe|deb-src http://old-releases.ubuntu.com/ubuntu ${distribution}-security main universe"
     # ensure it's unset
     unset LD_PRELOAD
     ;;
   wheezy)
-    # nowadays also resides on archive
+    # nowadays resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   jessie|stretch|buster)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # security and updates
-    OTHERMIRROR="deb http://security.debian.org/debian-security \${distribution}/updates main"
+    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  bullseye|*)
+  bullseye)
+    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    # security and updates
+    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}-security main"
+    # package install speedup
+    EXTRAPACKAGES="eatmydata"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
+    ;;
+  *)
     MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="\${LD_PRELOAD:+\$LD_PRELOAD:}libeatmydata.so"
+    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
 esac
 EOF
