@@ -2,9 +2,6 @@
 
 set -e
 
-# config
-DEBIAN_MIRROR="deb.debian.org"
-
 # depending on the Debian version we're running on adjust runtime behavior
 DEBIAN_VERSION="$(lsb_release -c -s)"
 
@@ -105,14 +102,14 @@ EOF
   *)
     echo "!!! Enabling Debian backports !!!"
     cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://${DEBIAN_MIRROR}/debian ${DEBIAN_VERSION}-backports main
+deb http://deb.debian.org/debian ${DEBIAN_VERSION}-backports main
 EOF
   ;;
 esac
 
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
-  echo "!!! Setting ${DEBIAN_MIRROR} as Debian mirror in /etc/apt/sources.list !!!"
-  sed -i "s/http.debian.net/${DEBIAN_MIRROR}/" /etc/apt/sources.list
+  echo "!!! Setting deb.debian.org as Debian mirror in /etc/apt/sources.list !!!"
+  sed -i "s/http.debian.net/deb.debian.org/" /etc/apt/sources.list
 fi
 
 # backwards compatibility if running on jessie based slaves
@@ -234,7 +231,7 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   jessie)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # we need key id CBF8D6FD518E17E1
@@ -244,7 +241,7 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   stretch|buster)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # package install speedup
@@ -252,7 +249,7 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   bullseye)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}-security main"
     # package install speedup
@@ -260,7 +257,7 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   *)
-    MIRRORSITE="http://${DEBIAN_MIRROR}/debian"
+    MIRRORSITE="http://deb.debian.org/debian"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
