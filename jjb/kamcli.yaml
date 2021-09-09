@@ -149,7 +149,7 @@
            rm -f ./* || true
         - copyartifact:
             project: '{name}-source/distribution=$distribution,label=master'
-            filter: '*'
+            filter: '*.gz,*.bz2,*.xz,*.deb,*.dsc,*.changes'
             which-build: upstream-build
             fallback-to-last-successful: true
         - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-build-package"
@@ -162,11 +162,11 @@
             /usr/bin/adtsummary_tap adt/summary > report/autopkgtest.tap
       publishers:
         - archive:
-            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes,**/*.buildinfo,**/lintian.txt'
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt'
         - tap:
             results: 'report/*.tap'
         - junit:
-            results: '**/lintian.xml'
+            results: '**/*.xml'
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
