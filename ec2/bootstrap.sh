@@ -267,7 +267,7 @@ EOF
 
 echo "!!! Setting up /etc/sudoers.d/pbuilder !!!"
 cat > /etc/sudoers.d/pbuilder <<EOF
-Defaults  env_keep+="architecture branch distribution release ARCH DEB_* DIST JOB_NAME MIRROR PIUPARTS_*"
+Defaults  env_keep+="architecture branch distribution release ARCH DEB_* DIST JOB_NAME MIRROR PIUPARTS_* LINTIAN*"
 EOF
 
 if grep -q '^PBUILDER_CONFIG=' /etc/jenkins/debian_glue 2>/dev/null ; then

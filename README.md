@@ -46,7 +46,7 @@ Support providing additional configuration to cowbuilder + related tools:
     jenkins ALL=NOPASSWD: /usr/sbin/piuparts, /usr/sbin/debootstrap, /usr/bin/piuparts_wrapper
 
     # for cowbuilder instruction:
-    Defaults  env_keep+="architecture branch distribution release ARCH DEB_* DIST JOB_NAME MIRROR PIUPARTS_*"
+    Defaults  env_keep+="architecture branch distribution release ARCH DEB_* DIST JOB_NAME MIRROR PIUPARTS_* LINTIAN*"
     EOF
 
 Grab a copy of this repository:
