@@ -226,6 +226,8 @@ case "$distribution" in
   wheezy)
     # nowadays resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
+    # we need key id 6FB2A1C265FFB764
+    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
