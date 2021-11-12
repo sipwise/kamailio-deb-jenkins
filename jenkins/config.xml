@@ -22,7 +22,7 @@
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
   <systemMessage>&lt;h1&gt;&lt;a href=&quot;http://www.kamailio.org/wiki/packages/debs&quot;&gt;Kamailio Debian/Ubuntu repository&lt;/a&gt;&lt;/h1&gt;&#xd;
   &#xd;
-&lt;p&gt;Provided by &lt;a href=&quot;http://jenkins-debian-glue.org/&quot;&gt;jenkins-debian-glue&lt;/a&gt; and sponsored by &lt;a href=&quot;http://www.sipwise.com/&quot;&gt;Sipwise&lt;/a&gt;&lt;/h1&gt;&#xd;
+&lt;p&gt;This is a public service, provided by &lt;a href=&quot;http://jenkins-debian-glue.org/&quot;&gt;jenkins-debian-glue&lt;/a&gt; and sponsored by &lt;a href=&quot;http://www.sipwise.com/&quot;&gt;Sipwise&lt;/a&gt;&lt;/h1&gt;&#xd;
 &lt;p&gt;Configuration (including deployment + scripts) available as &lt;a href=&quot;https://github.com/sipwise/kamailio-deb-jenkins&quot;&gt;kamailio-deb-jenkins&lt;/a&gt;.&lt;/p&gt;</systemMessage>
   <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@1.8">
     <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
