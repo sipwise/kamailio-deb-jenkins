@@ -9,10 +9,29 @@ cd source
 # debug info
 env
 
+kamailio_nightly() {
+  case "${DISTRIBUTION}" in
+   UNRELEASED) echo "*** UNRELEASED detected, use ${VERSION}" ;;
+   *)
+    if [ "${GIT_BRANCH}" != "origin/master" ]; then
+      # use next point version instead, this is a nightly build
+      # if we have A.B.C as ORIG_VERSION we should use A.B.C+1 instead
+      if [[ ${VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] ; then
+        NEXT=${BASH_REMATCH[3]}
+        (( NEXT++ ))
+        VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${NEXT}"
+        echo "*** branch build detected, next version is ${VERSION}"
+      fi
+    fi
+    ;;
+  esac
+}
+
 # defaults
 build_tag=false
 TAG=unknown
-BASE_DIR=${debian_dir:-"pkg/kamailio/deb"}
+BASE_DIR=${debian_dir:-pkg/kamailio/deb}
+JOB_NAME=${JOB_NAME:-kamailio-source}
 distribution=${distribution:-unknown}
 BUILD_NUMBER=${BUILD_NUMBER:-0}
 
@@ -31,15 +50,30 @@ if [ -n "$GIT_BRANCH" ] ; then
 fi
 
 if [ ! -d "$BASE_DIR" ]; then
-  echo 'No $BASE_DIR found on source'
+  # shellcheck disable=SC2016
+  echo "No \$BASE_DIR [${BASE_DIR}] found on source" >&2
   exit 1
 fi
 
 git clean -fxd
 
 if [ ! -d "${BASE_DIR}/${distribution}" ]; then
-  echo "${distribution} not supported"
+  echo "${distribution} not supported" >&2
   exit 1
+fi
+
+if ! [ -f "${BASE_DIR}/${distribution}/changelog" ] ; then
+  case "${JOB_NAME}" in
+    rtpengine*)
+      echo "update changelog from ngcp-rtpengine to rtpengine source"
+      sed -i 's/ngcp-rtpengine/rtpengine/g' debian/changelog
+      echo "source format native"
+      sed -i 's/quilt/native/g' debian/source/format
+      cp debian/source/format "${BASE_DIR}/${distribution}/"source/
+      ;;
+  esac
+  echo "copying changelog from debian dir"
+  cp debian/changelog "${BASE_DIR}/${distribution}/"
 fi
 
 rm -rf debian
@@ -59,7 +93,7 @@ case "${distribution}" in
   buster)   BPO=bpo10 ;;
   bullseye) BPO=bpo11 ;;
   *)
-    echo "${distribution} not supported"
+    echo "${distribution} not supported" >&2
     exit 2 ;;
 esac
 
@@ -73,20 +107,10 @@ if "$build_tag" ; then
 else
   VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
   DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
-  case "$DISTRIBUTION" in
-   UNRELEASED) echo "*** UNRELEASED detected, use ${VERSION}" ;;
-   *)
-    if [ "${GIT_BRANCH}" != "origin/master" ]; then
-      # use next point version instead, this is a nightly build
-      # if we have A.B.C as ORIG_VERSION we should use A.B.C+1 instead
-      if [[ ${VERSION} =~ ([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] ; then
-        NEXT=${BASH_REMATCH[3]}
-        (( NEXT++ ))
-        VERSION="${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${NEXT}"
-        echo "*** branch build detected, next version is ${VERSION}"
-      fi
-    fi
-    ;;
+  case "${JOB_NAME}" in
+    kamailio*)  kamailio_nightly ;;
+    rtpengine*) echo ;;
+    *) echo "unknown JOB_NAME:${JOB_NAME}" >&2; exit 3 ;;
   esac
   TIMESTAMP="$(date -u +%Y%m%d%H%M%S)"
   if [[ "${VERSION}" =~ ~(dev|rc|pre)[0-9]+ ]] ; then

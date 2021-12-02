@@ -1,0 +1,387 @@
+# This jenkins-job-build configuration sets up Jenkins jobs
+# for building Debian packages of rtpengine
+
+## global defaults
+- defaults:
+    name: global
+    logrotate_keep: &logrotate_keep
+     5
+    architectures: !!python/tuple &architectures
+     - amd64
+     - i386
+    repos: &repos
+      'https://github.com/sipwise/rtpengine.git'
+    reftag: &reftag
+      '+refs/tags/*:refs/remotes/origin/tags/*'
+    refbranch: &refbranch
+      '+refs/heads/*:refs/remotes/origin/*'
+    branch: &branch
+      'master'
+    browser: githubweb
+    browser-url: &browserurl
+      'https://github.com/sipwise/rtpengine.git'
+    jobs: &jobs_simple
+      - '{name}-source'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+    recipients: &recipients
+      'vseva@sipwise.com'
+
+## list of projects with their configurations
+# build based on branches
+- project:
+    name: rtpengine-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: *branch
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: false
+
+- project:
+    name: rtpengine-mr10.2-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: 'mr10.2'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+- project:
+    name: rtpengine-mr9.5-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: 'mr9.5'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+- project:
+    name: rtpengine-mr8.5-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: 'mr8.5'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+# build based on tags
+- project:
+    name: rtpengine-mr10.2
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/mr10.2*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+- project:
+    name: rtpengine-mr9.5
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/mr9.5*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+- project:
+    name: rtpengine-mr8.5
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/mr8.5*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bullseye, buster]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: true
+
+## the job template
+- job-template:
+      name: '{name}-source'
+      project-type: matrix
+      description: |
+        Build Debian source package of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
+      scm:
+        - git:
+            url: '{repos}'
+            name: origin
+            basedir: source
+            refspec: '{refspec}'
+            branches:
+              - '{branch}'
+            wipe-workspace: false
+            browser: '{browser}'
+            browser-url: '{browser-url}'
+      execution-strategy:
+        sequential: true
+      axes:
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{obj:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
+      disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
+      triggers:
+        - pollscm:
+            cron: '@midnight'
+      builders:
+        - shell: 'rm -f ./* || true'
+        - shell: |
+            debian_dir=pkg/deb \
+            /home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source
+        - shell: |
+            mkdir -p report
+            /usr/bin/lintian-junit-report *.dsc > report/lintian.xml
+      publishers:
+        - archive:
+            artifacts: '*.gz,*.bz2,*.xz,*.deb,*.dsc,*.changes,lintian.txt'
+        - trigger:
+            project: '{name}-binaries'
+            threshold: UNSTABLE
+        - junit:
+            results: '**/lintian.xml'
+            keep-long-stdio: false
+        - fingerprint:
+            record-artifacts: true
+        - email:
+            recipients: '{recipients}'
+      wrappers:
+        - timestamps
+        - timeout:
+            timeout: 90
+            fail: true
+
+- job-template:
+      name: '{name}-binaries'
+      project-type: matrix
+      description: |
+        Build Debian/Ubuntu binary packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      node: master
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
+        - groovy-label:
+            script:
+                !include-raw-escape: groovy-label.groovy
+      execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
+        sequential: false
+      disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{obj:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{obj:distributions}'
+      builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-source/distribution=$distribution,label=master'
+            filter: '*.gz,*.bz2,*.xz,*.dsc,*.changes'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+        - shell: |
+            DEB_BUILD_PROFILES=pkg.rtpengine.no-transcoding \
+              /home/admin/kamailio-deb-jenkins/scripts/jdg-build-package
+        - shell: |
+            mkdir -p report
+            /usr/bin/lintian-junit-report *.changes > report/lintian.xml
+        - shell: |
+            mkdir -p report adt
+            touch adt/summary # do not fail if no autopkgtest run took place
+            /usr/bin/adtsummary_tap adt/summary > report/autopkgtest.tap
+      publishers:
+        - archive:
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt'
+        - tap:
+            results: 'report/*.tap'
+        - junit:
+            results: '**/*.xml'
+            keep-long-stdio: false
+        - fingerprint:
+            record-artifacts: true
+        - trigger:
+            project: '{name}-repos'
+            threshold: UNSTABLE
+        - trigger:
+            project: '{name}-piuparts'
+            threshold: UNSTABLE
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: '{recipients}'
+      wrappers:
+        - timestamps
+        - timeout:
+            timeout: 240
+            fail: true
+
+- job-template:
+      name: '{name}-repos'
+      project-type: matrix
+      description: |
+        Repository handling for Debian packages of {name}.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
+      execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
+        sequential: true
+      disabled: '{obj:disabled}'
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{obj:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{obj:distributions}'
+        - axis:
+            type: slave
+            name: label
+            values:
+              - master
+      builders:
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
+            filter: '*'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+            target: 'binaries/'
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-repository"
+      publishers:
+        - archive:
+            artifacts: '**/*.dsc,**/*.changes'
+        - fingerprint:
+            record-artifacts: true
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: '{recipients}'
+      wrappers:
+        - timestamps
+        - timeout:
+            timeout: 90
+            fail: true
+
+- job-template:
+      name: '{name}-piuparts'
+      project-type: matrix
+      description: |
+        Installation and upgrade tests for {name} Debian packages.
+        <!-- Do NOT edit this job through the web, it is generated via jenkins-job-builder! -->
+      node: master
+      properties:
+        - build-discarder:
+            num-to-keep: '{logrotate_keep}'
+        - groovy-label:
+            script:
+                !include-raw-escape: groovy-label.groovy
+      disabled: false
+      parameters:
+        - matrix-combinations:
+            name: matrixhasyouneo
+            description: "Choose combination(s) to trigger/build..."
+      execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
+        sequential: false
+      axes:
+        - axis:
+            type: user-defined
+            name: architecture
+            values: '{obj:architectures}'
+        - axis:
+            type: user-defined
+            name: distribution
+            values: '{obj:distributions}'
+      builders:
+        - shell: '/home/admin/kamailio-deb-jenkins/scripts/ec2-facts'
+        - shell: |
+           echo "* Removing files workspace before copying artifacts from another project. *"
+           rm -f ./* || true
+        - copyartifact:
+            project: '{name}-binaries/architecture=$architecture,distribution=$distribution'
+            filter: '*.deb'
+            which-build: upstream-build
+            fallback-to-last-successful: true
+            flatten: true
+            target: 'artifacts/'
+        - shell: "/home/admin/kamailio-deb-jenkins/scripts/jdg-piuparts"
+      publishers:
+        - tap:
+            results: 'piuparts.tap'
+        - archive:
+            artifacts: 'piuparts.*'
+        - fingerprint:
+            record-artifacts: true
+        - workspace-cleanup:
+            dirmatch: false
+        - email:
+            recipients: '{recipients}'
+      wrappers:
+        - timestamps
+        - timeout:
+            timeout: 240
+            fail: true
