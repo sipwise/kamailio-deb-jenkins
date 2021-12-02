@@ -17,6 +17,7 @@ usage() { # Function: Print a help message.
 list_supported_distributions() {
   for f in \
     bionic \
+    bookworm \
     bullseye \
     buster \
     focal \
@@ -250,7 +251,7 @@ case "$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  bullseye)
+  bullseye|bookworm)
     MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}-security main"
@@ -306,6 +307,11 @@ fi
 if ! [ -e /usr/share/debootstrap/scripts/bullseye ] ; then
   echo "Debootstrap version doesn't know about Debian bullseye yet, creating according symlink"
   ln -s sid /usr/share/debootstrap/scripts/bullseye
+fi
+
+if ! [ -e /usr/share/debootstrap/scripts/bookworm ] ; then
+  echo "Debootstrap version doesn't know about Debian bookworm yet, creating according symlink"
+  ln -s sid /usr/share/debootstrap/scripts/sid
 fi
 
 export distribution=${distri} # for usage in pbuilderrc
