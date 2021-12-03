@@ -3,9 +3,9 @@
   <disabledAdministrativeMonitors>
     <string>OldData</string>
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
+    <string>jenkins.diagnostics.ControllerExecutorsAgents</string>
   </disabledAdministrativeMonitors>
-  <version>2.204.3</version>
-  <installStateName>RESTART</installStateName>
+  <version>2.303.3</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -24,22 +24,20 @@
   &#xd;
 &lt;p&gt;This is a public service, provided by &lt;a href=&quot;http://jenkins-debian-glue.org/&quot;&gt;jenkins-debian-glue&lt;/a&gt; and sponsored by &lt;a href=&quot;http://www.sipwise.com/&quot;&gt;Sipwise&lt;/a&gt;&lt;/h1&gt;&#xd;
 &lt;p&gt;Configuration (including deployment + scripts) available as &lt;a href=&quot;https://github.com/sipwise/kamailio-deb-jenkins&quot;&gt;kamailio-deb-jenkins&lt;/a&gt;.&lt;/p&gt;</systemMessage>
-  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@1.8">
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.4">
     <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
   </markupFormatter>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.49.1">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.66">
       <name>ec2-eu-west-1</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
       <roleSessionName></roleSessionName>
       <credentialsId>1b899ce0-4378-4000-9c2a-bce15e9e5f22</credentialsId>
-      <privateKey>
-        <privateKey>[snip]</privateKey>
-      </privateKey>
+      <sshKeysCredentialsId>2f4d2c09-2318-45cf-9e69-b2c4591fcafc</sshKeysCredentialsId>
       <instanceCap>10</instanceCap>
       <templates>
         <hudson.plugins.ec2.SlaveTemplate>
@@ -80,8 +78,8 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -93,6 +91,13 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -120,7 +125,7 @@ cd /home/admin/kamailio-deb-jenkins/ &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
 sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript>
           <tmpDir></tmpDir>
           <userData></userData>
-          <numExecutors>3</numExecutors>
+          <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
@@ -129,13 +134,13 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <deleteRootOnTermination>false</deleteRootOnTermination>
           <useEphemeralDevices>false</useEphemeralDevices>
           <customDeviceMapping></customDeviceMapping>
-          <instanceCap>2147483647</instanceCap>
+          <instanceCap>1</instanceCap>
           <minimumNumberOfInstances>0</minimumNumberOfInstances>
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -147,6 +152,13 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -188,8 +200,8 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -201,6 +213,13 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -218,7 +237,6 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <mode>EXCLUSIVE</mode>
           <initScript>if [ -d /home/admin/kamailio-deb-jenkins ] ; then
   cd /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
-  git checkout 76757 2&gt;&amp;1
   git pull --rebase &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
 else
   git clone https://github.com/sipwise/kamailio-deb-jenkins.git /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
@@ -243,8 +261,8 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -256,6 +274,13 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -297,8 +322,8 @@ sudo ./ec2/bootstrap.sh -u precise &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -310,6 +335,13 @@ sudo ./ec2/bootstrap.sh -u precise &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -351,8 +383,8 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -364,6 +396,13 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -405,8 +444,8 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -418,6 +457,13 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -459,8 +505,8 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -472,6 +518,13 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -513,8 +566,8 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -526,11 +579,141 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
+          <usePrivateDnsName>false</usePrivateDnsName>
+          <connectUsingPublicIp>true</connectUsingPublicIp>
+        </hudson.plugins.ec2.SlaveTemplate>
+        <hudson.plugins.ec2.SlaveTemplate>
+          <ami>ami-0b865d070a5c0c91c</ami>
+          <description>jenkins-debian-glue-slave bullseye</description>
+          <zone></zone>
+          <securityGroups>kamailio-jenkins-slave</securityGroups>
+          <remoteFS>/home/admin</remoteFS>
+          <type>T3Large</type>
+          <ebsOptimized>false</ebsOptimized>
+          <monitoring>false</monitoring>
+          <t2Unlimited>false</t2Unlimited>
+          <labels>slave:bullseye</labels>
+          <mode>EXCLUSIVE</mode>
+          <initScript>if [ -d /home/admin/kamailio-deb-jenkins ] ; then
+  cd /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+  git pull --rebase &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+else
+  git clone https://github.com/sipwise/kamailio-deb-jenkins.git /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+  sudo chown -R admin:admin /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+fi
+
+cd /home/admin/kamailio-deb-jenkins/ &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+sudo ./ec2/bootstrap.sh -u bullseye &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript>
+          <tmpDir></tmpDir>
+          <userData></userData>
+          <numExecutors>2</numExecutors>
+          <remoteAdmin>admin</remoteAdmin>
+          <jvmopts></jvmopts>
+          <subnetId>subnet-0cac724e3fcebdcda</subnetId>
+          <idleTerminationMinutes>30</idleTerminationMinutes>
+          <iamInstanceProfile></iamInstanceProfile>
+          <deleteRootOnTermination>false</deleteRootOnTermination>
+          <useEphemeralDevices>false</useEphemeralDevices>
+          <customDeviceMapping></customDeviceMapping>
+          <instanceCap>1</instanceCap>
+          <minimumNumberOfInstances>0</minimumNumberOfInstances>
+          <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
+          <stopOnTerminate>false</stopOnTerminate>
+          <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
+          <associatePublicIp>true</associatePublicIp>
+          <amiType class="hudson.plugins.ec2.UnixData">
+            <rootCommandPrefix></rootCommandPrefix>
+            <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
+            <sshPort>22</sshPort>
+          </amiType>
+          <launchTimeout>2147483647</launchTimeout>
+          <connectBySSHProcess>false</connectBySSHProcess>
+          <maxTotalUses>-1</maxTotalUses>
+          <nodeProperties/>
+          <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
+          <usePrivateDnsName>false</usePrivateDnsName>
+          <connectUsingPublicIp>true</connectUsingPublicIp>
+        </hudson.plugins.ec2.SlaveTemplate>
+        <hudson.plugins.ec2.SlaveTemplate>
+          <ami>ami-0b865d070a5c0c91c</ami>
+          <description>jenkins-debian-glue-slave bookworm</description>
+          <zone></zone>
+          <securityGroups>kamailio-jenkins-slave</securityGroups>
+          <remoteFS>/home/admin</remoteFS>
+          <type>T1Micro</type>
+          <ebsOptimized>false</ebsOptimized>
+          <monitoring>false</monitoring>
+          <t2Unlimited>false</t2Unlimited>
+          <labels>slave:bookworm</labels>
+          <mode>EXCLUSIVE</mode>
+          <initScript>if [ -d /home/admin/kamailio-deb-jenkins ] ; then
+  cd /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+  git pull --rebase &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+else
+  git clone https://github.com/sipwise/kamailio-deb-jenkins.git /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+  sudo chown -R admin:admin /home/admin/kamailio-deb-jenkins &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+fi
+
+cd /home/admin/kamailio-deb-jenkins/ &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
+sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript>
+          <tmpDir></tmpDir>
+          <userData></userData>
+          <numExecutors></numExecutors>
+          <remoteAdmin>admin</remoteAdmin>
+          <jvmopts></jvmopts>
+          <subnetId>subnet-0cac724e3fcebdcda</subnetId>
+          <idleTerminationMinutes>30</idleTerminationMinutes>
+          <iamInstanceProfile></iamInstanceProfile>
+          <deleteRootOnTermination>false</deleteRootOnTermination>
+          <useEphemeralDevices>false</useEphemeralDevices>
+          <customDeviceMapping></customDeviceMapping>
+          <instanceCap>1</instanceCap>
+          <minimumNumberOfInstances>0</minimumNumberOfInstances>
+          <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
+          <stopOnTerminate>false</stopOnTerminate>
+          <connectionStrategy>PUBLIC_IP</connectionStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
+          <associatePublicIp>false</associatePublicIp>
+          <amiType class="hudson.plugins.ec2.UnixData">
+            <rootCommandPrefix></rootCommandPrefix>
+            <slaveCommandPrefix></slaveCommandPrefix>
+            <slaveCommandSuffix></slaveCommandSuffix>
+            <sshPort>22</sshPort>
+          </amiType>
+          <launchTimeout>2147483647</launchTimeout>
+          <connectBySSHProcess>false</connectBySSHProcess>
+          <maxTotalUses>-1</maxTotalUses>
+          <nodeProperties/>
+          <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
       </templates>
       <region>eu-west-1</region>
+      <altEC2Endpoint></altEC2Endpoint>
       <noDelayProvisioning>false</noDelayProvisioning>
     </hudson.plugins.ec2.EC2Cloud>
   </clouds>
@@ -595,7 +778,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -617,7 +800,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -639,7 +822,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -661,7 +844,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -683,7 +866,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -705,7 +888,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -727,7 +910,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -749,7 +932,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -771,7 +954,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
-        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -784,6 +967,50 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
         <hudson.views.BuildButtonColumn/>
       </columns>
       <includeRegex>kamailio53.*</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>kam54</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>kamailio54.*</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>kam55</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>kamailio55.*</includeRegex>
       <recurse>false</recurse>
     </listView>
   </views>
