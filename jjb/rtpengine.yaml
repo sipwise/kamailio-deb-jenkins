@@ -54,7 +54,7 @@
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
-    disabled: true
+    disabled: false
 
 - project:
     name: rtpengine-mr9.5-nightly
@@ -94,7 +94,7 @@
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
-    disabled: true
+    disabled: false
 
 - project:
     name: rtpengine-mr9.5
