@@ -5,7 +5,7 @@
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.diagnostics.ControllerExecutorsAgents</string>
   </disabledAdministrativeMonitors>
-  <version>2.303.3</version>
+  <version>2.319.1</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -24,7 +24,7 @@
   &#xd;
 &lt;p&gt;This is a public service, provided by &lt;a href=&quot;http://jenkins-debian-glue.org/&quot;&gt;jenkins-debian-glue&lt;/a&gt; and sponsored by &lt;a href=&quot;http://www.sipwise.com/&quot;&gt;Sipwise&lt;/a&gt;&lt;/h1&gt;&#xd;
 &lt;p&gt;Configuration (including deployment + scripts) available as &lt;a href=&quot;https://github.com/sipwise/kamailio-deb-jenkins&quot;&gt;kamailio-deb-jenkins&lt;/a&gt;.&lt;/p&gt;</systemMessage>
-  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.4">
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.5">
     <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
   </markupFormatter>
   <jdks/>
@@ -674,7 +674,7 @@ cd /home/admin/kamailio-deb-jenkins/ &gt;&gt;/tmp/initsh.log 2&gt;&amp;1
 sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript>
           <tmpDir></tmpDir>
           <userData></userData>
-          <numExecutors></numExecutors>
+          <numExecutors>1</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
@@ -689,7 +689,7 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
           <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
-          <associatePublicIp>false</associatePublicIp>
+          <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -1027,4 +1027,5 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
   <nodeProperties/>
   <globalNodeProperties/>
   <noUsageStatistics>true</noUsageStatistics>
+  <nodeRenameMigrationNeeded>true</nodeRenameMigrationNeeded>
 </hudson>
