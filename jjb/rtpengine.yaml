@@ -37,7 +37,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -50,7 +50,7 @@
     refspec: *refbranch
     branch: 'mr10.2'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -63,7 +63,7 @@
     refspec: *refbranch
     branch: 'mr9.5'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -76,7 +76,7 @@
     refspec: *refbranch
     branch: 'mr8.5'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -90,7 +90,7 @@
     refspec: *reftag
     branch: '*/tags/mr10.2*'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -103,7 +103,7 @@
     refspec: *reftag
     branch: '*/tags/mr9.5*'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -116,7 +116,7 @@
     refspec: *reftag
     branch: '*/tags/mr8.5*'
     browser-url: *browserurl
-    distributions: !!python/tuple [bullseye, buster]
+    distributions: !!python/tuple [bookworm, bullseye, buster]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
