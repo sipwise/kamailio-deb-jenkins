@@ -78,7 +78,7 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -139,7 +139,7 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -200,7 +200,7 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -261,7 +261,7 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -322,7 +322,7 @@ sudo ./ec2/bootstrap.sh -u precise &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -383,7 +383,7 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -444,7 +444,7 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -505,7 +505,7 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
@@ -566,7 +566,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <minimumNumberOfSpareInstances>0</minimumNumberOfSpareInstances>
           <stopOnTerminate>false</stopOnTerminate>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
-          <hostKeyVerificationStrategy>CHECK_NEW_HARD</hostKeyVerificationStrategy>
+          <hostKeyVerificationStrategy>ACCEPT_NEW</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
