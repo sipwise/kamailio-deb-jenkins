@@ -230,7 +230,7 @@
               /home/admin/kamailio-deb-jenkins/scripts/jdg-build-package
         - shell: |
             mkdir -p report
-            /usr/bin/lintian-junit-report --skip-lintian --filename *.lintian.txt > report/lintian.xml
+            /usr/bin/lintian-junit-report --skip-lintian --filename *.lintian.txt *.lintian.txt > report/lintian.xml
         - shell: |
             mkdir -p report adt
             touch adt/summary # do not fail if no autopkgtest run took place
