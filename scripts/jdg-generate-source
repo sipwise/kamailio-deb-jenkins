@@ -57,6 +57,14 @@ fi
 
 git clean -fxd
 
+if [ -x "${BASE_DIR}/debian/backports/${distribution}" ]; then
+  echo "build debian directory for ${distribution}"
+  (
+    cd "${BASE_DIR}" || exit 1
+    ./debian/backports/"${distribution}"
+  )
+fi
+
 if [ ! -d "${BASE_DIR}/${distribution}" ]; then
   echo "${distribution} not supported" >&2
   exit 1
