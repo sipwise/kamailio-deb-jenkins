@@ -237,7 +237,7 @@
             /usr/bin/adtsummary_tap adt/summary > report/autopkgtest.tap
       publishers:
         - archive:
-            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt'
+            artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.ddeb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt'
         - tap:
             results: 'report/*.tap'
         - junit:
