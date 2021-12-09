@@ -57,6 +57,14 @@ fi
 
 git clean -fxd
 
+if [ -x "${BASE_DIR}/generator.sh" ]; then
+  echo "generate base debian directory"
+  (
+    cd "${BASE_DIR}" || exit 1
+    ./generator.sh
+  )
+fi
+
 if [ -x "${BASE_DIR}/debian/backports/${distribution}" ]; then
   echo "build debian directory for ${distribution}"
   (
