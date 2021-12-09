@@ -107,8 +107,10 @@ case "${distribution}" in
 esac
 
 if "$build_tag" ; then
-  # remove v prefix from tag if necessary
-  TAG=${TAG#v}
+  case "${JOB_NAME}" in
+    rtpengine*) TAG=${TAG#mr} ;;
+    *)  TAG=${TAG#v} ;;
+  esac
   echo "*** Building a tagged version (${TAG}+${BPO}).***"
   dch -b --distribution="${distribution}" \
     --newversion="${TAG}+${BPO}" \
