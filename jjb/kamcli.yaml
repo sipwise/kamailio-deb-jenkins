@@ -129,8 +129,6 @@
             script:
               !include-raw-escape: groovy-label.groovy
       execution-strategy:
-        combination-filter: |
-            !(distribution=="focal" && architecture=="i386")
         sequential: true
       disabled: '{obj:disabled}'
       axes:
