@@ -42,7 +42,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, bionic, xenial]
+    distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
     disabled: false
 
@@ -54,7 +54,7 @@
     refspec: *reftag
     branch: '*/tags/v*'
     browser-url: *browserurl
-    distributions: !!python/tuple [buster, stretch, bionic, xenial]
+    distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
     disabled: false
 
@@ -129,6 +129,8 @@
             script:
               !include-raw-escape: groovy-label.groovy
       execution-strategy:
+        combination-filter: |
+            !(distribution=="focal" && architecture=="i386")
         sequential: true
       disabled: '{obj:disabled}'
       axes:
