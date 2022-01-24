@@ -127,7 +127,7 @@ else
   VERSION=$(dpkg-parsechangelog --count 1 | awk '/^Version/ {print $2}')
   DISTRIBUTION=$(dpkg-parsechangelog --count 1 | awk '/^Distribution/ {print $2}')
   case "${JOB_NAME}" in
-    kamailio*)  kamailio_nightly ;;
+    kamailio*|kamcli*)  kamailio_nightly ;;
     rtpengine*) echo ;;
     *) echo "unknown JOB_NAME:${JOB_NAME}" >&2; exit 3 ;;
   esac
