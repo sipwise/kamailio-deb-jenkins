@@ -114,13 +114,22 @@ case "${distribution}" in
     exit 2 ;;
 esac
 
+# not yet released, in order to avoid bad-distribution-in-changes-file error
+case "${distribution}" in
+  bookworm|sid)
+    echo "*** switch ${distribution} to unstable ***"
+    distribution_control=unstable
+    ;;
+  *) distribution_control=${distribution} ;;
+esac
+
 if "$build_tag" ; then
   case "${JOB_NAME}" in
     rtpengine*) TAG=${TAG#mr} ;;
     *)  TAG=${TAG#v} ;;
   esac
   echo "*** Building a tagged version (${TAG}+${BPO}).***"
-  dch -b --distribution="${distribution}" \
+  dch -b --distribution="${distribution_control}" \
     --newversion="${TAG}+${BPO}" \
     -- "Automated package build for tag $TAG and distribution $distribution."
 else
@@ -139,7 +148,7 @@ else
     AUTO_VERSION="${VERSION}~${BPO}.${TIMESTAMP}.${BUILD_NUMBER}"
   fi
   echo "*** Building version ${AUTO_VERSION} for ${distribution}.***"
-  dch -b --distribution="${distribution}" \
+  dch -b --distribution="${distribution_control}" \
     --newversion="${AUTO_VERSION}" \
     -- "Automated package build."
 fi
