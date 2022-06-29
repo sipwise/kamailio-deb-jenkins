@@ -103,6 +103,7 @@ case "${distribution}" in
   xenial)   BPO=ubuntu16.04 ;;
   bionic)   BPO=ubuntu18.04 ;;
   focal)    BPO=ubuntu20.04 ;;
+  jammy)    BPO=ubuntu22.04 ;;
   wheezy)   BPO=bpo7 ;;
   jessie)   BPO=bpo8 ;;
   stretch)  BPO=bpo9 ;;

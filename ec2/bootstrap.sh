@@ -21,6 +21,7 @@ list_supported_distributions() {
     bullseye \
     buster \
     focal \
+    jammy \
     jessie \
     precise \
     stretch \
@@ -84,12 +85,27 @@ else
   wget -O - http://jenkins.grml.org/debian/C525F56752D4A654.asc | apt-key add -
 fi
 
+install_ubuntu_keyring() {
+  wget -O ubuntu-keyring_2021.03.26_all.deb \
+    http://de.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2021.03.26_all.deb
+  echo "0d0e7ed6b112f5d03eabf3c7eb01ebdacf9c57714b279e90495cfc58c8c4520f  ubuntu-keyring_2021.03.26_all.deb" > ubuntu-keyring_2021.03.26_all.deb.sha256
+  if sha256sum -c ubuntu-keyring_2021.03.26_all.deb.sha256 >/dev/null ; then
+    dpkg -i ubuntu-keyring_2021.03.26_all.deb
+  else
+    echo "Error: wrong checksum for ubuntu-keyring_2021.03.26_all.deb :-/" >&2
+    exit 1
+  fi
+}
+
 if [ -r /usr/share/keyrings/ubuntu-archive-keyring.gpg ] ; then
   echo "!!! /usr/share/keyrings/ubuntu-archive-keyring.gpg exists already !!!"
+
+  if gpg /usr/share/keyrings/ubuntu-archive-keyring.gpg | grep -q 871920D1991BC93C ; then
+    echo "!!! /usr/share/keyrings/ubuntu-archive-keyring.gpg is outdated - refreshing !!!"
+    install_ubuntu_keyring
+  fi
 else
-  wget -O ubuntu-keyring_2012.05.19_all.deb \
-    http://archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2012.05.19_all.deb
-  dpkg -i ubuntu-keyring_2012.05.19_all.deb
+  install_ubuntu_keyring
 fi
 
 # jessie repos expired, so disable the repository check iff running on jessie
@@ -169,9 +185,15 @@ case "${DEBIAN_VERSION}" in
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
     apt-get -y $APT_OPTIONS install -t stretch-backports pbuilder debootstrap piuparts lintian
     ;;
+  bullseye)
+    # for ubuntu 22.04 / zstd support
+    apt-get -y $APT_OPTIONS install zstd
+    apt-get -y $APT_OPTIONS install -t bullseye-backports debootstrap
+    ;;
   *)
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
     apt-get -y $APT_OPTIONS install pbuilder piuparts lintian
+    ;;
 esac
 
 # packages required for static checks
@@ -187,7 +209,7 @@ echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc << "EOF"
 # distribution specific configuration
 case "$distribution" in
-  xenial|bionic|focal)
+  xenial|bionic|focal|jammy)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -279,6 +301,11 @@ else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
 fi
 
+if ! [ -e /usr/share/debootstrap/scripts/jammy ] ; then
+  echo "Debootstrap version doesn't know about Ubuntu jammy yet, creating according symlink"
+  ln -s gutsy /usr/share/debootstrap/scripts/jammy
+fi
+
 if ! [ -e /usr/share/debootstrap/scripts/focal ] ; then
   echo "Debootstrap version doesn't know about Ubuntu focal yet, creating according symlink"
   ln -s gutsy /usr/share/debootstrap/scripts/focal
@@ -318,10 +345,10 @@ export distribution=${distri} # for usage in pbuilderrc
 
 for arch in amd64 i386 ; do
   case "${distri}" in
-    focal)
+    focal|jammy)
       if [ "${arch}" = "i386" ] ; then
-	echo "*** WARN: Ubuntu dropped support for i386 as of 19.10, skipping therefore. ***"
-	continue
+        echo "*** WARN: Ubuntu dropped support for i386 as of 19.10, skipping for ${distri} therefore. ***"
+        continue
       fi
       ;;
   esac
