@@ -99,7 +99,7 @@ install_ubuntu_keyring() {
 if [ -r /usr/share/keyrings/ubuntu-archive-keyring.gpg ] ; then
   echo "!!! /usr/share/keyrings/ubuntu-archive-keyring.gpg exists already !!!"
 
-  if gpg /usr/share/keyrings/ubuntu-archive-keyring.gpg | grep -q 871920D1991BC93C ; then
+  if ! gpg /usr/share/keyrings/ubuntu-archive-keyring.gpg | grep -q 871920D1991BC93C ; then
     echo "!!! /usr/share/keyrings/ubuntu-archive-keyring.gpg is outdated - refreshing !!!"
     install_ubuntu_keyring
   fi
