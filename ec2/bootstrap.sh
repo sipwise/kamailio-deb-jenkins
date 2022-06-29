@@ -23,7 +23,6 @@ list_supported_distributions() {
     focal \
     jammy \
     jessie \
-    precise \
     stretch \
     trusty \
     xenial
