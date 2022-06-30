@@ -11,7 +11,6 @@
      5
     architectures: !!python/tuple &architectures
      - amd64
-     - i386
     repos: &repos
       'https://github.com/kamailio/kamailio.git'
     reftag: &reftag
@@ -391,8 +390,6 @@
             script:
                 !include-raw-escape: groovy-label.groovy
       execution-strategy:
-        combination-filter: |
-            !(distribution=="focal" && architecture=="i386")
         sequential: false
       disabled: '{obj:disabled}'
       parameters:
@@ -463,8 +460,6 @@
         - build-discarder:
             num-to-keep: '{logrotate_keep}'
       execution-strategy:
-        combination-filter: |
-            !(distribution=="focal" && architecture=="i386")
         sequential: true
       disabled: '{obj:disabled}'
       parameters:
@@ -531,8 +526,6 @@
             name: matrixhasyouneo
             description: "Choose combination(s) to trigger/build..."
       execution-strategy:
-        combination-filter: |
-            !(distribution=="focal" && architecture=="i386")
         sequential: false
       axes:
         - axis:
