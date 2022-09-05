@@ -7,7 +7,7 @@
 
 set -e
 
-if [ -x "$(which jenkins-jobs >/dev/null 2>&1)" ] ; then
+if [ -x "$(which jenkins-jobs)" ] ; then
   echo "** jenkins-jobs binary already present, skipping pip execution"
 elif [ -r bin/activate ] && [ -x bin/jenkins-jobs ] ; then
   echo "** jenkins-jobs binary not found, but noticed according pip environment, enabling"
