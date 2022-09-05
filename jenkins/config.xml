@@ -1,13 +1,14 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors>
+    <string>jenkins.monitor.JavaVersionRecommendationAdminMonitor-2</string>
     <string>jenkins.monitor.JavaVersionRecommendationAdminMonitor</string>
     <string>OldData</string>
     <string>jenkins.model.BuiltInNodeMigration</string>
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.diagnostics.ControllerExecutorsAgents</string>
   </disabledAdministrativeMonitors>
-  <version>2.346.1</version>
+  <version>2.346.3</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -33,7 +34,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.68">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@2.0.2">
       <name>ec2-eu-west-1</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -68,6 +69,7 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -130,6 +132,7 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -192,6 +195,7 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -254,6 +258,7 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -316,6 +321,7 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -378,6 +384,7 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -440,6 +447,7 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -502,6 +510,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -564,6 +573,7 @@ sudo ./ec2/bootstrap.sh -u bullseye &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -626,6 +636,7 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
@@ -688,6 +699,7 @@ sudo ./ec2/bootstrap.sh -u jammy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <userData></userData>
           <numExecutors>2</numExecutors>
           <remoteAdmin>admin</remoteAdmin>
+          <javaPath>java</javaPath>
           <jvmopts></jvmopts>
           <subnetId>subnet-0cac724e3fcebdcda</subnetId>
           <idleTerminationMinutes>30</idleTerminationMinutes>
