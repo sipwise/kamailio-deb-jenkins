@@ -57,7 +57,7 @@
     refspec: *refbranch
     branch: '5.6'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, jessie, trusty, xenial, bionic, focal]
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, jessie, trusty, xenial, bionic, focal, jammy]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -190,7 +190,7 @@
     refspec: *reftag
     branch: '*/tags/5.6*'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, jessie, trusty, xenial, bionic, focal]
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, jessie, trusty, xenial, bionic, focal, jammy]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
