@@ -255,7 +255,8 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
   jessie)
-    MIRRORSITE="http://deb.debian.org/debian"
+    # nowadays resides on archive
+    MIRRORSITE="http://archive.debian.org/debian/"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # we need key id CBF8D6FD518E17E1
