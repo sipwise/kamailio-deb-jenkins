@@ -261,6 +261,8 @@ case "$distribution" in
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # we need key id CBF8D6FD518E17E1
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
+    # support bootstrapping archived repository with expired GPG key
+    APTGETOPT=("${APTGETOPT[@]}" "-o Acquire::Check-Valid-Until=false" "-o APT::Get::AllowUnauthenticated=true" --force-yes)
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
@@ -370,6 +372,17 @@ else
     echo "!!! /var/cache/pbuilder/base-${distri}-amd64.cow exists already (execute '$0 --update' to refresh it) !!!"
   fi
 fi
+
+case "${distri}" in
+  jessie)
+    echo "Setting up /etc/apt/apt.conf.d/99-ignore-expired-keys.conf in build environment for ${distri}"
+    cat > /var/cache/pbuilder/base-${distri}-amd64.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf << EOF
+# set up via kamailio-deb-jenkins' ec2/bootstrap.sh
+Acquire::Check-Valid-Until false;
+APT::Get::AllowUnauthenticated true;
+EOF
+    ;;
+esac
 
 if $UPDATE ; then
   echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
