@@ -258,7 +258,7 @@ case "$distribution" in
     # nowadays resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
     # security and updates
-    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
+    OTHERMIRROR="deb http://archive.debian.org/debian-security ${distribution}/updates main"
     # we need key id CBF8D6FD518E17E1
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
     # support bootstrapping archived repository with expired GPG key
