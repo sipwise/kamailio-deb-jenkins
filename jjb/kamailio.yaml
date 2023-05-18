@@ -96,7 +96,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic, focal]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio53-nightly
@@ -108,7 +108,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio52-nightly
@@ -120,7 +120,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio51-nightly
@@ -241,7 +241,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic, focal]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio53
@@ -253,7 +253,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio52
@@ -265,7 +265,7 @@
     distributions: !!python/tuple [buster, stretch, jessie, wheezy, trusty, xenial, bionic]
     architectures: *architectures
     jobs: *jobs_simple
-    disabled: false
+    disabled: true
 
 - project:
     name: kamailio51
