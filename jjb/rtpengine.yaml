@@ -43,13 +43,13 @@
     disabled: false
 
 - project:
-    name: rtpengine-mr10.5-nightly
+    name: rtpengine-mr11.5-nightly
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: 'mr10.5'
+    branch: 'mr11.5'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -60,9 +60,9 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: 'mr11.5'
+    branch: 'mr10.5'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
