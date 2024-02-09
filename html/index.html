@@ -14,8 +14,17 @@
   <p>Usage instructions:</p>
 
   <pre>
-% wget -O- http://kamailio.sipwise.com/debian/kamailiodebkey.gpg | sudo apt-key add -
-</pre>
+    % wget -O- https://deb.kamailio.org/kamailiodebkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/kamailio.gpg
+  </pre>
+
+  <p>add key info in repository definition:</p>
+  <pre>
+    deb [signed-by=/usr/share/keyrings/kamailio.gpg] http://kamailio.sipwise.com/debian/kamailio${VER} ${CODENAME} main
+  </pre>
+  <p>Old method:</p>
+  <pre>
+    % wget -O- http://kamailio.sipwise.com/debian/kamailiodebkey.gpg | sudo apt-key add -
+  </pre>
 
   <p>
   <ul><a id="list"></a>

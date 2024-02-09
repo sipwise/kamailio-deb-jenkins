@@ -12,10 +12,19 @@
   <p><a href="https://github.com/sipwise/rtpengine/">RTPengine</a> <a
     href="https://kamailio.sipwise.com/debian/rtpengine.html">builds</a></p>
   <p>Usage instructions:</p>
-
+  
   <pre>
-% wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | sudo apt-key add -
-</pre>
+    % wget -O- https://deb.kamailio.org/kamailiodebkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/kamailio.gpg
+  </pre>
+
+  <p>add key info in repository definition:</p>
+  <pre>
+    deb [signed-by=/usr/share/keyrings/kamailio.gpg] http://deb.kamailio.org/kamailio${VER} ${CODENAME} main
+  </pre>
+  <p>Old method:</p>
+  <pre>
+    % wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | sudo apt-key add -
+  </pre>
 
   <p>
   <ul><a id="list"></a>
