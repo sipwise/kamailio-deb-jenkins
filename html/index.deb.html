@@ -12,7 +12,7 @@
   <p><a href="https://github.com/sipwise/rtpengine/">RTPengine</a> <a
     href="https://kamailio.sipwise.com/debian/rtpengine.html">builds</a></p>
   <p>Usage instructions:</p>
-  
+
   <pre>
     % wget -O- https://deb.kamailio.org/kamailiodebkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/kamailio.gpg
   </pre>
@@ -30,6 +30,7 @@
   <ul><a id="list"></a>
     <li><a href="#stable">Stable releases</a>
       <ul>
+        <!--<li><a href="#stable58">latest release of 5.8</a></li> -->
         <li><a href="#stable57">latest release of 5.7</a></li>
         <li><a href="#stable56">latest release of 5.6</a></li>
         <li><a href="#stable55">latest release of 5.5</a></li>
@@ -49,6 +50,7 @@
     <li><a href="#dev">Nightly built packages</a>
       <ul>
         <li><a href="#dev_master">master</a></li>
+        <li><a href="#dev58">branch 5.8</a></li>
         <li><a href="#dev57">branch 5.7</a></li>
         <li><a href="#dev56">branch 5.6</a></li>
         <li><a href="#dev55">branch 5.5</a></li>
@@ -69,7 +71,36 @@
   </p>
 
   <h2><a id="stable">Stable releases</a></h2>
+<!--
+  <p>Debian/Ubuntu packages with latest changes from <a id="stable58">5.8
+    branch</a> (choose the distribution you're interested in):</p>
 
+  <pre>
+  deb     http://deb.kamailio.org/kamailio58 stretch main
+  deb-src http://deb.kamailio.org/kamailio58 stretch main
+
+  deb     http://deb.kamailio.org/kamailio58 buster main
+  deb-src http://deb.kamailio.org/kamailio58 buster main
+
+  deb     http://deb.kamailio.org/kamailio58 bullseye main
+  deb-src http://deb.kamailio.org/kamailio58 bullseye main
+
+  deb     http://deb.kamailio.org/kamailio58 bookworm main
+  deb-src http://deb.kamailio.org/kamailio58 bookworm main
+
+  deb     http://deb.kamailio.org/kamailio58 xenial main
+  deb-src http://deb.kamailio.org/kamailio58 xenial main
+
+  deb     http://deb.kamailio.org/kamailio58 bionic main
+  deb-src http://deb.kamailio.org/kamailio58 bionic main
+
+  deb     http://deb.kamailio.org/kamailio58 focal main
+  deb-src http://deb.kamailio.org/kamailio58 focal main
+
+  deb     http://deb.kamailio.org/kamailio58 jammy main
+  deb-src http://deb.kamailio.org/kamailio58 jammy main
+  </pre>
+-->
   <p>Debian/Ubuntu packages with latest changes from <a id="stable57">5.7
     branch</a> (choose the distribution you're interested in):</p>
 
@@ -435,6 +466,35 @@ deb-src http://deb.kamailio.org/kamailiodev-nightly focal main
 
 deb     http://deb.kamailio.org/kamailiodev-nightly jammy main
 deb-src http://deb.kamailio.org/kamailiodev-nightly jammy main
+</pre>
+
+<p>Debian/Ubuntu packages with latest changes from <a id="dev58">5.8
+  branch</a> (choose the distribution you're interested in):</p>
+
+<pre>
+deb     http://deb.kamailio.org/kamailio58-nightly stretch main
+deb-src http://deb.kamailio.org/kamailio58-nightly stretch main
+
+deb     http://deb.kamailio.org/kamailio58-nightly buster main
+deb-src http://deb.kamailio.org/kamailio58-nightly buster main
+
+deb     http://deb.kamailio.org/kamailio58-nightly bullseye main
+deb-src http://deb.kamailio.org/kamailio58-nightly bullseye main
+
+deb     http://deb.kamailio.org/kamailio58-nightly bookworm main
+deb-src http://deb.kamailio.org/kamailio58-nightly bookworm main
+
+deb     http://deb.kamailio.org/kamailio58-nightly xenial main
+deb-src http://deb.kamailio.org/kamailio58-nightly xenial main
+
+deb     http://deb.kamailio.org/kamailio58-nightly bionic main
+deb-src http://deb.kamailio.org/kamailio58-nightly bionic main
+
+deb     http://deb.kamailio.org/kamailio58-nightly focal main
+deb-src http://deb.kamailio.org/kamailio58-nightly focal main
+
+deb     http://deb.kamailio.org/kamailio58-nightly jammy main
+deb-src http://deb.kamailio.org/kamailio58-nightly jammy main
 </pre>
 
 <p>Debian/Ubuntu packages with latest changes from <a id="dev57">5.7
