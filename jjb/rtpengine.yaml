@@ -249,7 +249,7 @@
             which-build: upstream-build
             fallback-to-last-successful: true
         - shell: |
-            DEB_BUILD_PROFILES=pkg.rtpengine.no-transcoding \
+            DEB_BUILD_PROFILES=$(/home/admin/kamailio-deb-jenkins/scripts/rtpengine-profiles) \
               /home/admin/kamailio-deb-jenkins/scripts/jdg-build-package
         - shell: |
             mkdir -p report
