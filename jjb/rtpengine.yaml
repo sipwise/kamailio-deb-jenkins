@@ -43,6 +43,19 @@
     disabled: false
 
 - project:
+    name: rtpengine-mr12.5-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: 'mr12.5'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: false
+
+- project:
     name: rtpengine-mr11.5-nightly
     logrotate_keep: *logrotate_keep
     repos: *repos
@@ -95,6 +108,19 @@
     disabled: true
 
 # build based on tags
+- project:
+    name: rtpengine-mr12.5
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/mr12.5.*'
+    browser-url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    architectures: *architectures
+    jobs: *jobs_simple
+    recipients: *recipients
+    disabled: false
+
 - project:
     name: rtpengine-mr11.5
     logrotate_keep: *logrotate_keep
