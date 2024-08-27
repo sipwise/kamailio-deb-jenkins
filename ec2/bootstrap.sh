@@ -23,6 +23,7 @@ list_supported_distributions() {
     focal \
     jammy \
     jessie \
+    noble \
     stretch \
     trusty \
     xenial
@@ -208,7 +209,7 @@ echo "!!! Setting up /etc/jenkins/pbuilderrc !!!"
 cat > /etc/jenkins/pbuilderrc << "EOF"
 # distribution specific configuration
 case "$distribution" in
-  xenial|bionic|focal|jammy)
+  xenial|bionic|focal|jammy|noble)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
@@ -310,6 +311,11 @@ if grep -q '^PBUILDER_CONFIG=' /etc/jenkins/debian_glue 2>/dev/null ; then
   echo "!!! /etc/jenkins/debian_glue with PBUILDER_CONFIG exists already !!!"
 else
   echo "PBUILDER_CONFIG=/etc/jenkins/pbuilderrc" >> /etc/jenkins/debian_glue
+fi
+
+if ! [ -e /usr/share/debootstrap/scripts/noble ] ; then
+  echo "Debootstrap version doesn't know about Ubuntu noble yet, creating according symlink"
+  ln -s gutsy /usr/share/debootstrap/scripts/noble
 fi
 
 if ! [ -e /usr/share/debootstrap/scripts/jammy ] ; then
