@@ -104,6 +104,7 @@ case "${distribution}" in
   bionic)   BPO=ubuntu18.04 ;;
   focal)    BPO=ubuntu20.04 ;;
   jammy)    BPO=ubuntu22.04 ;;
+  noble)    BPO=ubuntu24.04 ;;
   wheezy)   BPO=bpo7 ;;
   jessie)   BPO=bpo8 ;;
   stretch)  BPO=bpo9 ;;

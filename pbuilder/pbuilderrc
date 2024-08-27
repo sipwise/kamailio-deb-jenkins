@@ -1,6 +1,6 @@
 # distribution specific configuration
 case "$distribution" in
-  xenial|bionic|focal|jammy)
+  xenial|bionic|focal|jammy|noble)
     MIRRORSITE="http://archive.ubuntu.com/ubuntu/"
     # we need key id 40976EAF437D05B5
     DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg")
