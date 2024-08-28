@@ -45,7 +45,7 @@
     refspec: *refbranch
     branch: *branch
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, nobel]
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
