@@ -49,7 +49,7 @@
     refspec: *refbranch
     branch: 'mr12.5'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
@@ -115,7 +115,7 @@
     refspec: *reftag
     branch: '*/tags/mr12.5.*'
     browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     recipients: *recipients
