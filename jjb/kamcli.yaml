@@ -44,7 +44,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, noble, jammy, focal, bionic]
     jobs: *jobs_simple
-    disabled: true
+    disabled: false
 
 # build based on tags
 - project:
@@ -56,7 +56,7 @@
     browser-url: *browserurl
     distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
-    disabled: true
+    disabled: false
 
 ## the job template
 - job-template:
@@ -247,7 +247,7 @@
         - groovy-label:
             script:
              !include-raw-escape: groovy-label.groovy
-      disabled: true
+      disabled: false
       execution-strategy:
         sequential: true
       axes:
