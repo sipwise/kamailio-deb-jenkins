@@ -360,61 +360,67 @@ fi
 
 export distribution=${distri} # for usage in pbuilderrc
 
-if ! [ -d /var/cache/pbuilder/base-${distri}-amd64.cow ] ; then
-  (
-    source /etc/jenkins/pbuilderrc
-    eatmydata cowbuilder --create \
-      --basepath /var/cache/pbuilder/base-${distri}-amd64.cow \
-      --distribution ${distri} --debootstrapopts --arch \
-      --debootstrapopts amd64 --debootstrapopts --variant=buildd \
-      --configfile=/etc/jenkins/pbuilderrc \
-      --mirror ${MIRRORSITE} \
-      --othermirror="${OTHERMIRROR}"
-  )
-else
-  if $UPDATE ; then
-    echo "!!! Executing update for cowbuilder as requested !!!"
+prepare_cowbuilder() {
+  if ! [ -d "/var/cache/pbuilder/base-${distri}-${arch}.cow" ] ; then
     (
       source /etc/jenkins/pbuilderrc
-      eatmydata cowbuilder --update \
-        --basepath /var/cache/pbuilder/base-${distri}-amd64.cow \
-        --distribution ${distri} \
+      eatmydata cowbuilder --create \
+        --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
+        --distribution "${distri}" --debootstrapopts --arch \
+        --debootstrapopts "${arch}" --debootstrapopts --variant=buildd \
         --configfile=/etc/jenkins/pbuilderrc \
-        --mirror ${MIRRORSITE} \
-        --othermirror="${OTHERMIRROR}" --override-config
+        --mirror "${MIRRORSITE}" \
+        --othermirror="${OTHERMIRROR}"
     )
   else
-    echo "!!! /var/cache/pbuilder/base-${distri}-amd64.cow exists already (execute '$0 --update' to refresh it) !!!"
+    if $UPDATE ; then
+      echo "!!! Executing update for cowbuilder as requested !!!"
+      (
+        source /etc/jenkins/pbuilderrc
+        eatmydata cowbuilder --update \
+          --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
+          --distribution "${distri}" \
+          --configfile=/etc/jenkins/pbuilderrc \
+          --mirror "${MIRRORSITE}" \
+          --othermirror="${OTHERMIRROR}" --override-config
+      )
+    else
+      echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
+    fi
   fi
-fi
 
-case "${distri}" in
-  jessie)
-    echo "Setting up /etc/apt/apt.conf.d/99-ignore-expired-keys.conf in build environment for ${distri}"
-    cat > /var/cache/pbuilder/base-${distri}-amd64.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf << EOF
+  case "${distri}" in
+    jessie)
+      echo "Setting up /etc/apt/apt.conf.d/99-ignore-expired-keys.conf in build environment for ${distri}"
+      cat > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf << EOF
 # set up via kamailio-deb-jenkins' ec2/bootstrap.sh
 Acquire::Check-Valid-Until false;
 APT::Get::AllowUnauthenticated true;
 EOF
     ;;
-esac
+  esac
 
-if $UPDATE ; then
-  echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
-  echo "Creating /var/cache/pbuilder/base-${distri}-amd64.tgz for piuparts usage"
-  pushd "/var/cache/pbuilder/base-${distri}-amd64.cow" >/dev/null
-  tar acf /var/cache/pbuilder/base-${distri}-amd64.tgz *
-  popd >/dev/null
-else
-  if [ -r "/var/cache/pbuilder/base-${distri}-amd64.tgz" ] ; then
-    echo "!!! /var/cache/pbuilder/base-${distri}-amd64.tgz exists already (execute '$0 --update' to force (re)building) !!!"
-  else
-    echo "Creating /var/cache/pbuilder/base-${distri}-amd64.tgz for piuparts usage"
-    pushd "/var/cache/pbuilder/base-${distri}-amd64.cow" >/dev/null
-    tar acf /var/cache/pbuilder/base-${distri}-amd64.tgz *
+  if $UPDATE ; then
+    echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
+    echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+    pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
     popd >/dev/null
+  else
+    if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
+      echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.tgz exists already (execute '$0 --update' to force (re)building) !!!"
+    else
+      echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
+      pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
+      tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+      popd >/dev/null
+    fi
   fi
-fi
+}
+
+for arch in amd64 arm64 ; do
+  prepare_cowbuilder
+done
 
 echo "Cleaning pbuilder's apt cache"
 rm -f /var/cache/pbuilder/aptcache/*

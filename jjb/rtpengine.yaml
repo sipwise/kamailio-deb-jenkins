@@ -8,6 +8,7 @@
      5
     architectures: !!python/tuple &architectures
      - amd64
+     - arm64
     repos: &repos
       'https://github.com/sipwise/rtpengine.git'
     reftag: &reftag
