@@ -300,6 +300,14 @@ case "$distribution" in
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
 esac
+
+case "$architecture" in
+  arm64)
+    MIRRORSITE=$(echo "${MIRRORSITE}" | sed 's#archive.ubuntu.com/ubuntu#ports.ubuntu.com#')
+    OTHERMIRROR=$(echo "${OTHERMIRROR}" | sed 's#archive.ubuntu.com/ubuntu#ports.ubuntu.com#')
+    OTHERMIRROR=$(echo "${OTHERMIRROR}" | sed 's#security.ubuntu.com/ubuntu#ports.ubuntu.com#')
+  ;;
+esac
 EOF
 
 echo "!!! Setting up /etc/sudoers.d/pbuilder !!!"
@@ -363,6 +371,7 @@ export distribution=${distri} # for usage in pbuilderrc
 prepare_cowbuilder() {
   if ! [ -d "/var/cache/pbuilder/base-${distri}-${arch}.cow" ] ; then
     (
+      export architecture=${arch} # for usage in pbuilderrc
       source /etc/jenkins/pbuilderrc
       eatmydata cowbuilder --create \
         --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
@@ -376,6 +385,7 @@ prepare_cowbuilder() {
     if $UPDATE ; then
       echo "!!! Executing update for cowbuilder as requested !!!"
       (
+        export architecture=${arch} # for usage in pbuilderrc
         source /etc/jenkins/pbuilderrc
         eatmydata cowbuilder --update \
           --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
