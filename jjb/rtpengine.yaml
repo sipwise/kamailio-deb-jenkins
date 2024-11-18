@@ -220,12 +220,20 @@
         - shell: |
             debian_dir=pkg/deb \
             /home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source
+        - trigger-builds:
+          - project: '{name}-binaries'
+            block: false
+            predefined-parameters: |
+              architecture=arm64
+              distribution=${{distribution}}
+          - project: '{name}-binaries'
+            block: false
+            predefined-parameters: |
+              architecture=amd64
+              distribution=${{distribution}}
       publishers:
         - archive:
             artifacts: '*.gz,*.bz2,*.xz,*.deb,*.dsc,*.changes'
-        - trigger:
-            project: '{name}-binaries'
-            threshold: UNSTABLE
         - fingerprint:
             record-artifacts: true
         - email:
@@ -295,12 +303,15 @@
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
-        - trigger:
-            project: '{name}-repos'
-            threshold: UNSTABLE
-        - trigger:
-            project: '{name}-piuparts'
-            threshold: UNSTABLE
+        - trigger-parameterized-builds:
+            - project: '{name}-repos'
+              block: false
+              current-parameters: true
+              condition: UNSTABLE_OR_BETTER
+            - project: '{name}-piuparts'
+              block: false
+              current-parameters: true
+              condition: UNSTABLE_OR_BETTER
         - workspace-cleanup:
             dirmatch: false
         - email:
