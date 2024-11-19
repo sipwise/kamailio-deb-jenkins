@@ -297,6 +297,22 @@
             mkdir -p report adt
             touch adt/summary # do not fail if no autopkgtest run took place
             /usr/bin/adtsummary_tap adt/summary > report/autopkgtest.tap
+        - trigger-builds:
+          - project: '{name}-repos'
+            block: false
+            predefined-parameters: |
+              architecture=${{architecture}}
+              distribution=${{distribution}}
+              label=master
+            restrict-matrix-project: |
+              (architecture=="${{architecture}}" && distribution=="${{distribution}}")
+          - project: '{name}-piuparts'
+            block: false
+            predefined-parameters: |
+              architecture=${{architecture}}
+              distribution=${{distribution}}
+            restrict-matrix-project: |
+              (architecture=="${{architecture}}" && distribution=="${{distribution}}")
       publishers:
         - archive:
             artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.ddeb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt'
@@ -307,23 +323,6 @@
             keep-long-stdio: false
         - fingerprint:
             record-artifacts: true
-        - trigger-parameterized-builds:
-            - project: '{name}-repos'
-              block: false
-              predefined-parameters: |
-                architecture=${{architecture}}
-                distribution=${{distribution}}
-              restrict-matrix-project: |
-                (architecture=="${{architecture}}" && distribution=="${{distribution}}")
-              condition: UNSTABLE_OR_BETTER
-            - project: '{name}-piuparts'
-              block: false
-              predefined-parameters: |
-                architecture=${{architecture}}
-                distribution=${{distribution}}
-              restrict-matrix-project: |
-                (architecture=="${{architecture}}" && distribution=="${{distribution}}")
-              condition: UNSTABLE_OR_BETTER
         - workspace-cleanup:
             dirmatch: false
         - email:
