@@ -226,11 +226,15 @@
             predefined-parameters: |
               architecture=arm64
               distribution=${{distribution}}
+            restrict-matrix-project: |
+                (architecture=="arm64" && distribution=="${{distribution}}")
           - project: '{name}-binaries'
             block: false
             predefined-parameters: |
               architecture=amd64
               distribution=${{distribution}}
+            restrict-matrix-project: |
+                (architecture=="amd64" && distribution=="${{distribution}}")
       publishers:
         - archive:
             artifacts: '*.gz,*.bz2,*.xz,*.deb,*.dsc,*.changes'
@@ -306,11 +310,19 @@
         - trigger-parameterized-builds:
             - project: '{name}-repos'
               block: false
-              current-parameters: true
+              predefined-parameters: |
+                architecture=${{architecture}}
+                distribution=${{distribution}}
+              restrict-matrix-project: |
+                (architecture=="${{architecture}}" && distribution=="${{distribution}}")
               condition: UNSTABLE_OR_BETTER
             - project: '{name}-piuparts'
               block: false
-              current-parameters: true
+              predefined-parameters: |
+                architecture=${{architecture}}
+                distribution=${{distribution}}
+              restrict-matrix-project: |
+                (architecture=="${{architecture}}" && distribution=="${{distribution}}")
               condition: UNSTABLE_OR_BETTER
         - workspace-cleanup:
             dirmatch: false
