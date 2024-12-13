@@ -36,7 +36,6 @@
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
     <hudson.plugins.ec2.EC2Cloud plugin="ec2@1764.v71db_efb_46a_fe">
-      <actions/>
       <name>ec2-eu-west-1</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -46,7 +45,7 @@
       <instanceCap>10</instanceCap>
       <templates>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave buster</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -98,7 +97,6 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -111,7 +109,7 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave stretch</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -163,7 +161,6 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -176,7 +173,7 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave jessie</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -240,7 +237,7 @@ sudo ./ec2/bootstrap.sh -u jessie &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave wheezy</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -304,7 +301,7 @@ sudo ./ec2/bootstrap.sh -u wheezy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave trusty</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -368,7 +365,7 @@ sudo ./ec2/bootstrap.sh -u trusty &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave xenial</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -432,7 +429,7 @@ sudo ./ec2/bootstrap.sh -u xenial &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave bionic</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -484,7 +481,6 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -497,7 +493,7 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave focal</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -549,7 +545,6 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -562,7 +557,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave bullseye</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -614,7 +609,6 @@ sudo ./ec2/bootstrap.sh -u bullseye &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -627,7 +621,7 @@ sudo ./ec2/bootstrap.sh -u bullseye &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave bookworm</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -679,7 +673,6 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -692,7 +685,7 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave jammy</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -744,7 +737,6 @@ sudo ./ec2/bootstrap.sh -u jammy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -757,7 +749,7 @@ sudo ./ec2/bootstrap.sh -u jammy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
         <hudson.plugins.ec2.SlaveTemplate>
-          <ami>ami-0481c36c7c60e5abd</ami>
+          <ami>ami-0d4199032315bac68</ami>
           <description>jenkins-debian-glue-slave noble</description>
           <zone></zone>
           <securityGroups>kamailio-jenkins-slave</securityGroups>
@@ -809,7 +801,6 @@ sudo ./ec2/bootstrap.sh -u noble &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
-          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
