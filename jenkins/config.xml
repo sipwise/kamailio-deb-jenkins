@@ -9,7 +9,7 @@
     <string>jenkins.security.s2m.MasterKillSwitchWarning</string>
     <string>jenkins.diagnostics.ControllerExecutorsAgents</string>
   </disabledAdministrativeMonitors>
-  <version>2.462.3</version>
+  <version>2.479.2</version>
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
@@ -35,7 +35,8 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1715.vb_9e9e841ca_94">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1764.v71db_efb_46a_fe">
+      <actions/>
       <name>ec2-eu-west-1</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -97,6 +98,7 @@ sudo ./ec2/bootstrap.sh -u buster &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -161,6 +163,7 @@ sudo ./ec2/bootstrap.sh -u stretch &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScri
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -481,6 +484,7 @@ sudo ./ec2/bootstrap.sh -u bionic &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScrip
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -545,6 +549,7 @@ sudo ./ec2/bootstrap.sh -u focal &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -609,6 +614,7 @@ sudo ./ec2/bootstrap.sh -u bullseye &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -673,6 +679,7 @@ sudo ./ec2/bootstrap.sh -u bookworm &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScr
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -737,6 +744,7 @@ sudo ./ec2/bootstrap.sh -u jammy &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
@@ -801,6 +809,7 @@ sudo ./ec2/bootstrap.sh -u noble &gt;&gt;/tmp/initsh.log 2&gt;&amp;1</initScript
           <maxTotalUses>-1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <currentSubnetId>subnet-0cac724e3fcebdcda</currentSubnetId>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
           <metadataSupported>true</metadataSupported>
