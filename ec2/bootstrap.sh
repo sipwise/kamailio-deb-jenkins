@@ -171,33 +171,22 @@ apt-get -y $APT_OPTIONS dist-upgrade
 apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv facter eatmydata
 
 case "${DEBIAN_VERSION}" in
-  jessie)
-    apt-get -y $APT_OPTIONS install -t jessie-backports ca-certificates-java openjdk-8-jre-headless
-    apt-get -y $APT_OPTIONS remove openjdk-7-jre-headless default-jre-headless
-    # required for build-profile support in e.g. rtpengine
-    apt-get -y $APT_OPTIONS install -t jessie-backports pbuilder
-    # make sure we use an up2date piuparts version, e.g.
-    # to solve https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=699028
-    # and lintian to solve control.tar.xz error (needs >= 2.5.50)
-    apt-get -y $APT_OPTIONS install -t jessie-backports piuparts lintian
-    ;;
-  stretch)
-    apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
-    apt-get -y $APT_OPTIONS install -t stretch-backports pbuilder debootstrap piuparts lintian
-    ;;
   bullseye)
-    # for ubuntu 22.04 / zstd support
-    apt-get -y $APT_OPTIONS install zstd
     apt-get -y $APT_OPTIONS install -t bullseye-backports debootstrap
+    # required for recent Jenkins versions
+    apt-get -y $APT_OPTIONS remove default-jdk-headless openjdk-11-jdk-headless openjdk-11-jre-headless
+    apt-get -y $APT_OPTIONS install openjdk-17-jre-headless ca-certificates-java
     ;;
   *)
     apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
-    apt-get -y $APT_OPTIONS install pbuilder piuparts lintian
     ;;
 esac
 
 # packages required for static checks
 apt-get -y $APT_OPTIONS install cppcheck
+
+# for ubuntu 22.04 / zstd support
+apt-get -y $APT_OPTIONS install zstd
 
 # commodity packages
 apt-get -y $APT_OPTIONS install screen zsh vim
