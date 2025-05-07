@@ -82,32 +82,6 @@
     recipients: *recipients
     disabled: false
 
-- project:
-    name: rtpengine-mr9.5-nightly
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *refbranch
-    branch: 'mr9.5'
-    browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
-    architectures: *architectures
-    jobs: *jobs_simple
-    recipients: *recipients
-    disabled: false
-
-- project:
-    name: rtpengine-mr8.5-nightly
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *refbranch
-    branch: 'mr8.5'
-    browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster]
-    architectures: *architectures
-    jobs: *jobs_simple
-    recipients: *recipients
-    disabled: true
-
 # build based on tags
 - project:
     name: rtpengine-mr12.5
@@ -147,32 +121,6 @@
     jobs: *jobs_simple
     recipients: *recipients
     disabled: false
-
-- project:
-    name: rtpengine-mr9.5
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *reftag
-    branch: '*/tags/mr9.5.7.*'
-    browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
-    architectures: *architectures
-    jobs: *jobs_simple
-    recipients: *recipients
-    disabled: false
-
-- project:
-    name: rtpengine-mr8.5
-    logrotate_keep: *logrotate_keep
-    repos: *repos
-    refspec: *reftag
-    branch: '*/tags/mr8.5.9.*'
-    browser-url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster]
-    architectures: *architectures
-    jobs: *jobs_simple
-    recipients: *recipients
-    disabled: true
 
 ## the job template
 - job-template:
