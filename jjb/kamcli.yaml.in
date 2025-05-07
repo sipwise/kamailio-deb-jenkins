@@ -1,0 +1,57 @@
+# This jenkins-job-build configuration sets up Jenkins jobs
+# for building Debian packages of kamcli
+# NOTE: requires jenkins-job-builder >= 6.4.0
+
+## global defaults
+- defaults:
+    name: global
+    debian_dir: pkg/deb
+    logrotate_keep: &logrotate_keep
+     5
+    architectures: !!python/tuple &architectures
+     - amd64
+     - arm64
+    repos: &repos
+      'https://github.com/kamailio/kamcli.git'
+    reftag: &reftag
+      '+refs/tags/*:refs/remotes/origin/tags/*'
+    refbranch: &refbranch
+      '+refs/heads/*:refs/remotes/origin/*'
+    branch: &branch
+      'master'
+    browser_url: &browserurl
+      'https://github.com/kamailio/kamcli.git'
+    jobs_simple: &jobs_simple
+      - '{name}-get-code'
+      - '{name}-source'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+
+## list of projects with their configurations
+# build based on branches
+- project:
+    name: kamcli-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: *branch
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, noble, jammy, focal, bionic]
+    jobs: *jobs_simple
+    disabled: false
+
+# build based on tags
+- project:
+    name: kamcli
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *reftag
+    branch: '*/tags/v*'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
+    jobs: *jobs_simple
+    disabled: false
+
+## the job templates
+#:TEMPLATES:#

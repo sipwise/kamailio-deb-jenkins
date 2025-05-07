@@ -1,0 +1,119 @@
+# This jenkins-job-build configuration sets up Jenkins jobs
+# for building Debian packages of kamailio
+# NOTE: requires jenkins-job-builder >= 6.4.0
+
+## global defaults
+- defaults:
+    name: global
+    debian_dir: 'pkg/kamailio/deb'
+    logrotate_keep: &logrotate_keep
+     5
+    architectures: !!python/tuple &architectures
+     - amd64
+     - arm64
+    repos: &repos
+      'https://github.com/kamailio/kamailio.git'
+    reftag: &reftag
+      '+refs/tags/*:refs/remotes/origin/tags/*'
+    refbranch: &refbranch
+      '+refs/heads/*:refs/remotes/origin/*'
+    branch: &branch
+      'master'
+    browser_url: &browserurl
+      'https://github.com/kamailio/kamailio.git'
+    jobs: &jobs_simple
+      - '{name}-get-code'
+      - '{name}-source'
+      - '{name}-binaries'
+      - '{name}-repos'
+      - '{name}-piuparts'
+
+## list of projects with their configurations
+# build based on branches
+- project:
+    name: kamailiodev-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: *branch
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
+    name: kamailio60-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '6.0'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
+    name: kamailio58-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '5.8'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
+    name: kamailio57-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '5.7'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+# build based on tags
+- project:
+    name: kamailio60
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '*/tags/6.0*'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
+    name: kamailio58
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '*/tags/5.8*'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
+    name: kamailio57
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: '*/tags/5.7*'
+    browser_url: *browserurl
+    distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+## the job templates
+#:TEMPLATES:#
