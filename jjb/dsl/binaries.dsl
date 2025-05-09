@@ -12,11 +12,11 @@ pipeline {
             }
         }
         stage('Build') {
+{%- if debian_profiles is defined %}
             environment {
-                {%- if debian_profiles is defined %}
                 DEB_BUILD_PROFILES="$({{ debian_profiles }})"
-                {%- endif %}
             }
+{%- endif %}
             steps {
                 sh '/home/admin/kamailio-deb-jenkins/scripts/jdg-build-package'
             }
