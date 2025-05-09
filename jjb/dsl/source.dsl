@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build source') {
             environment {
-                debian_dir={{ debian_dir }}
+                debian_dir="{{ debian_dir }}"
             }
             steps {
                 sh '/home/admin/kamailio-deb-jenkins/scripts/jdg-generate-source'
