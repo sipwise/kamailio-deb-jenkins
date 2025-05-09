@@ -1,6 +1,11 @@
 pipeline {
     agent { label 'built-in' }
     stages {
+        stage("Initialization") {
+            steps {
+                buildName "#${BUILD_NUMBER} ${distribution}:${architecture}"
+            }
+        }
         stage('copy artifacts') {
             steps {
                 deleteDir()
