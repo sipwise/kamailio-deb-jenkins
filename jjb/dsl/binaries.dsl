@@ -40,11 +40,13 @@ pipeline {
                 archiveArtifacts artifacts: '**/*.gz,**/*.bz2,**/*.xz,**/*.deb,**/*.ddeb,**/*.dsc,**/*.changes,**/*.buildinfo,**/*lintian.txt', fingerprint: true, followSymlinks: false
             }
         }
+        stage('trigger repos') {
+            step {
+                build wait: false, propagate: false, job: '{{ name }}-repos', parameters: [string(name: 'distribution', value: "${distribution}"), string(name: 'architecture', value: "${architecture}")]
+            }
+        }
     }
     post {
-        success {
-            build wait: false, propagate: false, job: '{{ name }}-repos', parameters: [string(name: 'distribution', value: "${distribution}"), string(name: 'architecture', value: "${architecture}")]
-        }
         failure {
             emailext body: '{{ email_body }}',
                     to: '{{ email }}',

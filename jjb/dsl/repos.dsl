@@ -25,11 +25,13 @@ pipeline {
                 archiveArtifacts artifacts: '**/*.dsc,**/*.changes', fingerprint: true, followSymlinks: false
             }
         }
+        stage('trigger piuparts') {
+            steps {
+                build wait: false, propagate: false, job: '{{ name }}-piuparts', parameters: [string(name: 'distribution', value: "${distribution}"), string(name: 'architecture', value: "${architecture}")]
+            }
+        }
     }
     post {
-        success {
-            build wait: false, propagate: false, job: '{{ name }}-piuparts', parameters: [string(name: 'distribution', value: "${distribution}"), string(name: 'architecture', value: "${architecture}")]
-        }
         failure {
             emailext body: '{{ email_body }}',
                     to: '{{ email }}',
