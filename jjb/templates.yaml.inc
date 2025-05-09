@@ -112,3 +112,8 @@
     properties:
       - build-discarder:
           days-to-keep: '{logrotate_keep}'
+
+- view-template:
+    name: '{name}'
+    view-type: list
+    regex: '{name}.*'

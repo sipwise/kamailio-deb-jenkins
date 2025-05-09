@@ -28,6 +28,11 @@
       - '{name}-repos'
       - '{name}-piuparts'
 
+- view:
+    name: kamailiodev
+    view-type: list
+    regex: 'kamailiodev.*'
+
 ## list of projects with their configurations
 # build based on branches
 - project:
@@ -81,6 +86,8 @@
 # build based on tags
 - project:
     name: kamailio60
+    views:
+      - '{name}'
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
@@ -93,6 +100,8 @@
 
 - project:
     name: kamailio58
+    views:
+      - '{name}'
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
@@ -105,6 +114,8 @@
 
 - project:
     name: kamailio57
+    views:
+      - '{name}'
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch

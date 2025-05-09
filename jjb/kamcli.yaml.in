@@ -44,6 +44,8 @@
 # build based on tags
 - project:
     name: kamcli
+    views:
+      - '{name}'
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag

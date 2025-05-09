@@ -30,6 +30,11 @@
     recipients: &recipients
       'vseva@sipwise.com'
 
+- view:
+    name: rtpengine
+    view-type: list
+    regex: 'rtpengine.*'
+
 ## list of projects with their configurations
 # build based on branches
 - project:
