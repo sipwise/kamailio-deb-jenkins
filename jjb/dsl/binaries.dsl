@@ -41,7 +41,7 @@ pipeline {
             }
         }
         stage('trigger repos') {
-            step {
+            steps {
                 build wait: false, propagate: false, job: '{{ name }}-repos', parameters: [string(name: 'distribution', value: "${distribution}"), string(name: 'architecture', value: "${architecture}")]
             }
         }
