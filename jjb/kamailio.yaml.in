@@ -6,7 +6,7 @@
 - defaults:
     name: global
     email: 'linuxmaniac@torreviejawireless.org'
-    email_body: |
+    email_body: |-
       Check console output at ${{BUILD_URL}} to view the results.\n\n${{CHANGES}}\n -------------------------------------------------- \n ${{BUILD_LOG, maxLines=100, escapeHtml=false}}
     debian_dir: 'pkg/kamailio/deb'
     logrotate_keep: &logrotate_keep
