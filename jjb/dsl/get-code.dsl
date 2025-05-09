@@ -10,7 +10,7 @@ def generateStage(dist) {
 }
 
 pipeline {
-    agent { label 'built-in' }
+    agent any
     stages {
         stage("generate parallel map") {
             steps {
