@@ -21,7 +21,7 @@
     refbranch: &refbranch
       '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
-      'master'
+      'refs/heads/master'
     browser_url: &browserurl
       'https://github.com/kamailio/kamailio.git'
     jobs: &jobs_simple
@@ -55,7 +55,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '6.0'
+    branch: 'refs/heads/6.0'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
     architectures: *architectures
@@ -67,7 +67,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '5.8'
+    branch: 'refs/heads/5.8'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy, noble]
     architectures: *architectures
@@ -79,7 +79,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '5.7'
+    branch: 'refs/heads/5.7'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy]
     architectures: *architectures
@@ -94,7 +94,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '*/tags/6.0*'
+    branch: ':.*/tags/6.0*'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, bionic, focal, jammy, noble]
     architectures: *architectures
@@ -108,7 +108,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '*/tags/5.8*'
+    branch: ':.*/tags/5.8*'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy, noble]
     architectures: *architectures
@@ -122,7 +122,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *refbranch
-    branch: '*/tags/5.7*'
+    branch: ':.*/tags/5.7*'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, stretch, xenial, bionic, focal, jammy]
     architectures: *architectures

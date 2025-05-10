@@ -13,7 +13,21 @@ pipeline {
         }
         stage('checkout code') {
             steps {
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/{{ branch }}']], browser: github('{{ browser_url }}'), extensions: [cleanBeforeCheckout(deleteUntrackedNestedRepositories: true), cloneOption(noTags: false, reference: '', shallow: false), [$class: 'RelativeTargetDirectory', relativeTargetDir: 'source']], userRemoteConfigs: [[name: 'origin', refspec: '{{ refspec }}', url: '{{ repos }}']])
+                script {
+                    def scmVars = checkout(changelog: false, poll: false,
+                        scm: scmGit(
+                            branches: [[name: '{{ branch }}']],
+                            browser: github('{{ browser_url }}'),
+                            extensions: [
+                                cleanBeforeCheckout(deleteUntrackedNestedRepositories: true),
+                                cloneOption(noTags: false, reference: '', shallow: false),
+                                [$class: 'RelativeTargetDirectory', relativeTargetDir: 'source']
+                            ],
+                            userRemoteConfigs: [[name: 'origin', refspec: '{{ refspec }}', url: '{{ repos }}']]
+                        )
+                    )
+                    env.GIT_BRANCH=scmVars.GIT_BRANCH
+                }
             }
         }
         stage('Build source') {

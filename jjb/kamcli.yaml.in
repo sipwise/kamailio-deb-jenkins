@@ -20,7 +20,7 @@
     refbranch: &refbranch
       '+refs/heads/*:refs/remotes/origin/*'
     branch: &branch
-      'master'
+      'refs/heads/master'
     browser_url: &browserurl
       'https://github.com/kamailio/kamcli.git'
     jobs_simple: &jobs_simple
@@ -51,7 +51,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch: '*/tags/v*'
+    branch: ':.*/tags/v*'
     browser_url: *browserurl
     distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
