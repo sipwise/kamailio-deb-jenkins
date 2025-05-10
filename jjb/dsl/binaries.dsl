@@ -16,12 +16,17 @@ pipeline {
                 copyArtifacts filter: '*.gz,*.bz2,*.xz,*.dsc,*.changes', fingerprintArtifacts: true, projectName: '{{ name }}-source', selector: buildParameter('BUILD_SELECTOR')
             }
         }
-        stage('Build') {
 {%- if debian_profiles is defined %}
-            environment {
-                DEB_BUILD_PROFILES="$({{ debian_profiles }})"
+        stage('debian profile') {
+            steps {
+                script {
+                    def profile = sh(returnStdout: true, script: '{{ debian_profiles }}')
+                    env.DEB_BUILD_PROFILES=profile.trim()
+                }
             }
+        }
 {%- endif %}
+        stage('Build') {
             steps {
                 sh '/home/admin/kamailio-deb-jenkins/scripts/jdg-build-package'
             }
