@@ -12,6 +12,25 @@ def generateStage(dist) {
 pipeline {
     agent any
     stages {
+        stage('checkout code') {
+            steps {
+                script {
+                    def scmVars = checkout(changelog: false, poll: true,
+                        scm: scmGit(
+                            branches: [[name: '{{ branch }}']],
+                            browser: github('{{ browser_url }}'),
+                            extensions: [
+                                cleanBeforeCheckout(deleteUntrackedNestedRepositories: true),
+                                cloneOption(noTags: false, reference: '', shallow: false),
+                                [$class: 'RelativeTargetDirectory', relativeTargetDir: 'source']
+                            ],
+                            userRemoteConfigs: [[name: 'origin', refspec: '{{ refspec }}', url: '{{ repos }}']]
+                        )
+                    )
+                    env.GIT_BRANCH=scmVars.GIT_BRANCH
+                }
+            }
+        }
         stage("generate parallel map") {
             steps {
                 script {
