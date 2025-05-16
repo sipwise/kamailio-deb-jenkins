@@ -93,7 +93,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch: ':.*/tags/mr12.5.*'
+    branch: ':refs/tags/mr12\\.5\\.\\d+.\\d+'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
     architectures: *architectures
@@ -105,7 +105,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch: ':.*/tags/mr11.5.*'
+    branch: ':refs/tags/mr11\\.5\\.\\d+\\.\\d+'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
     architectures: *architectures
@@ -117,7 +117,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch: ':.*/tags/mr10.5.4.*'
+    branch: ':refs/tags/mr10\\.5\\.\\d+\\.\\d+'
     browser_url: *browserurl
     distributions: !!python/tuple [bookworm, bullseye, buster, focal]
     architectures: *architectures

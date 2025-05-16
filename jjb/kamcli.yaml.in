@@ -51,7 +51,7 @@
     logrotate_keep: *logrotate_keep
     repos: *repos
     refspec: *reftag
-    branch: ':.*/tags/v*'
+    branch: ':refs/tags/v.*'
     browser_url: *browserurl
     distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
