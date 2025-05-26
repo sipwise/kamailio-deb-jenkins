@@ -7,4 +7,8 @@ export REPOS="${distribution}"
 export SKIP_REMOVAL=true
 
 /usr/bin/generate-reprepro-codename "${REPOS}"
+
+# workaround reprepro not supporting ddeb packages
+sed -i '/\.ddeb/d' binaries/*.changes
+
 /usr/bin/build-and-provide-package
