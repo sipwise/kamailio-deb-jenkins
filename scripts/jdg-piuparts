@@ -1,6 +1,7 @@
 #!/bin/bash
 flavour=debian
 
+# shellcheck disable=SC1091
 source /etc/jenkins/pbuilderrc
 export MIRROR=${MIRRORSITE}
 

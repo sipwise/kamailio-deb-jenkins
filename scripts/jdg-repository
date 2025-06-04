@@ -3,6 +3,7 @@
 export BASE_PATH="binaries/"
 export PROVIDE_ONLY=true
 export REPOSITORY="/srv/repository/${JOB_NAME%-repos*}"
+# shellcheck disable=SC2154
 export REPOS="${distribution}"
 export SKIP_REMOVAL=true
 

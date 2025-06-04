@@ -11,6 +11,7 @@ if [ -x "$(which jenkins-jobs)" ] ; then
   echo "** jenkins-jobs binary already present, skipping pip execution"
 elif [ -r bin/activate ] && [ -x bin/jenkins-jobs ] ; then
   echo "** jenkins-jobs binary not found, but noticed according pip environment, enabling"
+  # shellcheck disable=SC1091
   source bin/activate
 else
   echo "** jenkins-job-builder not executable, installing build dependencies"
@@ -18,8 +19,9 @@ else
 
   echo "** Installing jenkins-job-builder via virtualenv"
   virtualenv .
+  # shellcheck disable=SC1091
   source bin/activate
   pip install jenkins-job-builder
 fi
 
-jenkins-jobs $@
+jenkins-jobs "$@"

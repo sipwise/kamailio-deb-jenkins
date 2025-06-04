@@ -2,9 +2,11 @@
 # Purpose: prepare setup and invoke Debian binary package build
 
 # configuration for build-and-provide-package and its tools
-export DEB_BUILD_OPTIONS="parallel=$(nproc)"
+DEB_BUILD_OPTIONS="parallel=$(nproc)"
+export DEB_BUILD_OPTIONS
 export BUILD_ONLY=true
 export SUDO_CMD=sudo
+# shellcheck disable=SC2154
 export COWBUILDER_DIST=$distribution
 export POST_BUILD_HOOK=/home/admin/kamailio-deb-jenkins/scripts/jdg-debc
 export LINTIAN=true

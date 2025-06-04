@@ -135,13 +135,16 @@ if grep -q 'jessie-updates' /etc/apt/sources.list ; then
   sed -i 's/\(^deb.* jessie-updates .*\)/# disabled by ec2\/bootstrap.sh\n# \1/' /etc/apt/sources.list
 fi
 
+APT_OPTIONS=()
+
 # make sure we don't get stuck if debconf wants to pop up because of a modified conf file
-APT_OPTIONS='-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold'
+APT_OPTIONS+=(-o Dpkg::Options::=--force-confdef)
+APT_OPTIONS+=(-o Dpkg::Options::=--force-confold)
 
 # jessie repos expired, so disable the repository check iff running on jessie
 case "${DEBIAN_VERSION}" in
   jessie)
-    APT_OPTIONS="$APT_OPTIONS -o Acquire::Check-Valid-Until=false"
+    APT_OPTIONS+=(-o Acquire::Check-Valid-Until=false)
     ;;
 esac
 
@@ -158,38 +161,38 @@ while [[ $step -ne 0 ]]; do
   fi
 done
 
-if ! apt-get $APT_OPTIONS update ; then
+if ! apt-get "${APT_OPTIONS[@]}" update ; then
   echo "Retrying apt-get update once more after failure in 5 secs"
   sleep 5
-  apt-get $APT_OPTIONS update
+  apt-get "${APT_OPTIONS[@]}" update
 fi
 
-apt-get -y $APT_OPTIONS upgrade
-apt-get -y $APT_OPTIONS dist-upgrade
+apt-get -y "${APT_OPTIONS[@]}" upgrade
+apt-get -y "${APT_OPTIONS[@]}" dist-upgrade
 
 # packages required for building on slaves
-apt-get -y $APT_OPTIONS install jenkins-debian-glue-buildenv facter eatmydata
+apt-get -y "${APT_OPTIONS[@]}" install jenkins-debian-glue-buildenv facter eatmydata
 
 case "${DEBIAN_VERSION}" in
   bullseye)
-    apt-get -y $APT_OPTIONS install -t bullseye-backports debootstrap
+    apt-get -y "${APT_OPTIONS[@]}" install -t bullseye-backports debootstrap
     # required for recent Jenkins versions
-    apt-get -y $APT_OPTIONS remove default-jdk-headless openjdk-11-jdk-headless openjdk-11-jre-headless
-    apt-get -y $APT_OPTIONS install openjdk-17-jre-headless ca-certificates-java
+    apt-get -y "${APT_OPTIONS[@]}" remove default-jdk-headless openjdk-11-jdk-headless openjdk-11-jre-headless
+    apt-get -y "${APT_OPTIONS[@]}" install openjdk-17-jre-headless ca-certificates-java
     ;;
   *)
-    apt-get -y $APT_OPTIONS install default-jdk-headless ca-certificates-java
+    apt-get -y "${APT_OPTIONS[@]}" install default-jdk-headless ca-certificates-java
     ;;
 esac
 
 # packages required for static checks
-apt-get -y $APT_OPTIONS install cppcheck
+apt-get -y "${APT_OPTIONS[@]}" install cppcheck
 
 # for ubuntu 22.04 / zstd support
-apt-get -y $APT_OPTIONS install zstd
+apt-get -y "${APT_OPTIONS[@]}" install zstd
 
 # commodity packages
-apt-get -y $APT_OPTIONS install screen zsh vim
+apt-get -y "${APT_OPTIONS[@]}" install screen zsh vim
 
 # get rid of installation packages
 apt-get clean
@@ -367,7 +370,9 @@ export distribution=${distri} # for usage in pbuilderrc
 prepare_cowbuilder() {
   if ! [ -d "/var/cache/pbuilder/base-${distri}-${arch}.cow" ] ; then
     (
+      # shellcheck disable=SC2030
       export architecture=${arch} # for usage in pbuilderrc
+      # shellcheck disable=SC1091
       source /etc/jenkins/pbuilderrc
       eatmydata cowbuilder --create \
         --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
@@ -381,7 +386,9 @@ prepare_cowbuilder() {
     if $UPDATE ; then
       echo "!!! Executing update for cowbuilder as requested !!!"
       (
+        # shellcheck disable=SC2031
         export architecture=${arch} # for usage in pbuilderrc
+        # shellcheck disable=SC1091
         source /etc/jenkins/pbuilderrc
         eatmydata cowbuilder --update \
           --basepath "/var/cache/pbuilder/base-${distri}-${arch}.cow" \
@@ -398,7 +405,7 @@ prepare_cowbuilder() {
   case "${distri}" in
     jessie)
       echo "Setting up /etc/apt/apt.conf.d/99-ignore-expired-keys.conf in build environment for ${distri}"
-      cat > /var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf << EOF
+      cat > "/var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf" << EOF
 # set up via kamailio-deb-jenkins' ec2/bootstrap.sh
 Acquire::Check-Valid-Until false;
 APT::Get::AllowUnauthenticated true;
@@ -410,7 +417,7 @@ EOF
     echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
     echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
     pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
-    tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+    tar acf "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ./*
     popd >/dev/null
   else
     if [ -r "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ] ; then
@@ -418,7 +425,7 @@ EOF
     else
       echo "Creating /var/cache/pbuilder/base-${distri}-${arch}.tgz for piuparts usage"
       pushd "/var/cache/pbuilder/base-${distri}-${arch}.cow" >/dev/null
-      tar acf /var/cache/pbuilder/base-${distri}-${arch}.tgz *
+      tar acf "/var/cache/pbuilder/base-${distri}-${arch}.tgz" ./*
       popd >/dev/null
     fi
   fi

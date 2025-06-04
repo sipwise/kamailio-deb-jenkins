@@ -17,8 +17,8 @@ if [ -n "$CHANGES" ] >/dev/null 2>&1 ; then
   for file in $CHANGES ; do
     debc "$file"
   done
-elif ls *.deb >/dev/null 2>&1 ; then
-  debc *.deb
+elif ls ./*.deb >/dev/null 2>&1 ; then
+  debc ./*.deb
 else
   echo "No changes and deb files found in $(pwd), ignoring."
 fi

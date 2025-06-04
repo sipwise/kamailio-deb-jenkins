@@ -4,7 +4,10 @@
 # $debian_dir: and one directory for every distribution
 # $debian_auto_version: how the automatic version is created
 # $tagbase: tag to use for git describe
-cd source
+cd source || {
+  echo "cannot change to source/ directory" >&2
+  exit 1
+}
 
 # debug info
 env
