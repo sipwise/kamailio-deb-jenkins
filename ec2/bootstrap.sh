@@ -267,19 +267,11 @@ case "$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  stretch)
+  stretch|buster)
     # nowadays resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
     # archived security repository
     OTHERMIRROR="deb http://archive.debian.org/debian-security ${distribution}/updates main"
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
-    ;;
-  buster)
-    MIRRORSITE="http://deb.debian.org/debian"
-    # security and updates
-    OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}/updates main"
     # package install speedup
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
