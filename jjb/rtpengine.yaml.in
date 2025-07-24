@@ -51,6 +51,18 @@
     disabled: false
 
 - project:
+    name: rtpengine-mr13.5-nightly
+    logrotate_keep: *logrotate_keep
+    repos: *repos
+    refspec: *refbranch
+    branch: 'refs/heads/mr13.5'
+    browser_url: *browserurl
+    distributions: !!python/tuple [trixie, bookworm, bullseye, focal, jammy, noble]
+    architectures: *architectures
+    jobs: *jobs_simple
+    disabled: false
+
+- project:
     name: rtpengine-mr12.5-nightly
     logrotate_keep: *logrotate_keep
     repos: *repos
