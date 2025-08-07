@@ -19,7 +19,6 @@ list_supported_distributions() {
     bionic \
     bookworm \
     bullseye \
-    buster \
     focal \
     jammy \
     jessie \
@@ -267,7 +266,7 @@ case "$distribution" in
     EXTRAPACKAGES="eatmydata"
     export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
     ;;
-  stretch|buster)
+  stretch)
     # nowadays resides on archive
     MIRRORSITE="http://archive.debian.org/debian/"
     # archived security repository
@@ -340,11 +339,6 @@ fi
 if ! [ -e /usr/share/debootstrap/scripts/stretch ] ; then
   echo "Debootstrap version doesn't know about Debian stretch yet, creating according symlink"
   ln -s sid /usr/share/debootstrap/scripts/stretch
-fi
-
-if ! [ -e /usr/share/debootstrap/scripts/buster ] ; then
-  echo "Debootstrap version doesn't know about Debian buster yet, creating according symlink"
-  ln -s sid /usr/share/debootstrap/scripts/buster
 fi
 
 if ! [ -e /usr/share/debootstrap/scripts/bullseye ] ; then
