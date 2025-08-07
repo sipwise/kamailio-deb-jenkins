@@ -53,7 +53,7 @@
     refspec: *reftag
     branch: ':refs/tags/v.*'
     browser_url: *browserurl
-    distributions: !!python/tuple [bullseye, stretch, focal, bionic, xenial]
+    distributions: !!python/tuple [bullseye, focal, bionic, xenial]
     jobs: *jobs_simple
     disabled: false
 

@@ -3,7 +3,6 @@ distribution=${distribution:-unknown}
 
 case "$distribution" in
   precise|trusty|xenial|bionic|focal) BUILD_PROFILES=pkg.rtpengine.no-transcoding ;;
-  wheezy|jessie|stretch|buster) BUILD_PROFILES=pkg.rtpengine.no-transcoding ;;
 esac
 
 echo "${BUILD_PROFILES:-}"

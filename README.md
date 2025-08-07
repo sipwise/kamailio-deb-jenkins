@@ -10,7 +10,7 @@ Development of this setup is sponsored by [Sipwise](http://www.sipwise.com/).
 Involved Software
 -----------------
 
-* [Debian](https://www.debian.org/) (version 9/stretch, amd64)
+* [Debian](https://www.debian.org/) (amd64)
 * [Jenkins](https://jenkins.io/)
 * [jenkins-debian-glue](https://jenkins-debian-glue.org/)
 * [Jenkins Job Builder](https://docs.openstack.org/infra/jenkins-job-builder/)

@@ -21,9 +21,7 @@ list_supported_distributions() {
     bullseye \
     focal \
     jammy \
-    jessie \
     noble \
-    stretch \
     trusty \
     xenial
   do
@@ -107,31 +105,9 @@ else
   install_ubuntu_keyring
 fi
 
-# jessie repos expired, so disable the repository check iff running on jessie
-case "${DEBIAN_VERSION}" in
-  jessie)
-    echo "!!! Enabling Debian backports for usage on jessie !!!"
-    cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://archive.debian.org/debian jessie-backports main
-EOF
-    ;;
-  *)
-    echo "!!! Enabling Debian backports !!!"
-    cat > /etc/apt/sources.list.d/backports.list << EOF
-deb http://deb.debian.org/debian ${DEBIAN_VERSION}-backports main
-EOF
-  ;;
-esac
-
 if grep -q 'http.debian.net' /etc/apt/sources.list ; then
   echo "!!! Setting deb.debian.org as Debian mirror in /etc/apt/sources.list !!!"
   sed -i "s/http.debian.net/deb.debian.org/" /etc/apt/sources.list
-fi
-
-# backwards compatibility if running on jessie based slaves
-if grep -q 'jessie-updates' /etc/apt/sources.list ; then
-  echo "!!! Disabling no-longer-existing jessie-updates in /etc/apt/sources.list !!!"
-  sed -i 's/\(^deb.* jessie-updates .*\)/# disabled by ec2\/bootstrap.sh\n# \1/' /etc/apt/sources.list
 fi
 
 APT_OPTIONS=()
@@ -139,13 +115,6 @@ APT_OPTIONS=()
 # make sure we don't get stuck if debconf wants to pop up because of a modified conf file
 APT_OPTIONS+=(-o Dpkg::Options::=--force-confdef)
 APT_OPTIONS+=(-o Dpkg::Options::=--force-confold)
-
-# jessie repos expired, so disable the repository check iff running on jessie
-case "${DEBIAN_VERSION}" in
-  jessie)
-    APT_OPTIONS+=(-o Acquire::Check-Valid-Until=false)
-    ;;
-esac
 
 step=5
 while [[ $step -ne 0 ]]; do
@@ -237,44 +206,6 @@ case "$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  wheezy)
-    # nowadays resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
-    # we need key id 6FB2A1C265FFB764
-    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
-    ;;
-  jessie)
-    # nowadays resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
-    # security and updates
-    case "${arch}" in
-      arm64)
-        :  # no arm64 support, so do not define additional mirror
-      ;;
-      *)
-        OTHERMIRROR="deb http://archive.debian.org/debian-security ${distribution}/updates main"
-      ;;
-    esac
-    # we need key id CBF8D6FD518E17E1
-    DEBOOTSTRAPOPTS=("${DEBOOTSTRAPOPTS[@]}" "--keyring=/usr/share/keyrings/debian-archive-removed-keys.gpg")
-    # support bootstrapping archived repository with expired GPG key
-    APTGETOPT=("${APTGETOPT[@]}" "-o Acquire::Check-Valid-Until=false" "-o APT::Get::AllowUnauthenticated=true" --force-yes)
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
-    ;;
-  stretch)
-    # nowadays resides on archive
-    MIRRORSITE="http://archive.debian.org/debian/"
-    # archived security repository
-    OTHERMIRROR="deb http://archive.debian.org/debian-security ${distribution}/updates main"
-    # package install speedup
-    EXTRAPACKAGES="eatmydata"
-    export LD_PRELOAD="${LD_PRELOAD:+$LD_PRELOAD:}libeatmydata.so"
-    ;;
   bullseye|bookworm)
     MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
@@ -336,11 +267,6 @@ if ! [ -e /usr/share/debootstrap/scripts/xenial ] ; then
   ln -s gutsy /usr/share/debootstrap/scripts/xenial
 fi
 
-if ! [ -e /usr/share/debootstrap/scripts/stretch ] ; then
-  echo "Debootstrap version doesn't know about Debian stretch yet, creating according symlink"
-  ln -s sid /usr/share/debootstrap/scripts/stretch
-fi
-
 if ! [ -e /usr/share/debootstrap/scripts/bullseye ] ; then
   echo "Debootstrap version doesn't know about Debian bullseye yet, creating according symlink"
   ln -s sid /usr/share/debootstrap/scripts/bullseye
@@ -387,17 +313,6 @@ prepare_cowbuilder() {
       echo "!!! /var/cache/pbuilder/base-${distri}-${arch}.cow exists already (execute '$0 --update' to refresh it) !!!"
     fi
   fi
-
-  case "${distri}" in
-    jessie)
-      echo "Setting up /etc/apt/apt.conf.d/99-ignore-expired-keys.conf in build environment for ${distri}"
-      cat > "/var/cache/pbuilder/base-${distri}-${arch}.cow/etc/apt/apt.conf.d/99-ignore-expired-keys.conf" << EOF
-# set up via kamailio-deb-jenkins' ec2/bootstrap.sh
-Acquire::Check-Valid-Until false;
-APT::Get::AllowUnauthenticated true;
-EOF
-    ;;
-  esac
 
   if $UPDATE ; then
     echo "!!! (Re)creating tarballs for piuparts usage as requested !!!"
