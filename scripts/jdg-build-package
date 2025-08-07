@@ -29,10 +29,6 @@ case "$distribution" in
     export MIRRORSITE="http://old-releases.ubuntu.com/ubuntu/"
     echo "*** Building for Ubuntu release ${distribution}, using mirror $MIRRORSITE ***"
     ;;
-  jessie|wheezy)
-    export MIRRORSITE="http://archive.debian.org/debian/"
-    echo "*** Building for Debian release ${distribution}, using mirror $MIRRORSITE ***"
-    ;;
 esac
 
 # execute main jenkins-debian-glue script
