@@ -45,7 +45,7 @@
     refspec: *refbranch
     branch: *branch
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
+    distributions: !!python/tuple [bookworm, bullseye, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -57,7 +57,7 @@
     refspec: *refbranch
     branch: 'refs/heads/mr12.5'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
+    distributions: !!python/tuple [bookworm, bullseye, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -69,7 +69,7 @@
     refspec: *refbranch
     branch: 'refs/heads/mr11.5'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    distributions: !!python/tuple [bookworm, bullseye, focal, jammy]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -81,7 +81,7 @@
     refspec: *refbranch
     branch: 'refs/heads/mr10.5'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
+    distributions: !!python/tuple [bookworm, bullseye, focal]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -94,7 +94,7 @@
     refspec: *reftag
     branch: ':refs/tags/mr12\\.5\\.\\d+.\\d+'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy, noble]
+    distributions: !!python/tuple [bookworm, bullseye, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -106,7 +106,7 @@
     refspec: *reftag
     branch: ':refs/tags/mr11\\.5\\.\\d+\\.\\d+'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal, jammy]
+    distributions: !!python/tuple [bookworm, bullseye, focal, jammy]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -118,7 +118,7 @@
     refspec: *reftag
     branch: ':refs/tags/mr10\\.5\\.\\d+\\.\\d+'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, focal]
+    distributions: !!python/tuple [bookworm, bullseye, focal]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
