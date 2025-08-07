@@ -39,7 +39,7 @@
     refspec: *refbranch
     branch: *branch
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, buster, noble, jammy, focal, bionic]
+    distributions: !!python/tuple [bookworm, bullseye, noble, jammy, focal, bionic]
     jobs: *jobs_simple
     disabled: false
 
@@ -53,7 +53,7 @@
     refspec: *reftag
     branch: ':refs/tags/v.*'
     browser_url: *browserurl
-    distributions: !!python/tuple [bullseye, buster, stretch, focal, bionic, xenial]
+    distributions: !!python/tuple [bullseye, stretch, focal, bionic, xenial]
     jobs: *jobs_simple
     disabled: false
 
