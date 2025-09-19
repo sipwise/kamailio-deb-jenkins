@@ -22,6 +22,7 @@ list_supported_distributions() {
     focal \
     jammy \
     noble \
+    trixie \
     trusty \
     xenial
   do
@@ -206,7 +207,7 @@ case "$distribution" in
     # ensure it's unset
     unset LD_PRELOAD
     ;;
-  bullseye|bookworm)
+  bullseye|bookworm|trixie)
     MIRRORSITE="http://deb.debian.org/debian"
     # security and updates
     OTHERMIRROR="deb http://security.debian.org/debian-security ${distribution}-security main"
@@ -274,6 +275,11 @@ fi
 
 if ! [ -e /usr/share/debootstrap/scripts/bookworm ] ; then
   echo "Debootstrap version doesn't know about Debian bookworm yet, creating according symlink"
+  ln -s sid /usr/share/debootstrap/scripts/sid
+fi
+
+if ! [ -e /usr/share/debootstrap/scripts/trixie ] ; then
+  echo "Debootstrap version doesn't know about Debian trixie yet, creating according symlink"
   ln -s sid /usr/share/debootstrap/scripts/sid
 fi
 
