@@ -110,6 +110,7 @@ case "${distribution}" in
   noble)    BPO=ubuntu24.04 ;;
   bullseye) BPO=bpo11 ;;
   bookworm) BPO=bpo12 ;;
+  trixie) BPO=bpo13 ;;
   *)
     echo "${distribution} not supported" >&2
     exit 2 ;;
@@ -117,7 +118,7 @@ esac
 
 # not yet released, in order to avoid bad-distribution-in-changes-file error
 case "${distribution}" in
-  bookworm|sid)
+  sid)
     echo "*** switch ${distribution} to unstable ***"
     distribution_control=unstable
     ;;
