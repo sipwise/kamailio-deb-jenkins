@@ -70,19 +70,6 @@ systemctl disable unattended-upgrades.service
 export DEBIAN_FRONTEND=noninteractive
 export DEBIAN_PRIORITY=critical
 
-# enable j-d-g repos
-if [ -r /etc/apt/sources.list.d/jenkins-debian-glue.list ] ; then
-  echo "!!! /etc/apt/sources.list.d/jenkins-debian-glue.list exists already !!!"
-else
-  echo "deb     http://jenkins.grml.org/debian jenkins-debian-glue main" > /etc/apt/sources.list.d/jenkins-debian-glue.list
-fi
-
-if apt-key list | grep -q 52D4A654 ; then
-  echo "!!! GnuPG key 52D4A654 already listed in apt-key setup !!!"
-else
-  wget -O - http://jenkins.grml.org/debian/C525F56752D4A654.asc | apt-key add -
-fi
-
 install_ubuntu_keyring() {
   wget -O ubuntu-keyring_2021.03.26_all.deb \
     http://de.archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2021.03.26_all.deb
