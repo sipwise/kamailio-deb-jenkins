@@ -39,7 +39,7 @@
     refspec: *refbranch
     branch: *branch
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, noble, jammy, focal, bionic]
+    distributions: !!python/tuple [trixie, bookworm, bullseye, noble, jammy, focal, bionic]
     jobs: *jobs_simple
     disabled: false
 

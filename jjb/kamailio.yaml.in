@@ -44,7 +44,7 @@
     refspec: *refbranch
     branch: *branch
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, bionic, focal, jammy, noble]
+    distributions: !!python/tuple [trixie, bookworm, bullseye, bionic, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -56,7 +56,7 @@
     refspec: *refbranch
     branch: 'refs/heads/6.0'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, bionic, focal, jammy, noble]
+    distributions: !!python/tuple [trixie, bookworm, bullseye, bionic, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
@@ -95,7 +95,7 @@
     refspec: *reftag
     branch: ':refs/tags/6\\.0\\.\\d+'
     browser_url: *browserurl
-    distributions: !!python/tuple [bookworm, bullseye, bionic, focal, jammy, noble]
+    distributions: !!python/tuple [trixie, bookworm, bullseye, bionic, focal, jammy, noble]
     architectures: *architectures
     jobs: *jobs_simple
     disabled: false
